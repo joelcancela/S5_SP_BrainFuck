@@ -13,18 +13,29 @@ Il existe 8 opérations :
 		 &emsp;La case courante, <em>p</em>, va incrémenter sa valeur, <em>dp</em>, (initialisée à 0) de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
 		<table>
 			<tr>
-				<td>[<b>=></b>0,0,0,0,0,0]</td><td>0</td><td>+</td>
+				<td>[&rarr;0,0,0,0,0,0]</td><td>0</td><td>+</td>
 			</tr>
 			<tr>
-				<td colspan="3"><center><b>Instruction +</b></center></td>
+				<td colspan="3"><b>Instruction : +</b></td>
 			</tr>
 			<tr>
-				<td>[<b>=></b>1,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
+				<td>[&rarr;1,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
 			</tr>
 		</table>
 		</li>
 	<li><b>La décrémentation :</b> Let C<SUB>p</SUB> = (M, p, i); Decrement(C<SUB>p</SUB>) = (M', p, i+1); d'<SUB>p</SUB>=d<SUB>p</SUB> - 1<br/>
-		&emsp;La case courante va décrémenter sa valeur de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.</li>
+		&emsp;La case courante va décrémenter sa valeur de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
+			<table>
+			<tr>
+				<td>[&rarr;3,0,0,0,0,0]</td><td>0</td><td>-</td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Instruction : -</b></td>
+			</tr>
+			<tr>
+				<td>[&rarr;2,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
+			</tr>
+		</table></li>
 	<li><b>"Left" :</b> Let C<SUB>p</SUB> = (M, p, i); Left(C<SUB>p</SUB>) = (M, p', i+1); p'=p - 1<br/>
 		&emsp;Change le case mémoire pointée par p. "Décalle" le pointeur d'une case de M vers la gauche (-1).</li>
 	<li><b>"Right" :</b> Let C<SUB>p</SUB> = (M, p, i); Right(C<SUB>p</SUB>) = (M, p', i+1); p'=p + 1<br/>
