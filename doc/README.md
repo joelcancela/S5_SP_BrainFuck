@@ -65,7 +65,7 @@ Il existe 8 opérations :
 			</tr>
 		</table>
 		</li>
-	<li><b>"Out" :</b> Let C<SUB>p</SUB> = (M, p, i); Out(C<SUB>p</SUB>) = (M, p, i+1); ^ out &larr; d<SUB>p</SUB><br/>
+	<li><b>"Out" :</b> Let C<SUB>p</SUB> = (M, p, i); Out(C<SUB>p</SUB>) = (M, p, i+1) = ^ out &larr; d<SUB>p</SUB><br/>
 		&emsp;Affiche la valeur du code ASCII contenue dans la case mémoire courante, <em>p</em>.
 		<table>
 			<tr>
@@ -83,10 +83,10 @@ Il existe 8 opérations :
 		&emsp;Lit une valeur entrée et la stocke dans la case mémoire courante, <em>p</em>.
 		<table>
 			<tr>
-				<td>[0,&rarr;97,0,0,0,0]</td><td>1</td><td>.</td>
+				<td>[0,&rarr;97,0,0,0,0]</td><td>1</td><td>,</td>
 			</tr>
 			<tr>
-				<td colspan="3"><b>Instruction : .</b><br/>Entre "<em>22</em>".</td>
+				<td colspan="3"><b>Instruction : ,</b><br/>Entre "<em>22</em>".</td>
 			</tr>
 			<tr>
 				<td>[0,&rarr;22,0,0,0,0]</td><td>1</td><td><em>...</em></td>
