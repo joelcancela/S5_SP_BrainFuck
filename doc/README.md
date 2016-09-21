@@ -11,17 +11,17 @@ Il existe 8 opérations :
 <ul>
 	<li><b>L'incrémentation :</b> Let C<SUB>p</SUB> = (M, p, i); Increment(C<SUB>p</SUB>) = (M', p, i+1); d'<SUB>p</SUB>=d<SUB>p</SUB> + 1<br/>
 		 &emsp;La case courante, <em>p</em>, va incrémenter sa valeur, <em>dp</em>, (initialisée à 0) de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
-		<table>
+		<center><table>
 			<tr>
 				<td>[<b>=></b>0,0,0,0,0,0]</td><td>0</td><td>+</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="font-weight: bold;">Instruction +</td>
+				<td colspan="3" style="text-align:center;"><b>Instruction +</b></td>
 			</tr>
 			<tr>
 				<td>[<b>=></b>1,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
 			</tr>
-		</table>
+		</table></center>
 		</li>
 	<li><b>La décrémentation :</b> Let C<SUB>p</SUB> = (M, p, i); Decrement(C<SUB>p</SUB>) = (M', p, i+1); d'<SUB>p</SUB>=d<SUB>p</SUB> - 1<br/>
 		&emsp;La case courante va décrémenter sa valeur de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.</li>
