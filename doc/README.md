@@ -13,10 +13,13 @@ Il existe 8 opérations :
 		 &emsp;La case courante, <em>p</em>, va incrémenter sa valeur, <em>dp</em>, (initialisée à 0) de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
 		<table>
 			<tr>
-				<td>1</td><td>2</td>
+				<td>[<b>=></b>0,0,0,0,0,0]</td><td>0</td><td>+</td>
 			</tr>
 			<tr>
-				<td colspan="2">3</td>
+				<td colspan="3" style="font-weight: bold;">Instruction +</td>
+			</tr>
+			<tr>
+				<td>[<b>=></b>1,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
 			</tr>
 		</table>
 		</li>
