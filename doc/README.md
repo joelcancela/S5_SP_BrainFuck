@@ -25,7 +25,7 @@ Il existe 8 opérations :
 		</li>
 	<li><b>La décrémentation :</b> Let C<SUB>p</SUB> = (M, p, i); Decrement(C<SUB>p</SUB>) = (M', p, i+1); d'<SUB>p</SUB>=d<SUB>p</SUB> - 1<br/>
 		&emsp;La case courante va décrémenter sa valeur de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
-			<table>
+		<table>
 			<tr>
 				<td>[&rarr;3,0,0,0,0,0]</td><td>0</td><td>-</td>
 			</tr>
@@ -35,11 +35,50 @@ Il existe 8 opérations :
 			<tr>
 				<td>[&rarr;2,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
 			</tr>
-		</table></li>
+		</table>
+		</li>
 	<li><b>"Left" :</b> Let C<SUB>p</SUB> = (M, p, i); Left(C<SUB>p</SUB>) = (M, p', i+1); p'=p - 1<br/>
-		&emsp;Change le case mémoire pointée par p. "Décalle" le pointeur d'une case de M vers la gauche (-1).</li>
+		&emsp;Change le case mémoire pointée par p. "Décalle" le pointeur d'une case de M vers la gauche (-1).
+		<table>
+			<tr>
+				<td>[0,&rarr;0,0,0,0,0]</td><td>1</td><td><</td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Instruction : <</b></td>
+			</tr>
+			<tr>
+				<td>[&rarr;0,0,0,0,0,0]</td><td>0</td><td><em>...</em></td>
+			</tr>
+		</table>
+		</li>
 	<li><b>"Right" :</b> Let C<SUB>p</SUB> = (M, p, i); Right(C<SUB>p</SUB>) = (M, p', i+1); p'=p + 1<br/>
-		&emsp;Change le case mémoire pointée par p. "Décalle" le pointeur d'une case de M vers la droite (+1).</li>
+		&emsp;Change le case mémoire pointée par p. "Décalle" le pointeur d'une case de M vers la droite (+1).
+		<table>
+			<tr>
+				<td>[0,&rarr;0,0,0,0,0]</td><td>1</td><td>></td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Instruction : ></b></td>
+			</tr>
+			<tr>
+				<td>[0,0,&rarr;0,0,0,0]</td><td>2</td><td><em>...</em></td>
+			</tr>
+		</table>
+		</li>
+	<li><b>"Out" :</b> Let C<SUB>p</SUB> = (M, p, i); Out(C<SUB>p</SUB>) = (M, p', i+1); ^ out &larr; d<SUB>p</SUB><br/>
+		&emsp;Affiche la valeur du code ASCII contenue dans la case mémoire courante, <em>p</em>.
+		<table>
+			<tr>
+				<td>[0,&rarr;97,0,0,0,0]</td><td>1</td><td>.</td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Instruction : .</b><br/>La machine affiche "<em>a</em>".</td>
+			</tr>
+			<tr>
+				<td>[0,&rarr;97,0,0,0,0]</td><td>1</td><td><em>...</em></td>
+			</tr>
+		</table>
+		</li>
 </ul>
 
 	
