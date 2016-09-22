@@ -1,13 +1,13 @@
 <h1>BrainFuck</h1>
 
-Le programme exécuté est un tuple, <strong>Cp</strong>, composé de 3 "variables" :
+<h2>Le programme exécuté est un tuple, <strong>Cp</strong>, composé de 3 "variables" :</h2>
 <ol>
 	<li><strong>M</strong>, 30 000 cases mémoires indexées de 0 à 29 999 (chacune pouvant stocker un entier de 0 à 255).</li>
  	<li><strong>p</strong>, pointeur sur la case mémoire actuelle.</li>
 	<li><strong>i</strong>, instruction (1 caractère) suivante du programme exécuté.</li>
 </ol>
 <br/>
-Il existe 8 opérations :
+<h2>Il existe 8 opérations :</h2>
 <ul>
 	<li><b>L'incrémentation :</b> Let C<SUB>p</SUB> = (M, p, i); Increment(C<SUB>p</SUB>) = (M', p, i+1); d'<SUB>p</SUB>=d<SUB>p</SUB> + 1<br/>
 		 &emsp;La case courante, <em>p</em>, va incrémenter sa valeur, <em>dp</em>, (initialisée à 0) de 1. Suite à cette opération on passe à l'instruction suivante sans changer de case mémoire.
@@ -93,6 +93,42 @@ Il existe 8 opérations :
 			</tr>
 		</table>
 		</li>
+	<li><b>"Jump to" :</b> Let C<SUB>p</SUB> = (M, p, i); 
+		<table border="0">
+			<tr><td rowspan="2">Jumpto(C<SUB>p</SUB>) = </td><td>d<SUB>p</SUB> = 0 &rArr; (M, p, i' + 1) ^ <em>bound</em>(i, i')</td></tr>
+			<tr><td>d<SUB>p</SUB> &ne; 0 &rArr;  (M, p, i' + 1)</td></tr>
+		</table><br/>
+		&emsp;Controle si la case mémoire courante, <em>p</em>, vaut 0. Dans le cas où p vaut 0 avance jusqu'à l'instruction "]" (back to), sinon continue normalement.
+	</li>
+	<li><b>"Back to" :</b> Let C<SUB>p</SUB> = (M, p, i); 
+		<table border="0">
+			<tr><td rowspan="2">Backto(C<SUB>p</SUB>) = </td><td>d<SUB>p</SUB> = 0 &rArr; (M, p, i' + 1)</td></tr>
+			<tr><td>d<SUB>p</SUB> &ne; 0 &rArr; (M, p, i' + 1) ^ <em>bound</em>(i', i)</td></tr>
+		</table><br/>
+		&emsp;Controle si la case mémoire courante, <em>p</em>, vaut 0. Dans le cas où p vaut 0 continue normalement, sinon recule jusqu'à l'instruction "[" (jump to), .
+	</li>
 </ul>
 
+<br/>
+<h2>Exemple de programme en <em>BrainFuck</em> :</h2>
+<table>
+	<tr><td>++++++++++</td><td><em>Donne la valeur 10 à la case mémoire qui va stocker le nombre d'itérations</em></td></tr>
+	<tr><td>[</td><td><em>Boucle initiale qui affecte des valeurs utiles au tableau</em></td></tr>
+	<tr><td>>+++++++>++++++++++>+++>+<<<<-</td><td><em>Ajoute 7 à la case suivante p+1, 10 à la case p+2, 3 à p+3, 1 à p+4, puis décrémente le nombre d'itérations de 1 (jusqu'à ce que d<SUB>p</SUB> = 0)</em></td></tr>
+	<tr><td>]</td><td></td></tr>
+	<tr><td></td><td><em>A la sortie de la boucle le tableau contient :</em></td></tr>
+	<tr><td>>++.</td><td>'H'    	<em>= 72  (70  + 2)</em></td></tr>
+	<tr><td>>+.</td><td>'e'    		<em>= 101 (100 + 1)</em></td></tr>
+	<tr><td>+++++++.</td><td>'l'    <em>= 108 (101 + 7)</em></td></tr>
+	<tr><td>.</td><td>'l'    		<em>= 108</em></td></tr>
+	<tr><td>+++.</td><td>'o'    	<em>= 111 (108 + 3)</em></td></tr>
+	<tr><td>>++.</td><td>espace 	<em>= 32  (30  + 2)</em></td></tr>
+	<tr><td><<+++++++++++++++.</td><td>'W'    <em>= 87  (72  + 15)</em></td></tr>
+	<tr><td>>.</td><td>'o'    		<em>= 111</em></td></tr>
+	<tr><td>+++.</td><td>'r'    	<em>= 114 (111 +  3)</em></td></tr>
+	<tr><td>------.</td><td>'l'    	<em>= 108 (114 - 6)</em></td></tr>
+	<tr><td>--------.</td><td>'d'   <em>= 100 (108 - 8)</em></td></tr>
+	<tr><td>>+.</td><td>'!'    		<em>= 33  (32  +  1)</em></td></tr>
+	<tr><td>>.</td><td>nouvelle ligne <em>= 10</em></td></tr>
+</table>
 	
