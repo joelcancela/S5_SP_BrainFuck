@@ -9,14 +9,21 @@ import unice.polytech.polystirN.brainfuck.language.Operator;
 
 /**
  * Model the virtual machine interpreting the
- * brainfuck language. 
+ * brainfuck language. The execution context of a program P is a tuple CP = (M, p, i) 
  * 
  * @author Joël CANCELA VAZ and Pierre Rainero
  * @author Tanguy Invernizzi and Aghiles Dziri
  */
 public class Interpreter {
 	
+	/** 
+	 * M is the previously defined memory
+	 */
 	private Byte[]							memory;
+	
+	/** 
+	 * p is a pointer to the memory cell currently used by the program
+	 */
 	private int								p;
 	private HashMap<Character, Operator>	symbols;
 	private BufferedReader					buffer;
