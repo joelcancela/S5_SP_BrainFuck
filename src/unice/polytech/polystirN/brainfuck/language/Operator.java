@@ -1,5 +1,11 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-public class Operator {
+import java.io.FileNotFoundException;
+
+public interface Operator {
+	
+	public boolean doOperation(int p,byte[] M) throws Exception;
+	
+	
 
 }

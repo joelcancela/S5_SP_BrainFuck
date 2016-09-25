@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 
+import unice.polytech.polystirN.brainfuck.language.Increment;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 
 /**
@@ -19,7 +20,8 @@ public class Interpreter {
 	/** 
 	 * M is the previously defined memory
 	 */
-	private Byte[]							memory;
+	//I have changed the Type Byte to byte 
+	private  byte[]						memory={-128};
 	
 	/** 
 	 * p is a pointer to the memory cell currently used by the program
@@ -38,9 +40,10 @@ public class Interpreter {
 		}
 		p = 0;
 		symbols = new HashMap<Character, Operator>();
-		symbols.put('+', new Operator());
-		symbols.put('-', new Operator());
-		memory = new Byte[30000];
+		//I put that increment for now
+		symbols.put('+', new Increment());
+		//symbols.put('-', new Operator());
+		memory = new byte[30000];
 		buffer = new BufferedReader(new FileReader(fileName));
 	}
 	
@@ -60,20 +63,36 @@ public class Interpreter {
 			if (symbols.get((char)c) == null) {
 				throw new Throwable("SyntaxError");
 			}
-			//symbols.get(c); doOp
+			symbols.get((char)c).doOperation(p, memory); 
 		}
 		return false;
 	}
     
     /**
+    *methode affiche to transform the byte number to integer
+    *and show it
+    *@return void
+    */
+    public void affiche(int p){
+    	
+    	System.out.println((int)((memory[p]) & 0x00FF));
+    	
+    	
+    }
+    
+    /**
      * Get the current memory.
      * @return What state the memory is in.
      */
-    public Byte[] getMemory() {
+    public byte[] getMemory() {
     	return memory;
     }
 
-    /**
+    public void setP(int p) {
+		this.p = p;
+	}
+
+	/**
      * Get the pointer to the memory cell currently used by the program.
      * @return The index of the current cell in the memory array used. 
      */
