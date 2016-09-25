@@ -14,44 +14,18 @@ import java.util.HashMap;
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-public class Interpreter {
+public abstract class Interpreter {
     /**
      * M is the previously defined memory
      */
-    private byte[] memory = {-128};
+    //I have changed the Type Byte to byte
+    private static byte[] memory = {-128};
     /**
      * p is a pointer to the memory cell currently used by the program
      */
-    public static int p;
-    private HashMap<Character, Operator> symbols;
-    private BufferedReader buffer;
-    /**
-     * Unique instance not initialized
-     */
-    private static Interpreter INSTANCE = null;
-
-    /**
-     * Constructor for objects of class Interpreter.
-     */
-    private Interpreter() {
-        symbols = new HashMap<Character, Operator>();
-        symbols.put('+', new Increment());
-        symbols.put('-', new Decrement());
-        symbols.put('<', new Left());
-        symbols.put('>', new Right());
-    }
-
-
-    /**
-     * Access point for unique instance of Interpreter
-     */
-    public static synchronized Interpreter getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Interpreter();
-        }
-        return INSTANCE;
-    }
-
+    private static int p;
+    private static HashMap<Character, Operator> symbols;
+    private static BufferedReader buffer;
 
     /**
      * This method specifies the file read by the interpreter
@@ -60,7 +34,12 @@ public class Interpreter {
      * @param filename is the name of the file read
      * @throws Exception if the file doesn't have the correct extension
      */
-    public void init(String filename) throws Exception {
+    public static void init(String filename) throws Exception {
+    	symbols = new HashMap<Character, Operator>();
+        symbols.put('+', new Increment());
+        symbols.put('-', new Decrement());
+        symbols.put('<', new Left());
+        symbols.put('>', new Right());
         if (!filename.matches("(.*).bf")) {
             throw new Exception("IncorrectFileType");
         }
@@ -77,9 +56,9 @@ public class Interpreter {
      * @return True if the file was successfully read, false if not.
      * @throws Exception SyntaxError
      */
-    public boolean readfile() throws Exception {
+    public static boolean readfile() throws Exception {
         int c;
-        while ((c = this.buffer.read()) != -1) {
+        while ((c = buffer.read()) != -1) {
             if (((char) c != '\r') && ((char) c != '\n')) {
                 if (symbols.get((char) c) == null) {
                     throw new Exception("SyntaxError");
@@ -89,23 +68,31 @@ public class Interpreter {
         }
         return false;
     }
-
-    /**
-     * methode affiche to transform the byte number to integer
-     * and show it
-     *
-     * @return void
-     */
-    public void affiche(int p) {
-        System.out.println((int) ((memory[p]) & 0x00FF));
-    }
-
+    
     /**
      * Get the current memory.
      *
      * @return What state the memory is in.
      */
-    public byte[] getMemory() {
+    public static byte[] getMemory() {
         return memory;
+    }
+    
+    /**
+     * Get the current memory cell.
+     *
+     * @return What memory cell is selected.
+     */
+    public static int getP() {
+        return p;
+    }
+    
+    /**
+     * Set the current memory cell.
+     *
+     * @param New value of p.
+     */
+    public static void setP(int nP) {
+        p = nP;
     }
 }

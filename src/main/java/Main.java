@@ -15,9 +15,8 @@ public class Main {
             return;
         }
         if (args[0].equals("-p")) {
-            Interpreter bfckInterpreter = Interpreter.getInstance();
-            bfckInterpreter.init(args[1]);
-            bfckInterpreter.readfile();
+        	Interpreter.init(args[1]);
+        	Interpreter.readfile();
         }
     }
 }

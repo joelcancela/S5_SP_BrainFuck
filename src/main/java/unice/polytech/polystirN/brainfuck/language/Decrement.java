@@ -10,7 +10,7 @@ public class Decrement implements Operator {
         /**
          * Test overflow
          */
-        if (((int) M[p]) == 0) {
+        if ((((float) ((M[p]) & 0x00FF)) / 255) == 0) {
             throw new Exception("Memory underflow error");//TODO
         }
         M[p]--;

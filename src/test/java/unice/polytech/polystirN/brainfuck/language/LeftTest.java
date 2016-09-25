@@ -8,7 +8,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests unitaires pour Left
+ * Units tests for Left
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
@@ -27,19 +27,18 @@ public class LeftTest {
     @Test
     public void doOperation() throws Exception {
         //TUN :
-        Interpreter bfckI = Interpreter.getInstance();
+    	Interpreter.setP(1);
         Left l = new Left();
-        bfckI.p = 1;
-        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
-        assertEquals(0, bfckI.p);
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(0, Interpreter.getP());
 
-        bfckI.p=14999;
-        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
-        assertEquals(14998, bfckI.p);
+        Interpreter.setP(14999);
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(14998, Interpreter.getP());
 
-        bfckI.p=29999;
-        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
-        assertEquals(29998, bfckI.p);
+        Interpreter.setP(29999);
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(29998, Interpreter.getP());
 
         //TUA :
         try {

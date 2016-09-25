@@ -26,14 +26,14 @@ public class Right implements Operator {
      * @return true if the current memory cell was shifted by one to the right
      */
     public boolean doOperation(int p, byte[] M) throws Exception {
-        //Cas d'anomalie :
+    	//Anomaly case :
         if (p == 29999)
             throw new Exception("p = 29999 +1 | Can't move to the right");
         if (p < 0)
             throw new Exception("p < 0 | Wrong memory");
 
-        //Cas nominal :
-        Interpreter.getInstance().p++;
+        //Nominal case :
+        Interpreter.setP(Interpreter.getP()+1);
         return true;
     }
 

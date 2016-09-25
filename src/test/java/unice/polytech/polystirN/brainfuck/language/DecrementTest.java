@@ -24,41 +24,41 @@ public class DecrementTest {
 
     @Test
     public void doOperation() throws Exception {
-
+    	byte[] m;
+    	
         //Cas nominal 1, avec fichier vide
-        Interpreter a = Interpreter.getInstance();
         try {
-            a.init("./examples/empty.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/empty.bf");
+        	Interpreter.readfile();
+        	m = Interpreter.getMemory();
+         	assertEquals(0, m[Interpreter.getP()] & 0xFF);
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
         //Cas nominal 2, decrementation de c0 3 fois apres incrementation 3 fois
         try {
-            a.init("./examples/decrementSimple.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/decrementSimple.bf");
+        	Interpreter.readfile();
+        	m = Interpreter.getMemory();
+         	assertEquals(0, m[Interpreter.getP()] & 0xFF);
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
         //Cas d'anomalie 1, decrementation de c0 7 fois
         try {
-            a.init("./examples/decrementC0by7.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/decrementC0by7.bf");
+        	Interpreter.readfile();
         } catch (Throwable t) {
             assertEquals("Memory underflow error", t.getMessage());
         }
 
 
-        //Cas d'anomalie 2, decrementation de c0 à c-1
+        //Cas d'anomalie 2, decrementation de c0 Ã  c-1
         try {
-            a.init("./examples/decrementError.bf");
-            a.p = -1;
-            a.readfile();
+        	Interpreter.init("./examples/decrementError.bf");
+        	Interpreter.setP(-1);
         } catch (Exception e) {
             assertEquals("-1", e.getMessage());
         } catch (Throwable t) {

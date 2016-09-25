@@ -15,7 +15,7 @@ public class Increment implements Operator {
         /**
          * overflow or not
          */
-        if ((int)M[p] == 255) {
+        if ((((float) ((M[p]) & 0x00FF)) / 255) == 255){
             throw new Exception("Memory overflow error");
         }
         M[p]++;

@@ -24,39 +24,43 @@ public class IncrementTest {
 
     @Test
     public void doOperation() throws Exception {
+    	byte[] m;
+    	
         //Cas nominal 1, avec fichier vide
-        Interpreter a = Interpreter.getInstance();
         try {
-            a.init("./examples/empty.bf");
-            a.readfile();
-            a.affiche(0);
+            Interpreter.init("./examples/empty.bf");
+            Interpreter.readfile();
+            m = Interpreter.getMemory();
+        	assertEquals(0, m[Interpreter.getP()] & 0xFF);
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
         //Cas nominal 2, incrementation de c0, 255 fois
         try {
-            a.init("./examples/incrementMax255.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/incrementMax255.bf");
+        	Interpreter.readfile();
+        	m = Interpreter.getMemory();
+        	assertEquals(255, m[Interpreter.getP()] & 0xFF);
+        	
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
         //Cas nominal 3, incrementation de c0, 7 fois
         try {
-            a.init("./examples/incrementC0by7.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/incrementC0by7.bf");
+        	Interpreter.readfile();
+        	m = Interpreter.getMemory();
+        	assertEquals(7, m[Interpreter.getP()] & 0xFF);
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
         //Cas d'anomalie 1, incrementation de c0, 256 fois
         try {
-            a.init("./examples/incrementError256.bf");
-            a.readfile();
-            a.affiche(0);
+        	Interpreter.init("./examples/incrementError256.bf");
+        	Interpreter.readfile();
         } catch (Throwable t) {
             assertEquals("Memory overflow error", t.getMessage());
         }
@@ -64,15 +68,14 @@ public class IncrementTest {
 
         //Cas d'anomalie 2, incrementation de c-1
         try {
-            a.init("./examples/incrementMax255.bf");
-            a.p = -1;
-            a.readfile();
+        	Interpreter.init("./examples/incrementMax255.bf");
+        	Interpreter.setP(-1);
+        	Interpreter.readfile();
         } catch (Exception e) {
             assertEquals("-1", e.getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
         }
-
     }
 
 }

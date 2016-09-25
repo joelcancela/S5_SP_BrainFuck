@@ -4,10 +4,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests unitaires pour Right
+ * Units tests for Right
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
@@ -26,23 +28,30 @@ public class RightTest {
     @Test
     public void doOperation() throws Exception {
         //TUN :
-        Right r = new Right();
-        assertEquals(true, r.doOperation(0, new byte[30000]));
-        assertEquals(true, r.doOperation(14999, new byte[30000]));
-        assertEquals(true, r.doOperation(29998, new byte[30000]));
+    	Interpreter.setP(0);
+        Right l = new Right();
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(1, Interpreter.getP());
+
+        Interpreter.setP(14999);
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(15000, Interpreter.getP());
+
+        Interpreter.setP(29998);
+        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
+        assertEquals(29999, Interpreter.getP());
 
         //TUA :
         try {
-            r.doOperation(-1, new byte[30000]);
+            l.doOperation(-1, new byte[30000]);
         } catch (Exception e) {
             assertEquals("p < 0 | Wrong memory", e.getMessage());
         }
         try {
-            r.doOperation(29999, new byte[30000]);
+            l.doOperation(29999, new byte[30000]);
         } catch (Exception e) {
             assertEquals("p = 29999 +1 | Can't move to the right", e.getMessage());
         }
-
     }
 
 }

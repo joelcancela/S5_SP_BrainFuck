@@ -26,14 +26,14 @@ public class Left implements Operator {
      * @return true if the current memory cell was shifted by one to the left
      */
     public boolean doOperation(int p, byte[] M) throws Exception {
-        //Cas d'anomalie :
+        //Anomaly case :
         if (p == 0)
             throw new Exception("p = 0 -1 | Can't move to the left");
         if (p > 29999)
             throw new Exception("p > 30000 | Wrong memory");
 
-        //Cas nominal :
-        Interpreter.getInstance().p--;
+        //Nominal case :
+        Interpreter.setP(Interpreter.getP()-1);
         return true;
     }
 
