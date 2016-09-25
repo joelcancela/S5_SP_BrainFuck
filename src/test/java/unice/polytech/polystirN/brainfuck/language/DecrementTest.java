@@ -8,10 +8,9 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * Created by Joel CANCELA VAZ on 25/09/2016.
  */
-public class IncrementTest {
+public class DecrementTest {
     @Before
     public void setUp() throws Exception {
 
@@ -24,6 +23,7 @@ public class IncrementTest {
 
     @Test
     public void doOperation() throws Exception {
+
         //Cas nominal 1, avec fichier vide
         Interpreter a = null;
         try {
@@ -34,37 +34,28 @@ public class IncrementTest {
             t.printStackTrace();
         }
 
-        //Cas nominal 2, incrementation de c0, 255 fois
+        //Cas nominal 2, decrementation de c0 3 fois apres incrementation 3 fois
         try {
-            a = new Interpreter("./examples/incrementMax255.bf");
+            a = new Interpreter("./examples/decrementSimple.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
             t.printStackTrace();
         }
 
-        //Cas nominal 3, incrementation de c0, 7 fois
+        //Cas d'anomalie 1, decrementation de c0 7 fois
         try {
-            a = new Interpreter("./examples/incrementC0by7.bf");
+            a = new Interpreter("./examples/decrementC0by7.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
-            t.printStackTrace();
-        }
-
-        //Cas d'anomalie 1, incrementation de c0, 256 fois
-        try {
-            a = new Interpreter("./examples/incrementError256.bf");
-            a.readfile();
-            a.affiche(0);
-        } catch (Throwable t) {
-            assertEquals("Memory overflow error", t.getMessage());
+            assertEquals("Memory underflow error", t.getMessage());
         }
 
 
-        //Cas d'anomalie 2, incrementation de c-1
+        //Cas d'anomalie 2, decrementation de c0 à c-1
         try {
-            a = new Interpreter("./examples/incrementMax255.bf");
+            a = new Interpreter("./examples/decrementError.bf");
             a.p = -1;
             a.readfile();
         } catch (Exception e) {
@@ -72,7 +63,6 @@ public class IncrementTest {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-
     }
 
 }
