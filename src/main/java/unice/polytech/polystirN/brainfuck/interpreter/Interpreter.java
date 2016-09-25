@@ -3,22 +3,21 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
+
 
 /**
  * Model the virtual machine interpreting the
  * brainfuck language. The execution context of a program P is a tuple CP = (M, p, i)
  *
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Interpreter {
     /**
      * M is the previously defined memory
      */
-    //I have changed the Type Byte to byte
     private byte[] memory = {-128};
     /**
      * p is a pointer to the memory cell currently used by the program
@@ -26,13 +25,15 @@ public class Interpreter {
     public static int p;
     private HashMap<Character, Operator> symbols;
     private BufferedReader buffer;
+    /**
+     * Unique instance not initialized
+     */
+    private static Interpreter INSTANCE = null;
 
     /**
      * Constructor for objects of class Interpreter.
-     *
      */
-
-    private Interpreter(){
+    private Interpreter() {
         symbols = new HashMap<Character, Operator>();
         symbols.put('+', new Increment());
         symbols.put('-', new Decrement());
@@ -40,20 +41,26 @@ public class Interpreter {
         symbols.put('>', new Right());
     }
 
-    /** Instance unique non préinitialisée */
-    private static Interpreter INSTANCE = null;
 
-    /** Point d'accès pour l'instance unique du singleton */
-    public static synchronized Interpreter getInstance()
-    {
-        if (INSTANCE == null)
-        { 	INSTANCE = new Interpreter();
+    /**
+     * Access point for unique instance of Interpreter
+     */
+    public static synchronized Interpreter getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Interpreter();
         }
         return INSTANCE;
     }
 
 
-    public void init(String filename) throws Exception{
+    /**
+     * This method specifies the file read by the interpreter
+     * also resets the memory and the pointer
+     *
+     * @param filename is the name of the file read
+     * @throws Exception if the file doesn't have the correct extension
+     */
+    public void init(String filename) throws Exception {
         if (!filename.matches("(.*).bf")) {
             throw new Exception("IncorrectFileType");
         }

@@ -6,6 +6,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+
+/**
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
+ */
 public class InterpreterTest {
     @Before
     public void setUp() throws Exception {
@@ -36,19 +41,19 @@ public class InterpreterTest {
         //Tests left :
         a.init("./examples/left_outMin.bf");
         try {
-	    	a.readfile();
-        } catch(Exception e){
-        	assertEquals("p = 0 -1 | Can't move to the left",e.getMessage());
-        	assertEquals(0,a.p);
+            a.readfile();
+        } catch (Exception e) {
+            assertEquals("p = 0 -1 | Can't move to the left", e.getMessage());
+            assertEquals(0, a.p);
         }
-        
+
         //Tests right :
-    	a.init("./examples/right_outMax.bf");
+        a.init("./examples/right_outMax.bf");
         try {
-	    	a.readfile();
-        } catch(Exception e){
-        	assertEquals("p = 29999 +1 | Can't move to the right",e.getMessage());
-        	assertEquals(29999,a.p);
+            a.readfile();
+        } catch (Exception e) {
+            assertEquals("p = 29999 +1 | Can't move to the right", e.getMessage());
+            assertEquals(29999, a.p);
         }
     }
 }

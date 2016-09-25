@@ -10,8 +10,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests unitaires pour Left
  *
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class LeftTest {
     @Before

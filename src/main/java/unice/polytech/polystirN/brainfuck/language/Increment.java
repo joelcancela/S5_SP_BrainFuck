@@ -3,8 +3,8 @@ package unice.polytech.polystirN.brainfuck.language;
 /**
  * Class Increment
  *
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Increment implements Operator {
     /**
@@ -15,7 +15,7 @@ public class Increment implements Operator {
         /**
          * overflow or not
          */
-        if ((M[p] & 0xFF) == 255) {
+        if ((int)M[p] == 255) {
             throw new Exception("Memory overflow error");
         }
         M[p]++;

@@ -8,8 +8,8 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class IncrementTest {
     @Before

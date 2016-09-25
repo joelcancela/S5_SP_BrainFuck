@@ -5,8 +5,8 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 /**
  * Class Right
  *
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 
 public class Right implements Operator {

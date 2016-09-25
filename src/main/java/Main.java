@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 /**
  * The main class of the project.
  *
- * @author Joël CANCELA VAZ and Pierre Rainero
- * @author Tanguy Invernizzi and Aghiles Dziri
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Main {
 
