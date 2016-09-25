@@ -8,7 +8,8 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 import static org.junit.Assert.*;
 
 /**
- * Created by Joel CANCELA VAZ on 25/09/2016.
+ * @author Joël CANCELA VAZ and Pierre Rainero
+ * @author Tanguy Invernizzi and Aghiles Dziri
  */
 public class IncrementTest {
     @Before

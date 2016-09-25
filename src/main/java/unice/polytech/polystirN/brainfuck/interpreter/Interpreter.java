@@ -1,7 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import unice.polytech.polystirN.brainfuck.language.Increment;
-import unice.polytech.polystirN.brainfuck.language.Operator;
+import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -40,6 +39,8 @@ public class Interpreter {
 		//I put that increment for now
 		symbols.put('+', new Increment());
 		//symbols.put('-', new Operator());
+		symbols.put('<', new Left());
+		symbols.put('>', new Right());
 		memory = new byte[30000];
 		buffer = new BufferedReader(new FileReader(fileName));
 	}
@@ -59,7 +60,7 @@ public class Interpreter {
 			if (symbols.get((char)c) == null) {
 				throw new Throwable("SyntaxError");
 			}
-			symbols.get((char)c).doOperation(p, memory); 
+			symbols.get((char)c).doOperation(p, memory);
 		}
 		return false;
 	}
