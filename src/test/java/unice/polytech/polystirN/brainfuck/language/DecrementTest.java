@@ -25,9 +25,9 @@ public class DecrementTest {
     public void doOperation() throws Exception {
 
         //Cas nominal 1, avec fichier vide
-        Interpreter a = null;
+        Interpreter a = Interpreter.getInstance();
         try {
-            a = new Interpreter("./examples/empty.bf");
+            a.init("./examples/empty.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -36,7 +36,7 @@ public class DecrementTest {
 
         //Cas nominal 2, decrementation de c0 3 fois apres incrementation 3 fois
         try {
-            a = new Interpreter("./examples/decrementSimple.bf");
+            a.init("./examples/decrementSimple.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -45,7 +45,7 @@ public class DecrementTest {
 
         //Cas d'anomalie 1, decrementation de c0 7 fois
         try {
-            a = new Interpreter("./examples/decrementC0by7.bf");
+            a.init("./examples/decrementC0by7.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -55,7 +55,7 @@ public class DecrementTest {
 
         //Cas d'anomalie 2, decrementation de c0 à c-1
         try {
-            a = new Interpreter("./examples/decrementError.bf");
+            a.init("./examples/decrementError.bf");
             a.p = -1;
             a.readfile();
         } catch (Exception e) {

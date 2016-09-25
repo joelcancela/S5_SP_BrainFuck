@@ -30,21 +30,36 @@ public class Interpreter {
     /**
      * Constructor for objects of class Interpreter.
      *
-     * @throws FileNotFoundException
      */
-    public Interpreter(String fileName) throws FileNotFoundException, Throwable {
-        if (!fileName.matches("(.*).bf")) {
-            throw new Throwable("IncorrectFileType");
-        }
-        p = 0;
+
+    private Interpreter(){
         symbols = new HashMap<Character, Operator>();
-        //I put that increment for now
         symbols.put('+', new Increment());
         symbols.put('-', new Decrement());
         symbols.put('<', new Left());
         symbols.put('>', new Right());
+    }
+
+    /** Instance unique non préinitialisée */
+    private static Interpreter INSTANCE = null;
+
+    /** Point d'accès pour l'instance unique du singleton */
+    public static synchronized Interpreter getInstance()
+    {
+        if (INSTANCE == null)
+        { 	INSTANCE = new Interpreter();
+        }
+        return INSTANCE;
+    }
+
+
+    public void init(String filename) throws Exception{
+        if (!filename.matches("(.*).bf")) {
+            throw new Exception("IncorrectFileType");
+        }
+        buffer = new BufferedReader(new FileReader(filename));
+        p = 0;
         memory = new byte[30000];
-        buffer = new BufferedReader(new FileReader(fileName));
     }
 
     /**
@@ -52,16 +67,15 @@ public class Interpreter {
      * Throws an error when a character in the file isn't supported
      * by the brainfuck language.
      *
-     * @param filename The name of the file.
      * @return True if the file was successfully read, false if not.
-     * @throws SyntaxError
+     * @throws Exception SyntaxError
      */
-    public boolean readfile() throws Throwable {
+    public boolean readfile() throws Exception {
         int c;
         while ((c = this.buffer.read()) != -1) {
             if (((char) c != '\r') && ((char) c != '\n')) {
                 if (symbols.get((char) c) == null) {
-                    throw new Throwable("SyntaxError");
+                    throw new Exception("SyntaxError");
                 }
                 symbols.get((char) c).doOperation(p, memory);
             }

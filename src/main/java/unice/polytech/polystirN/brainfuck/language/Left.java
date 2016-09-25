@@ -1,5 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
 /**
  * Class Left
  *
@@ -31,7 +33,7 @@ public class Left implements Operator {
             throw new Exception("p > 30000 | Wrong memory");
 
         //Cas nominal :
-        p = p - 1;
+        Interpreter.getInstance().p--;
         return true;
     }
 

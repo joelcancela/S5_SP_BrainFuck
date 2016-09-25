@@ -12,14 +12,13 @@ public class Increment implements Operator {
      * and @return boolean if the case is incremented else return an exception
      */
     public boolean doOperation(int p, byte[] M) throws Exception {
-
-        M[p]++;
         /**
          * overflow or not
          */
-        if ((((float) ((M[p]) & 0x00FF)) / 255) == 0) {
+        if ((M[p] & 0xFF) == 255) {
             throw new Exception("Memory overflow error");
         }
+        M[p]++;
         return true;
     }
 }

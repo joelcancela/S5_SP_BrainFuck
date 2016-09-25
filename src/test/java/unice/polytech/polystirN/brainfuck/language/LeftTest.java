@@ -3,6 +3,7 @@ package unice.polytech.polystirN.brainfuck.language;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,10 +27,19 @@ public class LeftTest {
     @Test
     public void doOperation() throws Exception {
         //TUN :
+        Interpreter bfckI = Interpreter.getInstance();
         Left l = new Left();
-        assertEquals(true, l.doOperation(1, new byte[30000]));
-        assertEquals(true, l.doOperation(14999, new byte[30000]));
-        assertEquals(true, l.doOperation(29999, new byte[30000]));
+        bfckI.p = 1;
+        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
+        assertEquals(0, bfckI.p);
+
+        bfckI.p=14999;
+        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
+        assertEquals(14998, bfckI.p);
+
+        bfckI.p=29999;
+        assertEquals(true, l.doOperation(bfckI.p, new byte[30000]));
+        assertEquals(29998, bfckI.p);
 
         //TUA :
         try {

@@ -25,9 +25,9 @@ public class IncrementTest {
     @Test
     public void doOperation() throws Exception {
         //Cas nominal 1, avec fichier vide
-        Interpreter a = null;
+        Interpreter a = Interpreter.getInstance();
         try {
-            a = new Interpreter("./examples/empty.bf");
+            a.init("./examples/empty.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -36,7 +36,7 @@ public class IncrementTest {
 
         //Cas nominal 2, incrementation de c0, 255 fois
         try {
-            a = new Interpreter("./examples/incrementMax255.bf");
+            a.init("./examples/incrementMax255.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -45,7 +45,7 @@ public class IncrementTest {
 
         //Cas nominal 3, incrementation de c0, 7 fois
         try {
-            a = new Interpreter("./examples/incrementC0by7.bf");
+            a.init("./examples/incrementC0by7.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -54,7 +54,7 @@ public class IncrementTest {
 
         //Cas d'anomalie 1, incrementation de c0, 256 fois
         try {
-            a = new Interpreter("./examples/incrementError256.bf");
+            a.init("./examples/incrementError256.bf");
             a.readfile();
             a.affiche(0);
         } catch (Throwable t) {
@@ -64,7 +64,7 @@ public class IncrementTest {
 
         //Cas d'anomalie 2, incrementation de c-1
         try {
-            a = new Interpreter("./examples/incrementMax255.bf");
+            a.init("./examples/incrementMax255.bf");
             a.p = -1;
             a.readfile();
         } catch (Exception e) {
