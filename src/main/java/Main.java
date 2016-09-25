@@ -1,8 +1,6 @@
-package unice.polytech.polystirN.brainfuck;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 import java.io.FileNotFoundException;
-
-import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
  * The main class of the project.

@@ -7,7 +7,7 @@ package unice.polytech.polystirN.brainfuck.language;
  */
 public class Increment implements Operator {
 	/**
-	 * methode doOperation increment the courrent case of memory 
+	 * methode doOperation increment the current case of memory
 	 * and @return boolean if the case is incremented else return an exception
 	 */
 	public boolean doOperation(int p,byte[] M) throws Exception{
@@ -16,7 +16,7 @@ public class Increment implements Operator {
 		     * overflow or not
 		     */
 			if((((float)((M[p]) & 0x00FF))/255)==0) {
-				throw new Exception("depassement de capacitie memoire");
+				throw new Exception("Memory overflow error");
 			}
 			return true;		
 	}

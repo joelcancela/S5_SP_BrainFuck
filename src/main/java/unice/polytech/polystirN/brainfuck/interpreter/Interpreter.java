@@ -1,13 +1,12 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import unice.polytech.polystirN.brainfuck.language.Increment;
+import unice.polytech.polystirN.brainfuck.language.Operator;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
-
-import unice.polytech.polystirN.brainfuck.language.Increment;
-
-import unice.polytech.polystirN.brainfuck.language.Operator;
 
 /**
  * Model the virtual machine interpreting the

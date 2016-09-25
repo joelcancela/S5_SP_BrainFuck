@@ -13,7 +13,9 @@
 hs_err_pid*
 
 # IDE Ignored files
-/.idea
-/.iml
-/.classpath
-/.project
+.idea
+.iml
+.classpath
+.project
+bin
+target/

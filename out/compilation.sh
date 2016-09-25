@@ -15,9 +15,6 @@
 # Name of the jar file to compile
 jarFileToLaunch="bfck.jar"
 
-# Insert here your additional java parameters
-extraJavaArgs=""
-
 # Name of the path to the jar to launch
 jarFile="./out/$jarFileToLaunch"
 
@@ -36,5 +33,5 @@ do
 done
 
 # Launch the application
-bash -c "java $extraJavaArgs -jar $jarFile $strArgs"
+bash -c "java -jar $jarFile $strArgs"
 exit $?
