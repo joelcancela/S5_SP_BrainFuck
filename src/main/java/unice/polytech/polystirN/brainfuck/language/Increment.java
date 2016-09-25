@@ -11,6 +11,7 @@ public class Increment implements Operator {
 	 * and @return boolean if the case is incremented else return an exception
 	 */
 	public boolean doOperation(int p,byte[] M) throws Exception{
+
 		    M[p]++;
 		    /**
 		     * overflow or not
