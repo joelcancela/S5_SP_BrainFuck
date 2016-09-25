@@ -35,7 +35,7 @@ public abstract class Interpreter {
      * @throws Exception if the file doesn't have the correct extension
      */
     public static void init(String filename) throws Exception {
-    	symbols = new HashMap<Character, Operator>();
+        symbols = new HashMap<Character, Operator>();
         symbols.put('+', new Increment());
         symbols.put('-', new Decrement());
         symbols.put('<', new Left());
@@ -68,7 +68,7 @@ public abstract class Interpreter {
         }
         return false;
     }
-    
+
     /**
      * Get the current memory.
      *
@@ -77,7 +77,7 @@ public abstract class Interpreter {
     public static byte[] getMemory() {
         return memory;
     }
-    
+
     /**
      * Get the current memory cell.
      *
@@ -86,11 +86,11 @@ public abstract class Interpreter {
     public static int getP() {
         return p;
     }
-    
+
     /**
      * Set the current memory cell.
      *
-     * @param nP is the new value of p.
+     * @param nP New value of p.
      */
     public static void setP(int nP) {
         p = nP;
