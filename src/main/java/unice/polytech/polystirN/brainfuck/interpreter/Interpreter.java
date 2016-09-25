@@ -90,7 +90,7 @@ public abstract class Interpreter {
     /**
      * Set the current memory cell.
      *
-     * @param New value of p.
+     * @param nP is the new value of p.
      */
     public static void setP(int nP) {
         p = nP;
