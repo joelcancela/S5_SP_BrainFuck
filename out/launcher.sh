@@ -2,8 +2,8 @@
 #--------------------------------------------------------------------#
 #                   bfck.jar to bfck linux executable                #
 #--------------------------------------------------------------------#
-#              By Aghiles Dziri, Tanguy Invernizzi,                  #
-#              Pierre Rainero and Joel Cancela Vaz                   #
+#              By Aghiles DZIRI, Tanguy INVERNIZZI,                  #
+#              Pierre RAINERO and Joel CANCELA VAZ                   #
 #                                                                    #
 # This file is used to simulate the bfck linux executable from the   #
 # bfck jar file. To use it, just generate your bfck.jar, create      #
@@ -12,7 +12,7 @@
 # linux executable                                                   #
 #--------------------------------------------------------------------#
 
-# Name of the jar file to compile
+# Name of the jar compiled
 jarFileToLaunch="bfck.jar"
 
 # Name of the path to the jar to launch
@@ -20,7 +20,7 @@ jarFile="./out/$jarFileToLaunch"
 
 #--------------------------------------------------------------------
 
-# Restore the arguments
+# Transfer the link arguments to the java command
 strArgs=''
 spaces="[[:space:]]"
 for i in "$@"

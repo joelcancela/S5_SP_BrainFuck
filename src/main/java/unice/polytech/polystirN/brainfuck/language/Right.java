@@ -3,7 +3,7 @@ package unice.polytech.polystirN.brainfuck.language;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
- * Class Right
+ * Class used to specify the Right operator behaviour
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
@@ -12,28 +12,25 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 public class Right implements Operator {
 
     /**
-     * Default constructor
-     */
-    public Right() {
-
-    }
-
-    /**
-     * Move the pointer of the current memory cell by one to the right
+     * This method moves the pointer by one to the right
      *
-     * @param p pointer of the current memory cell
-     * @param M all memory cells
+     * @param p is the index of the memory cell currently used
+     * @param M is the current memory state
      * @return true if the current memory cell was shifted by one to the right
+     * @throws Exception PointerMaximumValueError if the pointer has already reached
+     * the value of 299999 so it can't be moved to the right
+     * @throws Exception PointerPositionOutOfBounds if the pointer position
+     * is recognized as invalid (out of bounds of memory capacity)
      */
     public boolean doOperation(int p, byte[] M) throws Exception {
-    	//Anomaly case :
+        //Anomaly cases :
         if (p == 29999)
-            throw new Exception("p = 29999 +1 | Can't move to the right");
+            throw new Exception("PointerMaximumValueError");
         if (p < 0)
-            throw new Exception("p < 0 | Wrong memory");
+            throw new Exception("PointerPositionOutOfBounds");
 
         //Nominal case :
-        Interpreter.setP(Interpreter.getP()+1);
+        Interpreter.setP(Interpreter.getP() + 1);
         return true;
     }
 

@@ -10,29 +10,33 @@ import java.util.HashMap;
 /**
  * Model the virtual machine interpreting the
  * brainfuck language. The execution context of a program P is a tuple CP = (M, p, i)
+ * M is the previously defined memory
+ * p is an index (pointer) to the memory cell currently used by the program
+ * i is the current value of the memory case M[p]
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public abstract class Interpreter {
+
     /**
-     * M is the previously defined memory
+     * memory represents the memory M
+     * p represents the pointer
+     * symbols is an HashMap linking each operator character to their correct operator
+     * buffer is BufferedReader used to read files
      */
-    //I have changed the Type Byte to byte
     private static byte[] memory = {-128};
-    /**
-     * p is a pointer to the memory cell currently used by the program
-     */
     private static int p;
     private static HashMap<Character, Operator> symbols;
     private static BufferedReader buffer;
 
     /**
-     * This method specifies the file read by the interpreter
-     * also resets the memory and the pointer
+     * This method specifies the file read by the interpreter,
+     * it also resets the memory and the pointer and
+     * sets the correct symbols to interpret as operators
      *
-     * @param filename is the name of the file read
-     * @throws Exception if the file doesn't have the correct extension
+     * @param filename is the name of the file to read
+     * @throws Exception if the file doesn't have the correct extension (.bf)
      */
     public static void init(String filename) throws Exception {
         symbols = new HashMap<Character, Operator>();
@@ -49,11 +53,11 @@ public abstract class Interpreter {
     }
 
     /**
-     * Called when a file is need to be read.
+     * Called when a file has to be read.
      * Throws an error when a character in the file isn't supported
      * by the brainfuck language.
      *
-     * @return True if the file was successfully read, false if not.
+     * @return true if the file was successfully read, false if not.
      * @throws Exception SyntaxError
      */
     public static boolean readfile() throws Exception {
@@ -72,23 +76,23 @@ public abstract class Interpreter {
     /**
      * Get the current memory.
      *
-     * @return What state the memory is in.
+     * @return The current state of the memory.
      */
     public static byte[] getMemory() {
         return memory;
     }
 
     /**
-     * Get the current memory cell.
+     * Get the current memory cell index
      *
-     * @return What memory cell is selected.
+     * @return Which memory cell is selected.
      */
     public static int getP() {
         return p;
     }
 
     /**
-     * Set the current memory cell.
+     * Set the current memory cell index.
      *
      * @param nP New value of p.
      */

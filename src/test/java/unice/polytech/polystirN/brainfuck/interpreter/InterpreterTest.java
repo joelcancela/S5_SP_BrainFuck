@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 
 
 /**
+ * Tests for the Interpreter class
+ *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
@@ -23,32 +25,32 @@ public class InterpreterTest {
     }
 
     @Test
-    public void doOperation() throws Throwable {
-        //TUN :
-        //Tests left&Right :
-    	Interpreter.init("./examples/left&right1.bf");
+    public void doOperation() throws Exception {
+        //Nominal case
+        //Test left&right operations :
+        Interpreter.init("./examples/left&right1.bf");
         try {
-        	Interpreter.readfile();
-        	assertEquals(1,Interpreter.getP());
+            Interpreter.readfile();
+            assertEquals(1, Interpreter.getP());
         } catch (Exception e) {
-        	
+            e.printStackTrace();
         }
 
-        //TUA :
-        //Tests left :
-    	Interpreter.init("./examples/left_outMin.bf");
+        //Anomaly cases
+        //Test with out of bounds left :
+        Interpreter.init("./examples/left_outMin.bf");
         try {
-        	Interpreter.readfile();
+            Interpreter.readfile();
         } catch (Exception e) {
-        	assertEquals("p = 0 -1 | Can't move to the left",e.getMessage());
+            assertEquals("PointerMinimumValueError", e.getMessage());
         }
 
-        //Tests right :
-    	Interpreter.init("./examples/right_outMax.bf");
+        //Test with out of bounds right :
+        Interpreter.init("./examples/right_outMax.bf");
         try {
-        	Interpreter.readfile();
+            Interpreter.readfile();
         } catch (Exception e) {
-        	assertEquals("p = 29999 +1 | Can't move to the right",e.getMessage());
+            assertEquals("PointerMaximumValueError", e.getMessage());
         }
     }
 }
