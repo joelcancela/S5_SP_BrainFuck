@@ -6,7 +6,7 @@ Our group is called PolyStirN.
 
 ### Week 39
 
-- [ ] Do the "Take a step back" review
+- [ ] Do the "Take a step back" review + justify all your choices
 
 ### Week 37-38
 
