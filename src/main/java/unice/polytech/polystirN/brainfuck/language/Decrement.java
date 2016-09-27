@@ -25,7 +25,7 @@ public class Decrement implements Operator {
             throw new Exception("PointerPositionOutOfBounds");
         }
         //Test underflow
-        if ((((float) ((M[p]) & 0x00FF)) / 255) == 0) {
+        if (((M[p]) & 0xFF) == 0) {
             throw new Exception("MemoryUnderflowError");
         }
         M[p]--;

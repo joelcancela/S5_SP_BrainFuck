@@ -66,7 +66,7 @@ public class IncrementTest {
             Interpreter.init("./examples/incrementError256.bf");
             Interpreter.readfile();
         } catch (Exception e) {
-            assertEquals("Memory overflow error", e.getMessage());
+            assertEquals("MemoryOverflowError", e.getMessage());
         }
 
 

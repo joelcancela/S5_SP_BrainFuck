@@ -25,7 +25,7 @@ public class Increment implements Operator {
             throw new Exception("PointerPositionOutOfBounds");
         }
         //Test overflow
-        if ((((float) ((M[p]) & 0x00FF)) / 255) == 255) {
+        if (((M[p]) & 0xFF) == 255) {
             throw new Exception("MemoryOverflowError");
         }
         M[p]++;
