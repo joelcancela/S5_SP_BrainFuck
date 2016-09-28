@@ -54,7 +54,8 @@ public class LeftTest {
         	a = new Interpreter("./examples/empty.bf");
             l.doOperation(a.getMemory());
         } catch (Exception e) {
-            assertEquals("PointerMinimumValueError", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
         }
 
         //Anomaly case 2, shift pointer to the left when it's at illegal position (30000)
@@ -63,7 +64,8 @@ public class LeftTest {
         	a.getMemory().setP(30000);
             l.doOperation(a.getMemory());
         } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBounds", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer is at illegal position", e.getMessage());
         }
 
     }

@@ -1,7 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
-import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 
 /**
  * Class used to specify the Left operator behaviour
@@ -17,19 +17,18 @@ public class Left implements Operator {
      *
      * @param meme is the memory of the current program (M and P)
      * @return true if the current memory cell was shifted by one to the left
-     * @throws Exception PointerMinimumValueError if the pointer has already reached
-     * the value of 0 so it can't be moved to the left
-     * @throws Exception PointerPositionOutOfBounds if the pointer position
-     * is recognized as invalid (out of bounds of memory capacity)
+     * @throws PointerPositionOutOfBoundsException if the pointer has already reached
+     *                                             the value of 0 so it can't be moved to the left or if the pointer position
+     *                                             is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Memory meme) throws Exception {
-    	int p = meme.getP();
-    	
+    public boolean doOperation(Memory meme) throws PointerPositionOutOfBoundsException {
+        int p = meme.getP();
+
         //Anomaly cases :
         if (p == 0)
-            throw new Exception("PointerMinimumValueError");
+            throw new PointerPositionOutOfBoundsException("pointer can't be moved to the left (already at position 0)");
         if (p > 29999)
-            throw new Exception("PointerPositionOutOfBounds");
+            throw new PointerPositionOutOfBoundsException("pointer is at illegal position");
 
         //Nominal case :
         meme.setP(p - 1);

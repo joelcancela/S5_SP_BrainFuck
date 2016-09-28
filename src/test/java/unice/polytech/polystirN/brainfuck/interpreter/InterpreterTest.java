@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -26,12 +27,12 @@ public class InterpreterTest {
 
     @Test
     public void doOperation() throws Exception {
-    	Interpreter a=null;
-    	
+        Interpreter a;
+
         //Nominal case
         //Test left&right operations :
         try {
-        	a= new Interpreter("./examples/left&right1.bf");
+            a = new Interpreter("./examples/L1/LEFT&RIGHT.bf");
             a.readfile();
             assertEquals(1, a.getMemory().getP());
         } catch (Exception e) {
@@ -41,18 +42,20 @@ public class InterpreterTest {
         //Anomaly cases
         //Test with out of bounds left :
         try {
-        	a= new Interpreter("./examples/left_outMin.bf");
+            a = new Interpreter("./examples/L1/LEFTError.bf");
             a.readfile();
         } catch (Exception e) {
-            assertEquals("PointerMinimumValueError", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
         }
 
         //Test with out of bounds right :
         try {
-        	a= new Interpreter("./examples/right_outMax.bf");
+            a = new Interpreter("./examples/L1/RIGHTError.bf");
             a.readfile();
         } catch (Exception e) {
-            assertEquals("PointerMaximumValueError", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
         }
     }
 }

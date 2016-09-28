@@ -8,7 +8,7 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class MemoryOverflowException extends Exception {
 
-    public MemoryOverflowException(String message){
+    public MemoryOverflowException(String message) {
         super(message);
     }
 }

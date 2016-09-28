@@ -51,17 +51,21 @@ public class RightTest {
         //Anomaly case 1, shift pointer to the right when it's at illegal position (-1)
         try {
         	a = new Interpreter("./examples/empty.bf");
+            a.getMemory().setP(-1);
             r.doOperation(a.getMemory());
         } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBounds", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer is at illegal position", e.getMessage());
         }
 
         //Anomaly case 2, shift pointer to the right when it's at position 29999
         try {
         	a = new Interpreter("./examples/empty.bf");
+            a.getMemory().setP(29999);
             r.doOperation(a.getMemory());
         } catch (Exception e) {
-            assertEquals("PointerMaximumValueError", e.getMessage());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
         }
     }
 

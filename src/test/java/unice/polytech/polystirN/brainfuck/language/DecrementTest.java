@@ -40,30 +40,21 @@ public class DecrementTest {
 
         //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
         try {
-            a =new Interpreter("./examples/decrementSimple.bf");
+            a =new Interpreter("./examples/L1/DECRSimple.bf");
             a.readfile();
-            assertEquals(1, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //Anomaly cases
-        //Anomaly case 1, decrementation of c0 7 times
+        //Anomaly case 1, decrementation of c0
         try {
-            a =new Interpreter("./examples/decrementC0by7.bf");
+            a =new Interpreter("./examples/L1/DECRError.bf");
             a.readfile();
         } catch (Exception e) {
-            assertEquals("MemoryUnderflowError", e.getMessage());
-        }
-
-
-        //Anomaly case 2, decrementation of c-1
-        try {
-            a =new Interpreter("./examples/decrementError.bf");
-            a.getMemory().setP(-1);
-            a.readfile();
-        } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBounds", e.getMessage());
+            assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
+            assertEquals("value can't be negative", e.getMessage());
         }
     }
 
