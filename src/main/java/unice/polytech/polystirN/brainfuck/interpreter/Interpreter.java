@@ -48,6 +48,7 @@ public class Interpreter {
         if (!filename.matches("(.*).bf")) {
             throw new Exception("IncorrectFileType");
         }
+        memory = new Memory();
         buffer = new BufferedReader(new FileReader(filename));
     }
 
@@ -66,36 +67,14 @@ public class Interpreter {
                 if (symbols.get((char) c) == null) {
                     throw new Exception("SyntaxError");
                 }
-                symbols.get((char) c).doOperation(this);
+                symbols.get((char) c).doOperation(memory);
             }
         }
         return false;
     }
-
-    /**
-     * Get the current memory.
-     *
-     * @return The current state of the memory.
-     */
-    public byte[] getMemory() {
-        return memory;
+    
+    public Memory getMemory(){
+    	return memory;
     }
-
-    /**
-     * Get the current memory cell index
-     *
-     * @return Which memory cell is selected.
-     */
-    public int getP() {
-        return p;
-    }
-
-    /**
-     * Set the current memory cell index.
-     *
-     * @param nP New value of p.
-     */
-    public void setP(int nP) {
-        p = nP;
-    }
+    
 }

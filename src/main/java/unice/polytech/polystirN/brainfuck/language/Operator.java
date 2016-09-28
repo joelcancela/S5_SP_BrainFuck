@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
-import unice.polytech.polystirN.brainfuck.interpreter.*;
+import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
  * Interface used to specify the operators behaviour
@@ -16,5 +17,5 @@ public interface Operator {
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity
      */
-    public boolean doOperation(Interpreter inte) throws Exception;
+    public boolean doOperation(Memory meme) throws Exception;
 }

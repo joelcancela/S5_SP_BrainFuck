@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
@@ -22,8 +23,8 @@ public class Right implements Operator {
      * @throws Exception PointerPositionOutOfBounds if the pointer position
      * is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Interpreter inte) throws Exception {
-    	int p = inte.getP();
+    public boolean doOperation(Memory meme) throws Exception {
+    	int p = meme.getP();
     	
         //Anomaly cases :
         if (p == 29999)
@@ -32,7 +33,7 @@ public class Right implements Operator {
             throw new Exception("PointerPositionOutOfBounds");
 
         //Nominal case :
-        inte.setP(p + 1);
+        meme.setP(p + 1);
         return true;
     }
 

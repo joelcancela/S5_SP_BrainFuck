@@ -33,7 +33,7 @@ public class InterpreterTest {
         try {
         	a= new Interpreter("./examples/left&right1.bf");
             a.readfile();
-            assertEquals(1, a.getP());
+            assertEquals(1, a.getMemory().getP());
         } catch (Exception e) {
             e.printStackTrace();
         }

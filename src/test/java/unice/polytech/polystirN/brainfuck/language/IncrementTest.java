@@ -33,7 +33,7 @@ public class IncrementTest {
         try {
         	a = new Interpreter("./examples/empty.bf");
             a.readfile();
-            assertEquals(0, a.getMemory()[a.getP()] & 0xFF);
+            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class IncrementTest {
         try {
         	a = new Interpreter("./examples/incrementMax255.bf");
             a.readfile();
-            assertEquals(255, a.getMemory()[a.getP()] & 0xFF);
+            assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +51,7 @@ public class IncrementTest {
         try {
         	a = new Interpreter("./examples/incrementC0by7.bf");
             a.readfile();
-            assertEquals(7, a.getMemory()[a.getP()] & 0xFF);
+            assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class IncrementTest {
         //Anomaly case 2, incrementation of c-1
         try {
         	a = new Interpreter("./examples/incrementMax255.bf");
-            a.setP(-1);
+            a.getMemory().setP(-1);
             a.readfile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBounds", e.getMessage());
