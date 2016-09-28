@@ -26,36 +26,32 @@ public class IncrementTest {
 
     @Test
     public void doOperation() throws Exception {
-        byte[] m;
+    	Interpreter a=null;
 
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-            Interpreter.init("./examples/empty.bf");
-            Interpreter.readfile();
-            m = Interpreter.getMemory();
-            assertEquals(0, m[Interpreter.getP()] & 0xFF);
+        	a = new Interpreter("./examples/empty.bf");
+            a.readfile();
+            assertEquals(0, a.getMemory()[a.getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //Nominal case 2, incrementation of c0 255 times
         try {
-            Interpreter.init("./examples/incrementMax255.bf");
-            Interpreter.readfile();
-            m = Interpreter.getMemory();
-            assertEquals(255, m[Interpreter.getP()] & 0xFF);
-
+        	a = new Interpreter("./examples/incrementMax255.bf");
+            a.readfile();
+            assertEquals(255, a.getMemory()[a.getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //Nominal case 3, incrementation of c0 7 times
         try {
-            Interpreter.init("./examples/incrementC0by7.bf");
-            Interpreter.readfile();
-            m = Interpreter.getMemory();
-            assertEquals(7, m[Interpreter.getP()] & 0xFF);
+        	a = new Interpreter("./examples/incrementC0by7.bf");
+            a.readfile();
+            assertEquals(7, a.getMemory()[a.getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,8 +59,8 @@ public class IncrementTest {
         //Anomaly cases
         //Anomaly case 1, incrementation of c0 256 times
         try {
-            Interpreter.init("./examples/incrementError256.bf");
-            Interpreter.readfile();
+        	a = new Interpreter("./examples/incrementError256.bf");
+            a.readfile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowError", e.getMessage());
         }
@@ -72,9 +68,9 @@ public class IncrementTest {
 
         //Anomaly case 2, incrementation of c-1
         try {
-            Interpreter.init("./examples/incrementMax255.bf");
-            Interpreter.setP(-1);
-            Interpreter.readfile();
+        	a = new Interpreter("./examples/incrementMax255.bf");
+            a.setP(-1);
+            a.readfile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBounds", e.getMessage());
         }

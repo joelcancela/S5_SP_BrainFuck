@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.BufferedReader;
@@ -17,7 +18,7 @@ import java.util.HashMap;
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-public abstract class Interpreter {
+public class Interpreter {
 
     /**
      * memory represents the memory M
@@ -25,10 +26,10 @@ public abstract class Interpreter {
      * symbols is an HashMap linking each operator character to their correct operator
      * buffer is BufferedReader used to read files
      */
-    private static byte[] memory = {-128};
-    private static int p;
-    private static HashMap<Character, Operator> symbols;
-    private static BufferedReader buffer;
+	private Memory memory;
+    private HashMap<Character, Operator> symbols;
+    private BufferedReader buffer;
+    
 
     /**
      * This method specifies the file read by the interpreter,
@@ -38,7 +39,7 @@ public abstract class Interpreter {
      * @param filename is the name of the file to read
      * @throws Exception if the file doesn't have the correct extension (.bf)
      */
-    public static void init(String filename) throws Exception {
+    public Interpreter(String filename) throws Exception {
         symbols = new HashMap<Character, Operator>();
         symbols.put('+', new Increment());
         symbols.put('-', new Decrement());
@@ -48,8 +49,6 @@ public abstract class Interpreter {
             throw new Exception("IncorrectFileType");
         }
         buffer = new BufferedReader(new FileReader(filename));
-        p = 0;
-        memory = new byte[30000];
     }
 
     /**
@@ -60,14 +59,14 @@ public abstract class Interpreter {
      * @return true if the file was successfully read, false if not.
      * @throws Exception SyntaxError
      */
-    public static boolean readfile() throws Exception {
+    public boolean readfile() throws Exception {
         int c;
         while ((c = buffer.read()) != -1) {
             if (((char) c != '\r') && ((char) c != '\n')) {
                 if (symbols.get((char) c) == null) {
                     throw new Exception("SyntaxError");
                 }
-                symbols.get((char) c).doOperation(p, memory);
+                symbols.get((char) c).doOperation(this);
             }
         }
         return false;
@@ -78,7 +77,7 @@ public abstract class Interpreter {
      *
      * @return The current state of the memory.
      */
-    public static byte[] getMemory() {
+    public byte[] getMemory() {
         return memory;
     }
 
@@ -87,7 +86,7 @@ public abstract class Interpreter {
      *
      * @return Which memory cell is selected.
      */
-    public static int getP() {
+    public int getP() {
         return p;
     }
 
@@ -96,7 +95,7 @@ public abstract class Interpreter {
      *
      * @param nP New value of p.
      */
-    public static void setP(int nP) {
+    public void setP(int nP) {
         p = nP;
     }
 }

@@ -27,34 +27,41 @@ public class LeftTest {
     @Test
     public void doOperation() throws Exception {
         Left l = new Left();
+        Interpreter a=null;
 
         //Nominal cases
         //Nominal case 1, pointer at position 1
-        Interpreter.setP(1);
-        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(0, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        a.setP(1);
+        assertEquals(true, l.doOperation(a));
+        assertEquals(0, a.getP());
 
         //Nominal case 2, pointer at position 14999
-        Interpreter.setP(14999);
-        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(14998, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        a.setP(14999);
+        assertEquals(true, l.doOperation(a));
+        assertEquals(14998, a.getP());
 
         //Nominal case 3, pointer at position 29999
-        Interpreter.setP(29999);
-        assertEquals(true, l.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(29998, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        a.setP(29999);
+        assertEquals(true, l.doOperation(a));
+        assertEquals(29998, a.getP());
 
         //Anomaly cases
         //Anomaly case 1, shift pointer to the left when it's at position 0
         try {
-            l.doOperation(0, new byte[30000]);
+        	a = new Interpreter("./examples/empty.bf");
+            l.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerMinimumValueError", e.getMessage());
         }
 
         //Anomaly case 2, shift pointer to the left when it's at illegal position (30000)
         try {
-            l.doOperation(30000, new byte[30000]);
+        	a = new Interpreter("./examples/empty.bf");
+        	a.setP(30000);
+            l.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBounds", e.getMessage());
         }

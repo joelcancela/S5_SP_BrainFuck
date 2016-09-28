@@ -27,34 +27,39 @@ public class RightTest {
     @Test
     public void doOperation() throws Exception {
         Right r = new Right();
+        Interpreter a=null;
 
         //Nominal cases
         //Nominal case 1, pointer at position 0
-    	Interpreter.setP(0);
-        assertEquals(true, r.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(1, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        assertEquals(true, r.doOperation(a));
+        assertEquals(1, a.getP());
 
         //Nominal case 2, pointer at position 14999
-        Interpreter.setP(14999);
-        assertEquals(true, r.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(15000, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        a.setP(14999);
+        assertEquals(true, r.doOperation(a));
+        assertEquals(15000, a.getP());
 
         //Nominal case 3, pointer at position 29998
-        Interpreter.setP(29998);
-        assertEquals(true, r.doOperation(Interpreter.getP(), new byte[30000]));
-        assertEquals(29999, Interpreter.getP());
+        a = new Interpreter("./examples/empty.bf");
+        a.setP(29998);
+        assertEquals(true, r.doOperation(a));
+        assertEquals(29999, a.getP());
 
         //Anomaly cases
         //Anomaly case 1, shift pointer to the right when it's at illegal position (-1)
         try {
-            r.doOperation(-1, new byte[30000]);
+        	a = new Interpreter("./examples/empty.bf");
+            r.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBounds", e.getMessage());
         }
 
         //Anomaly case 2, shift pointer to the right when it's at position 29999
         try {
-            r.doOperation(29999, new byte[30000]);
+        	a = new Interpreter("./examples/empty.bf");
+            r.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerMaximumValueError", e.getMessage());
         }

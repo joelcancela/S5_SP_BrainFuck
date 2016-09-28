@@ -26,29 +26,31 @@ public class InterpreterTest {
 
     @Test
     public void doOperation() throws Exception {
+    	Interpreter a=null;
+    	
         //Nominal case
         //Test left&right operations :
-        Interpreter.init("./examples/left&right1.bf");
         try {
-            Interpreter.readfile();
-            assertEquals(1, Interpreter.getP());
+        	a= new Interpreter("./examples/left&right1.bf");
+            a.readfile();
+            assertEquals(1, a.getP());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //Anomaly cases
         //Test with out of bounds left :
-        Interpreter.init("./examples/left_outMin.bf");
         try {
-            Interpreter.readfile();
+        	a= new Interpreter("./examples/left_outMin.bf");
+            a.readfile();
         } catch (Exception e) {
             assertEquals("PointerMinimumValueError", e.getMessage());
         }
 
         //Test with out of bounds right :
-        Interpreter.init("./examples/right_outMax.bf");
         try {
-            Interpreter.readfile();
+        	a= new Interpreter("./examples/right_outMax.bf");
+            a.readfile();
         } catch (Exception e) {
             assertEquals("PointerMaximumValueError", e.getMessage());
         }

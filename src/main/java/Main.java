@@ -20,8 +20,8 @@ public class Main {
         }
         if (args[0].equals("-p")) {
             try {
-                Interpreter.init(args[1]);
-                Interpreter.readfile();
+            	Interpreter inte = new Interpreter(args[1]);
+                inte.readfile();
             } catch (Exception e) {
                 if(e.getMessage().equals("MemoryOverflowError") || e.getMessage().equals("MemoryUnderflowError")){
                 	e.printStackTrace();

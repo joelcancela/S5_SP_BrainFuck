@@ -1,4 +1,5 @@
 package unice.polytech.polystirN.brainfuck.language;
+import unice.polytech.polystirN.brainfuck.interpreter.*;
 
 /**
  * Interface used to specify the operators behaviour
@@ -15,5 +16,5 @@ public interface Operator {
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity
      */
-    public boolean doOperation(int p, byte[] M) throws Exception;
+    public boolean doOperation(Interpreter inte) throws Exception;
 }

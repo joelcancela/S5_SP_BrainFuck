@@ -22,7 +22,9 @@ public class Left implements Operator {
      * @throws Exception PointerPositionOutOfBounds if the pointer position
      * is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(int p, byte[] M) throws Exception {
+    public boolean doOperation(Interpreter inte) throws Exception {
+    	int p = inte.getP();
+    	
         //Anomaly cases :
         if (p == 0)
             throw new Exception("PointerMinimumValueError");
@@ -30,7 +32,7 @@ public class Left implements Operator {
             throw new Exception("PointerPositionOutOfBounds");
 
         //Nominal case :
-        Interpreter.setP(Interpreter.getP() - 1);
+        inte.setP(p - 1);
         return true;
     }
 

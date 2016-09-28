@@ -1,5 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
 /**
  * Class used to specify the Decrement operator behaviour
  *
@@ -18,17 +20,18 @@ public class Decrement implements Operator {
      * @throws Exception PointerPositionOutOfBounds if the pointer position
      * is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(int p, byte[] M) throws Exception {
-
+    public boolean doOperation(Interpreter inte) throws Exception {
+    	int p = inte.getP();
+    	
         //Test pointer position
-        if((p<0) || (p>29999)){
+        if(p<0 || p>29999){
             throw new Exception("PointerPositionOutOfBounds");
         }
         //Test underflow
-        if (((M[p]) & 0xFF) == 0) {
+        if (((inte.getMemory()[p]) & 0xFF) == 0) {
             throw new Exception("MemoryUnderflowError");
         }
-        M[p]--;
+        inte.getMemory()[p]--;
         return true;
     }
 }

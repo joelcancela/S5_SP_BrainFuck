@@ -26,25 +26,23 @@ public class DecrementTest {
 
     @Test
     public void doOperation() throws Exception {
-        byte[] m;
+    	Interpreter a=null;
 
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-            Interpreter.init("./examples/empty.bf");
-            Interpreter.readfile();
-            m = Interpreter.getMemory();
-            assertEquals(0, m[Interpreter.getP()] & 0xFF);
+            a =new Interpreter("./examples/empty.bf");
+            a.readfile();
+            assertEquals(0, a.getMemory()[a.getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
         try {
-            Interpreter.init("./examples/decrementSimple.bf");
-            Interpreter.readfile();
-            m = Interpreter.getMemory();
-            assertEquals(0, m[Interpreter.getP()] & 0xFF);
+            a =new Interpreter("./examples/decrementSimple.bf");
+            a.readfile();
+            assertEquals(1, a.getMemory()[a.getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,8 +50,8 @@ public class DecrementTest {
         //Anomaly cases
         //Anomaly case 1, decrementation of c0 7 times
         try {
-            Interpreter.init("./examples/decrementC0by7.bf");
-            Interpreter.readfile();
+            a =new Interpreter("./examples/decrementC0by7.bf");
+            a.readfile();
         } catch (Exception e) {
             assertEquals("MemoryUnderflowError", e.getMessage());
         }
@@ -61,9 +59,9 @@ public class DecrementTest {
 
         //Anomaly case 2, decrementation of c-1
         try {
-            Interpreter.init("./examples/decrementError.bf");
-            Interpreter.setP(-1);
-            Interpreter.readfile();
+            a =new Interpreter("./examples/decrementError.bf");
+            a.setP(-1);
+            a.readfile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBounds", e.getMessage());
         }
