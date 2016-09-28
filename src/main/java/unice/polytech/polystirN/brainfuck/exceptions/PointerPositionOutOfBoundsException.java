@@ -1,4 +1,4 @@
-package unice.polytech.polystirN.brainfuck.language;
+package unice.polytech.polystirN.brainfuck.exceptions;
 
 /**
  * Exception class for pointer positions out of bounds
