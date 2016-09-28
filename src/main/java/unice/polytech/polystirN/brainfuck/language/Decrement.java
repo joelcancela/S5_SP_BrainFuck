@@ -13,8 +13,7 @@ public class Decrement implements Operator {
     /**
      * This method execute all the decrement operator operations.
      *
-     * @param p is the index of the memory cell currently used
-     * @param M is the current memory state
+     * @param meme is the current Memory state
      * @return true if the operation ended well, else false
      * @throws Exception MemoryUnderflowError if the operation goes out of bounds of the memory
      * @throws Exception PointerPositionOutOfBounds if the pointer position
@@ -34,5 +33,7 @@ public class Decrement implements Operator {
         meme.getCells()[p]--;
         return true;
     }
+
+	
 }
 

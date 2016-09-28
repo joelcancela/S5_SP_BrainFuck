@@ -14,8 +14,7 @@ public class Increment implements Operator {
     /**
      * This method execute all the Increment operator operations.
      *
-     * @param p is the index of the memory cell currently used
-     * @param M is the current memory state
+     * @param meme is the current Memory state
      * @return true if the operation ended well, else false
      * @throws Exception MemoryOverflowError if the operation goes out of bounds of the memory
      * @throws Exception PointerPositionOutOfBounds if the pointer position
