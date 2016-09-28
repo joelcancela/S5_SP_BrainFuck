@@ -4,10 +4,13 @@ This is the repository for the brainfuck project.
 
 Our group is called PolyStirN.
 
+---
 ### Week 39
 
 - [ ] Do the "Take a step back" review + justify all your choices
+- [ ] Do some planification
 
+---
 ### Week 37-38
 
 - [x] Learn to use Git
