@@ -18,18 +18,6 @@ jarFile="./out/$jarFileToLaunch"
 
 #--------------------------------------------------------------------
 
-# Transfer the link arguments to the java command
-strArgs=''
-spaces="[[:space:]]"
-for i in "$@"
-do
-    if [[ $i =~ $spaces ]]; then
-        strArgs="$strArgs \"$i\""
-        continue
-    fi
-    strArgs="$strArgs ${i}"
-done
-
 # Launch the application
 java -jar $jarFile $@
 exit $?
