@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 /**
  * Model the virtual machine interpreting the
- * brainfuck language. The execution context of a program P is a tuple CP = (M, p, i)
+ * brainfuck language. The execution context of a program P is a tuple CP = (M, p, i) where :
  * M is the previously defined memory
  * p is an index (pointer) to the memory cell currently used by the program
  * i is the current value of the memory case M[p]
@@ -22,9 +22,8 @@ public class Interpreter {
 
     /**
      * memory represents the memory M
-     * p represents the pointer
      * symbols is an HashMap linking each operator character to their correct operator
-     * buffer is BufferedReader used to read files
+     * buffer is the BufferedReader used to read files
      */
 	private Memory memory;
     private HashMap<Character, Operator> symbols;

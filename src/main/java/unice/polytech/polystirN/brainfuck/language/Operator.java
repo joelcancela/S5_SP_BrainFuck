@@ -10,10 +10,9 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  */
 public interface Operator {
     /**
-     * This method execute all the operator operations.
+     * This method execute all the operations associated with the corresponding operator.
      *
-     * @param p is the index of the memory cell currently used
-     * @param M is the current memory state
+     * @param meme is the memory (M and P)
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity
      */

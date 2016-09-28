@@ -15,8 +15,7 @@ public class Left implements Operator {
     /**
      * This method moves the pointer by one to the left
      *
-     * @param p is the index of the memory cell currently used
-     * @param M is the current memory state
+     * @param meme is the memory of the current program (M and P)
      * @return true if the current memory cell was shifted by one to the left
      * @throws Exception PointerMinimumValueError if the pointer has already reached
      * the value of 0 so it can't be moved to the left
