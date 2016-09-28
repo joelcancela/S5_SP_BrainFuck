@@ -24,10 +24,15 @@ public class Main {
                 Interpreter.readfile();
             } catch (Exception e) {
                 if(e.getMessage().equals("MemoryOverflowError") || e.getMessage().equals("MemoryUnderflowError")){
-                    System.exit(1);
+                	e.printStackTrace();
+                	System.exit(1);
                 }
                 if(e.getMessage().equals("PointerMinimumValueError") || e.getMessage().equals("PointerMaximumValueError")){
-                    System.exit(2);
+                	e.printStackTrace();
+                	System.exit(2);
+                }
+                else{
+                	e.printStackTrace();
                 }
             }
         }
