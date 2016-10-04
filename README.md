@@ -4,11 +4,18 @@ This is the repository for the brainfuck project.
 
 Our group is called PolyStirN.
 
----
-### Week 39
+### Maven commands
 
-- [ ] Do the "Take a step back" review + justify all your choices
-- [ ] Do some planification
+mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
+mvn package : compiles the projet into a .jar (target folder)
+mvn tests : launches all the tests
+
+---
+### Week 39-40
+
+- [ ] Start Level 2, do s5 and s6
+- [x] Do the "Take a step back" review + justify all your choices
+- [x] Do some planification
 
 ---
 ### Week 37-38
