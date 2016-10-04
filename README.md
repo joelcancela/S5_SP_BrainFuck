@@ -6,9 +6,9 @@ Our group is called PolyStirN.
 
 ### Maven commands
 
-mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
-mvn package : compiles the projet into a .jar (target folder)
-mvn tests : launches all the tests
+- mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
+- mvn package : compiles the projet into a .jar (target folder)
+- mvn tests : launches all the tests
 
 ---
 ### Week 39-40
