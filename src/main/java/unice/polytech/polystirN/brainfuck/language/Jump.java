@@ -46,7 +46,7 @@ public class Jump implements Operator {
        //Nominal case :
 		switch(interpreter.getClass().getSimpleName()){
 			case "InterpreterText":
-				BufferedReader buffer = (BufferedReader) interpreter.getInstructions();
+				BufferedReader buffer = (BufferedReader) interpreter.getBuffer();
 		        while(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0){
 		        	while(nbOuvert != 0){
 		        		if(premierParcours == true){
