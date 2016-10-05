@@ -1,7 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
  * Class used to specify the Right operator behaviour
@@ -21,8 +21,8 @@ public class Right implements Operator {
      *                                             the value of 299999 so it can't be moved to the right or if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Memory memory) throws PointerPositionOutOfBoundsException {
-        int p = memory.getP();
+    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
+        int p = interpreter.getMemory().getP();
 
         //Anomaly cases :
         if (p == 29999)
@@ -31,7 +31,7 @@ public class Right implements Operator {
             throw new PointerPositionOutOfBoundsException("pointer is at illegal position");
 
         //Nominal case :
-        memory.setP(p + 1);
+        interpreter.getMemory().setP(p + 1);
         return true;
     }
 

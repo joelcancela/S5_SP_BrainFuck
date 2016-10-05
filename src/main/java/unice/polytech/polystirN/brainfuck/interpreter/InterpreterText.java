@@ -30,7 +30,7 @@ public class InterpreterText extends Interpreter {
         if (getOperatorsKeywords().get(keyword.trim()) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
-        getOperatorsKeywords().get(keyword.trim()).doOperation(getMemory());
+        getOperatorsKeywords().get(keyword.trim()).doOperation(this);
     }
     return false;
 	}

@@ -33,19 +33,19 @@ public class RightTest {
         //Nominal cases
         //Nominal case 1, pointer at position 0
         a = new InterpreterText("./examples/empty.bf");
-        assertEquals(true, r.doOperation(a.getMemory()));
+        assertEquals(true, r.doOperation(a));
         assertEquals(1, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
         a = new InterpreterText("./examples/empty.bf");
         a.getMemory().setP(14999);
-        assertEquals(true, r.doOperation(a.getMemory()));
+        assertEquals(true, r.doOperation(a));
         assertEquals(15000, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29998
         a = new InterpreterText("./examples/empty.bf");
         a.getMemory().setP(29998);
-        assertEquals(true, r.doOperation(a.getMemory()));
+        assertEquals(true, r.doOperation(a));
         assertEquals(29999, a.getMemory().getP());
 
         //Anomaly cases
@@ -53,7 +53,7 @@ public class RightTest {
         try {
         	a = new InterpreterText("./examples/empty.bf");
             a.getMemory().setP(-1);
-            r.doOperation(a.getMemory());
+            r.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer is at illegal position", e.getMessage());
@@ -63,7 +63,7 @@ public class RightTest {
         try {
         	a = new InterpreterText("./examples/empty.bf");
             a.getMemory().setP(29999);
-            r.doOperation(a.getMemory());
+            r.doOperation(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
