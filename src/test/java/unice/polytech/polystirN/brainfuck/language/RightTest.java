@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,18 +32,18 @@ public class RightTest {
 
         //Nominal cases
         //Nominal case 1, pointer at position 0
-        a = new Interpreter("./examples/empty.bf");
+        a = new InterpreterText("./examples/empty.bf");
         assertEquals(true, r.doOperation(a.getMemory()));
         assertEquals(1, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
-        a = new Interpreter("./examples/empty.bf");
+        a = new InterpreterText("./examples/empty.bf");
         a.getMemory().setP(14999);
         assertEquals(true, r.doOperation(a.getMemory()));
         assertEquals(15000, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29998
-        a = new Interpreter("./examples/empty.bf");
+        a = new InterpreterText("./examples/empty.bf");
         a.getMemory().setP(29998);
         assertEquals(true, r.doOperation(a.getMemory()));
         assertEquals(29999, a.getMemory().getP());
@@ -50,7 +51,7 @@ public class RightTest {
         //Anomaly cases
         //Anomaly case 1, shift pointer to the right when it's at illegal position (-1)
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new InterpreterText("./examples/empty.bf");
             a.getMemory().setP(-1);
             r.doOperation(a.getMemory());
         } catch (Exception e) {
@@ -60,7 +61,7 @@ public class RightTest {
 
         //Anomaly case 2, shift pointer to the right when it's at position 29999
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new InterpreterText("./examples/empty.bf");
             a.getMemory().setP(29999);
             r.doOperation(a.getMemory());
         } catch (Exception e) {

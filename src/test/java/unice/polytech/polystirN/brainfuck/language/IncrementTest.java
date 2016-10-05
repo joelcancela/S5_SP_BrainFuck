@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,7 +32,7 @@ public class IncrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new InterpreterText("./examples/empty.bf");
             a.readfile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -40,7 +41,7 @@ public class IncrementTest {
 
         //Nominal case 2, incrementation of c0 255 times
         try {
-        	a = new Interpreter("./examples/L1/INCRMax255.bf");
+        	a = new InterpreterText("./examples/L1/INCRMax255.bf");
             a.readfile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -49,7 +50,7 @@ public class IncrementTest {
 
         //Nominal case 3, incrementation of c0 7 times
         try {
-        	a = new Interpreter("./examples/L1/INCRC0by7.bf");
+        	a = new InterpreterText("./examples/L1/INCRC0by7.bf");
             a.readfile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -59,7 +60,7 @@ public class IncrementTest {
         //Anomaly cases
         //Anomaly case 1, incrementation of c0 256 times
         try {
-        	a = new Interpreter("./examples/L1/INCRError256.bf");
+        	a = new InterpreterText("./examples/L1/INCRError256.bf");
             a.readfile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
@@ -69,7 +70,7 @@ public class IncrementTest {
 
         //Anomaly case 2, incrementation of c-1
         try {
-        	a = new Interpreter("./examples/L1/INCRMax255.bf");
+        	a = new InterpreterText("./examples/L1/INCRMax255.bf");
             a.getMemory().setP(-1);
             a.readfile();
         } catch (Exception e) {

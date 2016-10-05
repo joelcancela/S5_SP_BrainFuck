@@ -1,4 +1,5 @@
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 /**
  * The main class of the project.
@@ -19,7 +20,7 @@ public class Main {
         }
         if (args[0].equals("-p")) {
             try {
-                Interpreter inte = new Interpreter(args[1]);
+                Interpreter inte = new InterpreterText(args[1]);
                 inte.readfile();
             } catch (Exception e) {
                 e.printStackTrace();

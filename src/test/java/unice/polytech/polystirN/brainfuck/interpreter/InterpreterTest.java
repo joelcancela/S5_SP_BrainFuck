@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
 
 /**
  * Tests for the Interpreter class
@@ -32,7 +30,7 @@ public class InterpreterTest {
         //Nominal case
         //Test left&right operations :
         try {
-            a = new Interpreter("./examples/L1/LEFT&RIGHT.bf");
+            a = new InterpreterText("./examples/L1/LEFT&RIGHT.bf");
             a.readfile();
             assertEquals(1, a.getMemory().getP());
         } catch (Exception e) {
@@ -42,7 +40,7 @@ public class InterpreterTest {
         //Anomaly cases
         //Test with out of bounds left :
         try {
-            a = new Interpreter("./examples/L1/LEFTError.bf");
+            a = new InterpreterText("./examples/L1/LEFTError.bf");
             a.readfile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
@@ -51,7 +49,7 @@ public class InterpreterTest {
 
         //Test with out of bounds right :
         try {
-            a = new Interpreter("./examples/L1/RIGHTError.bf");
+            a = new InterpreterText("./examples/L1/RIGHTError.bf");
             a.readfile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
