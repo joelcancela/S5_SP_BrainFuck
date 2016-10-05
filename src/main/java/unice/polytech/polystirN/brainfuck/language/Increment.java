@@ -1,8 +1,8 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.MemoryOverflowException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
  * Class used to specify the Increment operator behaviour
@@ -21,18 +21,18 @@ public class Increment implements Operator {
      *                                             is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryOverflowException             if the operation goes out of bounds of the memory
      */
-    public boolean doOperation(Memory memory) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
-        int p = memory.getP();
+    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
+        int p = interpreter.getMemory().getP();
 
         //Test pointer position
         if ((p < 0) || (p > 29999)) {
             throw new PointerPositionOutOfBoundsException("pointer must be between 0 and 29999 included");
         }
         //Test overflow
-        if (((memory.getCells()[p]) & 0xFF) == 255) {
+        if (((interpreter.getMemory().getCells()[p]) & 0xFF) == 255) {
             throw new MemoryOverflowException("value can't be higher than 255");
         }
-        memory.getCells()[p]++;
+        interpreter.getMemory().getCells()[p]++;
         return true;
     }
 }

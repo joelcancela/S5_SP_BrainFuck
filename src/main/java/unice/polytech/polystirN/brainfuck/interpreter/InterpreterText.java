@@ -27,14 +27,14 @@ public class InterpreterText extends Interpreter {
 	 */
 	@Override
 	public boolean executeFile() throws Exception {
-		String keyword;
-		while ((keyword = buffer.readLine()) != null) {
-			if (getOperatorsKeywords().get(keyword.trim()) == null) {
-				throw new SyntaxErrorException("Invalid keyword operator");
-			}
-			getOperatorsKeywords().get(keyword.trim()).doOperation(getMemory());
-		}
-		return false;
+    String keyword;
+    while ((keyword = buffer.readLine()) != null) {
+        if (getOperatorsKeywords().get(keyword.trim()) == null) {
+            throw new SyntaxErrorException("Invalid keyword operator");
+        }
+        getOperatorsKeywords().get(keyword.trim()).doOperation(this);
+    }
+    return false;
 	}
 	
     /**
