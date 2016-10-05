@@ -26,3 +26,35 @@ Our group is called PolyStirN.
 - [x] Finish first slice s0 with Javadoc associated
 - [x] Finish s1, s2, s3, s4 with exception handling and Javadoc associated
 - [x] Unit tests
+
+
+---
+
+[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)
+
+### Aghiles Dziri
+
+- [ ] s5
+- [ ] s9
+- [ ] Rapport s5
+- [ ] Rapport s9
+
+### Joel
+
+- [ ] s7
+- [ ] s8
+- [ ] Rapport s7
+- [ ] Rapport s8
+
+### Pierre
+
+- [ ] s10
+- [ ] s11
+- [ ] Rapport s10
+- [ ] Rapport s11
+
+### Tanguy
+
+- [ ] s6
+- [ ] Rapport s6
+- [ ] Keep calm and step back (L2)
