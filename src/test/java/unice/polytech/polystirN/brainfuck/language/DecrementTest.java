@@ -57,6 +57,38 @@ public class DecrementTest {
             assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
             assertEquals("value can't be negative", e.getMessage());
         }
+        
+        /*--------------------------------------------------------------------------
+        les tests pour les syntax court
+		--------------------------------------------------------------------------*/
+        //Nominal cases
+        //Nominal case 1, with an empty file
+        try {
+            a = new InterpreterText("./examples/empty.bf");
+            a.executeFile();
+            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
+        try {
+            a = new InterpreterText("./examples/decrementSimple.bf");
+            a.executeFile();
+            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Anomaly cases
+        //Anomaly case 1, decrementation of c0
+        try {
+            a = new InterpreterText("./examples/decrementError.bf");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
+            assertEquals("value can't be negative", e.getMessage());
+        }
     }
 
 }

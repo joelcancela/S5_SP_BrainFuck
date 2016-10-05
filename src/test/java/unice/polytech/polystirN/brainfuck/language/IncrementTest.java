@@ -28,7 +28,65 @@ public class IncrementTest {
     @Test
     public void doOperation() throws Exception {
     	Interpreter a=null;
+        /*--------------------------------------------------------------------------
+        les tests pour les syntax court
+		--------------------------------------------------------------------------*/
+        //Nominal cases
+        //Nominal case 1, with an empty file
+        try {
+        	a = new InterpreterText("./examples/empty.bf");
+            a.executeFile();
+            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        //Nominal case 2, incrementation of c0 255 times
+        try {
+        	a = new InterpreterText("./examples/incrementMax255.bf");
+            a.executeFile();
+            assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Nominal case 3, incrementation of c0 7 times
+        try {
+        	a = new InterpreterText("./examples/incrementC0by7.bf");
+            a.executeFile();
+            assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Anomaly cases
+        //Anomaly case 1, incrementation of c0 256 times
+        try {
+        	a = new InterpreterText("./examples/L1/INCRError256.bf");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
+            assertEquals("value can't be higher than 255", e.getMessage());
+        }
+
+        
+        
+        
+
+        //Anomaly case 2, incrementation of c-1
+        try {
+        	a = new InterpreterText("./examples/incrementMax255.bf");
+            a.getMemory().setP(-1);
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
+        }
+        
+        
+      /*--------------------------------------------------------------------------
+        les tests pour les syntax longue
+		--------------------------------------------------------------------------*/
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
@@ -67,6 +125,9 @@ public class IncrementTest {
             assertEquals("value can't be higher than 255", e.getMessage());
         }
 
+        
+        
+        
 
         //Anomaly case 2, incrementation of c-1
         try {

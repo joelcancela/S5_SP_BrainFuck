@@ -33,6 +33,10 @@ public abstract class Interpreter {
         operatorsKeywords.put("DECR", new Decrement());
         operatorsKeywords.put("LEFT", new Left());
         operatorsKeywords.put("RIGHT", new Right());
+        operatorsKeywords.put("+", new Increment());
+        operatorsKeywords.put("-", new Decrement());
+        operatorsKeywords.put("<", new Left());
+        operatorsKeywords.put(">", new Right());
         memory = new Memory();
     }
 
