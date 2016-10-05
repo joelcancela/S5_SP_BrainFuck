@@ -33,6 +33,7 @@ public abstract class Interpreter {
         operatorsKeywords.put("DECR", new Decrement());
         operatorsKeywords.put("LEFT", new Left());
         operatorsKeywords.put("RIGHT", new Right());
+        operatorsKeywords.put("JUMP", new Jump());
         memory = new Memory();
     }
 
@@ -47,6 +48,8 @@ public abstract class Interpreter {
     public abstract boolean rewriteFile() throws Exception;
     
     public abstract boolean executeFile() throws Exception;
+    
+    public abstract Object getInstructions();
 
     /**
      * getter for memory attribute

@@ -40,5 +40,10 @@ public class InterpreterText extends Interpreter {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public Object getInstructions() {
+		return buffer;
+	}
 	
 }
