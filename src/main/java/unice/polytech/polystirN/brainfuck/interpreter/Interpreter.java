@@ -44,7 +44,9 @@ public abstract class Interpreter {
      * @return true if the file was successfully read, false if not.
      * @throws SyntaxErrorException if the keyword isn't recognized as an operator
      */
-    public abstract boolean readfile() throws Exception;
+    public abstract boolean rewriteFile() throws Exception;
+    
+    public abstract boolean executeFile() throws Exception;
 
     /**
      * getter for memory attribute

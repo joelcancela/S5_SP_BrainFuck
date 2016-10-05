@@ -23,7 +23,8 @@ public class InterpreterText extends Interpreter {
 	/**
 	 * 
 	 */
-	public boolean readfile() throws Exception {
+	@Override
+	public boolean executeFile() throws Exception {
     String keyword;
     while ((keyword = buffer.readLine()) != null) {
         if (getOperatorsKeywords().get(keyword.trim()) == null) {
@@ -32,6 +33,12 @@ public class InterpreterText extends Interpreter {
         getOperatorsKeywords().get(keyword.trim()).doOperation(getMemory());
     }
     return false;
+	}
+
+	@Override
+	public boolean rewriteFile() throws Exception {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

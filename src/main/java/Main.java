@@ -21,7 +21,7 @@ public class Main {
         if (args[0].equals("-p")) {
             try {
                 Interpreter inte = new InterpreterText(args[1]);
-                inte.readfile();
+                inte.executeFile();
             } catch (Exception e) {
                 e.printStackTrace();
                 switch (e.getClass().getSimpleName()) {

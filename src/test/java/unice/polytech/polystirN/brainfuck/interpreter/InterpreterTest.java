@@ -31,7 +31,7 @@ public class InterpreterTest {
         //Test left&right operations :
         try {
             a = new InterpreterText("./examples/L1/LEFT&RIGHT.bf");
-            a.readfile();
+            a.executeFile();
             assertEquals(1, a.getMemory().getP());
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class InterpreterTest {
         //Test with out of bounds left :
         try {
             a = new InterpreterText("./examples/L1/LEFTError.bf");
-            a.readfile();
+            a.executeFile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
@@ -50,7 +50,7 @@ public class InterpreterTest {
         //Test with out of bounds right :
         try {
             a = new InterpreterText("./examples/L1/RIGHTError.bf");
-            a.readfile();
+            a.executeFile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
