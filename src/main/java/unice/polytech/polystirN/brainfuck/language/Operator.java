@@ -12,9 +12,9 @@ public interface Operator {
     /**
      * This method execute all the operations associated with the corresponding operator.
      *
-     * @param meme is the memory (M and P)
+     * @param memory is the memory (M and P)
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity or pointer range position
      */
-    public boolean doOperation(Memory meme) throws Exception;
+    public boolean doOperation(Memory memory) throws Exception;
 }

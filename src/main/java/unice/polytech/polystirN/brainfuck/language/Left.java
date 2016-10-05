@@ -15,14 +15,14 @@ public class Left implements Operator {
     /**
      * This method moves the pointer by one to the left
      *
-     * @param meme is the memory of the current program (M and P)
+     * @param memory is the memory of the current program (M and P)
      * @return true if the current memory cell was shifted by one to the left
      * @throws PointerPositionOutOfBoundsException if the pointer has already reached
      *                                             the value of 0 so it can't be moved to the left or if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Memory meme) throws PointerPositionOutOfBoundsException {
-        int p = meme.getP();
+    public boolean doOperation(Memory memory) throws PointerPositionOutOfBoundsException {
+        int p = memory.getP();
 
         //Anomaly cases :
         if (p == 0)
@@ -31,7 +31,7 @@ public class Left implements Operator {
             throw new PointerPositionOutOfBoundsException("pointer is at illegal position");
 
         //Nominal case :
-        meme.setP(p - 1);
+        memory.setP(p - 1);
         return true;
     }
 
