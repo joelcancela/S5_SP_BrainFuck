@@ -55,6 +55,7 @@ Our group is called PolyStirN.
 
 ### Tanguy
 
-- [ ] s6
+- [x] s6
 - [ ] Rapport s6
 - [ ] Keep calm and step back (L2)
+- [ ] Adapt the main to be able to handle every flags

@@ -33,10 +33,18 @@ public abstract class Interpreter {
         operatorsKeywords.put("DECR", new Decrement());
         operatorsKeywords.put("LEFT", new Left());
         operatorsKeywords.put("RIGHT", new Right());
+
+        operatorsKeywords.put("JUMP", new Jump());
+//        operatorsKeywords.put("BACK", new Back());
+
         operatorsKeywords.put("+", new Increment());
         operatorsKeywords.put("-", new Decrement());
         operatorsKeywords.put("<", new Left());
         operatorsKeywords.put(">", new Right());
+
+//      operatorsKeywords.put("[", new Jump());
+//      operatorsKeywords.put("]", new Back());
+
         memory = new Memory();
     }
 
@@ -51,7 +59,8 @@ public abstract class Interpreter {
     public abstract boolean rewriteFile() throws Exception;
     
     public abstract boolean executeFile() throws Exception;
-
+    
+    public abstract Object getBuffer();
     /**
      * getter for memory attribute
      *
