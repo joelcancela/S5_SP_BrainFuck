@@ -30,7 +30,7 @@ public class In implements Operator{
 	public boolean doOperation(Interpreter interpreter) throws Exception {
 		if(filename==null){
 			sc = new Scanner(System.in);
-			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=sc.nextByte();
+			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);
 		}
 		else{
 			try{
