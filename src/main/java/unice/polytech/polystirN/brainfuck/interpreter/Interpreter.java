@@ -22,6 +22,8 @@ public abstract class Interpreter {
      */
     private Memory memory;
     private HashMap<String, Operator> operatorsKeywords;
+    
+    
 
     /**
      * This method resets the memory and the pointer and
@@ -35,12 +37,17 @@ public abstract class Interpreter {
         operatorsKeywords.put("RIGHT", new Right());
         operatorsKeywords.put("JUMP", new Jump());
         operatorsKeywords.put("BACK", new Back());
+        operatorsKeywords.put("IN", new In(null));
+        operatorsKeywords.put("OUT", new Out(null));
         operatorsKeywords.put("+", new Increment());
         operatorsKeywords.put("-", new Decrement());
         operatorsKeywords.put("<", new Left());
         operatorsKeywords.put(">", new Right());
+        operatorsKeywords.put(",", new In(null));
+        operatorsKeywords.put(".", new Out(null));
 //      operatorsKeywords.put("[", new Jump());
 //      operatorsKeywords.put("]", new Back());
+
         memory = new Memory();
     }
 
