@@ -48,7 +48,7 @@ Our group is called PolyStirN.
 
 ### Pierre
 
-- [ ] s10
+- [x] s10
 - [ ] s11
 - [ ] Rapport s10
 - [ ] Rapport s11
