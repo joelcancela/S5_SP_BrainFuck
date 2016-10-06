@@ -15,8 +15,8 @@ public class Left implements Operator {
     /**
      * This method moves the pointer by one to the left
      *
-     * @param memory is the memory of the current program (M and P)
-     * @return true if the current memory cell was shifted by one to the left
+     * @param interpreter memory (M and P) of the current program and all of the following operations.
+     * @return true if the current memory cell was shifted by one to the left.
      * @throws PointerPositionOutOfBoundsException if the pointer has already reached
      *                                             the value of 0 so it can't be moved to the left or if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)

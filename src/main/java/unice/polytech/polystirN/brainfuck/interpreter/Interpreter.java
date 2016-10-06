@@ -34,7 +34,7 @@ public abstract class Interpreter {
         operatorsKeywords.put("LEFT", new Left());
         operatorsKeywords.put("RIGHT", new Right());
         operatorsKeywords.put("JUMP", new Jump());
-//        operatorsKeywords.put("BACK", new Back());
+        operatorsKeywords.put("BACK", new Back());
         operatorsKeywords.put("+", new Increment());
         operatorsKeywords.put("-", new Decrement());
         operatorsKeywords.put("<", new Left());
