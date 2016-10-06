@@ -2,8 +2,8 @@ package unice.polytech.polystirN.brainfuck.language;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
 /**
  * Class used to specify the Out operator behaviour
  *
@@ -11,40 +11,38 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Out implements Operator {
+	
 	private String filename;
+
 	/**
-	 * constructor
-	 * @param filename if it exist else null
+	 * Constructor of the Out class
+	 * @param The filename where out is supposed to write, or null if the operator 
+	 * 		  is supposed to write on the standard output.
 	 */
-	public Out(String filename){
+	public Out(String filename) {
 		this.filename=filename;
 	}
+
 	/**
-	 * methode doOperation write a charater on the Console or on a file
+	 *  Write the current cell memory content as an ASCII character, either on the standard output or in a file.
 	 *  @param object of type Interpreter
-	 *  @return boolean
+	 *  @return true if the character was successfully written, false if not.
 	 */
 	@Override
 	public boolean doOperation(Interpreter interpreter) throws Exception {
-		if(filename==null){
+		if(filename==null) {
 			System.out.println((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
 		}
 		else {
-			try
-			{
-			    FileWriter fichierw = new FileWriter (filename,true);
-			    fichierw.write(((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
-			    fichierw.close();
+			try {
+				FileWriter fichierw = new FileWriter (filename,true);
+				fichierw.write(((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
+				fichierw.close();
 			}
-			catch (IOException exception)
-			{
-			    System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-			}
-			
+			catch (IOException exception) {
+				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
+			}		
 		}
 		return true;
 	}
-	
-	
-	
 }
