@@ -22,9 +22,7 @@ public class InterpreterText extends Interpreter {
 		buffer = new BufferedReader(new FileReader(filename));
 	}
 
-	/**
-	 * 
-	 */
+
 	@Override
 	public boolean executeFile() throws Exception {
     String keyword;
@@ -86,6 +84,11 @@ public class InterpreterText extends Interpreter {
 			}
 		}
 		return true;
+	}
+
+
+	public void check() {
+		System.out.println("I checked the file !");
 	}
 
 }
