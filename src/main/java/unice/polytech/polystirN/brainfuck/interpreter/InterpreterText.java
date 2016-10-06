@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
-import unice.polytech.polystirN.brainfuck.exceptions.MemoryOverflowException;
-import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 
 public class InterpreterText extends Interpreter {
@@ -29,15 +27,17 @@ public class InterpreterText extends Interpreter {
 	public boolean executeFile() throws Exception {
     String keyword;
     while ((keyword = buffer.readLine()) != null) {
-    	if('A'<=keyword.trim().charAt(0) && 'Z'>=keyword.trim().charAt(0)){
-    		if (getOperatorsKeywords().get(keyword.trim()) == null) {
-    				throw new SyntaxErrorException("Invalid keyword operator");
+    	if(!keyword.trim().equals("")){
+    		if('A'<=keyword.trim().charAt(0) && 'Z'>=keyword.trim().charAt(0)){
+    			if (getOperatorsKeywords().get(keyword.trim()) == null) {
+    					throw new SyntaxErrorException("Invalid keyword operator");
+    			}
+    			getOperatorsKeywords().get(keyword.trim()).doOperation(this);
     		}
-    		getOperatorsKeywords().get(keyword.trim()).doOperation(this);
-    	}
-    	else{
-    		for(int i=0;i<keyword.length();i++){
-    			getOperatorsKeywords().get(keyword.trim().substring(i,i+1)).doOperation(this);
+    		else{
+    			for(int i=0;i<keyword.replaceAll("\\s", "").length();i++){
+    				getOperatorsKeywords().get(keyword.replaceAll("\\s", "").substring(i,i+1)).doOperation(this);
+    			}
     		}
     	}
     }
