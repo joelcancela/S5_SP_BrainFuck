@@ -35,7 +35,7 @@ Our group is called PolyStirN.
 ### Aghiles Dziri
 
 - [ ] s5
-- [ ] s9
+- [x] s9
 - [ ] Rapport s5
 - [ ] Rapport s9
 
@@ -58,4 +58,4 @@ Our group is called PolyStirN.
 - [x] s6
 - [ ] Rapport s6
 - [ ] Keep calm and step back (L2)
-- [ ] Adapt the main to be able to handle every flags
+- [x] Adapt the main to be able to handle every flags
