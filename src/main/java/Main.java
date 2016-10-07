@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		//Configure the parser
-		OptionParser parser = new OptionParser("p:io");
+		OptionParser parser = new OptionParser("p:i:o:");
 		parser.accepts( "check" );
 		parser.accepts( "rewrite" );
 

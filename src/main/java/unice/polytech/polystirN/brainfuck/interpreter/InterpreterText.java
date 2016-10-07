@@ -23,35 +23,37 @@ public class InterpreterText extends Interpreter {
 
 	@Override
 	public boolean executeFile() throws Exception {
-    String keyword;
-    while ((keyword = buffer.readLine()) != null) {
-    	if(!keyword.trim().equals("")){
-    		if('A'<=keyword.trim().charAt(0) && 'Z'>=keyword.trim().charAt(0)){
-    			if (getOperatorsKeywords().get(keyword.trim()) == null) {
-    					throw new SyntaxErrorException("Invalid keyword operator");
-    			}
-    			getOperatorsKeywords().get(keyword.trim()).doOperation(this);
-    		}
-    		else{
-    			for(int i=0;i<keyword.replaceAll("\\s", "").length();i++){
-    				getOperatorsKeywords().get(keyword.replaceAll("\\s", "").substring(i,i+1)).doOperation(this);
-    			}
-    		}
-    	}
-    }
-    return false;
+		String keyword;
+		
+		while ((keyword = buffer.readLine()) != null) {
+			if (!keyword.trim().equals("")) {
+				if ('A'<=keyword.trim().charAt(0) && 'Z'>=keyword.trim().charAt(0)) {
+					if (getOperatorsKeywords().get(keyword.trim()) == null) {
+						throw new SyntaxErrorException("Invalid keyword operator");
+					}
+					getOperatorsKeywords().get(keyword.trim()).doOperation(this);
+				}
+				else {
+					for (int i=0;i<keyword.replaceAll("\\s", "").length();i++) {
+						getOperatorsKeywords().get(keyword.replaceAll("\\s", "").substring(i,i+1)).doOperation(this);
+					}
+				}
+			}
+		}
+		return false;
 	}
-	
-    /**
-     * This method is invoked if the parameter --rewrite is present at the execution
-     * It will print on the standard output the shortened representation of the program given as input.
-     *
-     * @return true if the operation ended well, else false
-     * @throws SyntaxErrorException             if an incorrect character is in the file that is being read
-     */
+
+	/**
+	 * This method is invoked if the parameter --rewrite is present at the execution
+	 * It will print on the standard output the shortened representation of the program given as input.
+	 *
+	 * @return true if the operation ended well, else false
+	 * @throws SyntaxErrorException             if an incorrect character is in the file that is being read
+	 */
 	@Override
 	public boolean rewriteFile() throws Exception {
 		String keyword;
+		
 		while ((keyword = buffer.readLine()) != null) {
 			if (getOperatorsKeywords().get(keyword.trim()) == null) {
 				for (int i = 0; i < keyword.trim().length(); i++)

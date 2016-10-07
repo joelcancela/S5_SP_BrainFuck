@@ -45,8 +45,8 @@ public abstract class Interpreter {
         operatorsKeywords.put(">", new Right());
         operatorsKeywords.put(",", new In(null));
         operatorsKeywords.put(".", new Out(null));
-//      operatorsKeywords.put("[", new Jump());
-//      operatorsKeywords.put("]", new Back());
+        operatorsKeywords.put("[", new Jump());
+      	operatorsKeywords.put("]", new Back());
 
         memory = new Memory();
     }
