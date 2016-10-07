@@ -85,6 +85,14 @@ public class InterpreterText extends Interpreter {
 				{
 					System.out.print("<");
 				}
+				else if (keyword.trim().equals("JUMP"))
+				{
+					System.out.print("[");
+				}
+				else if (keyword.trim().equals("BACK"))
+				{
+					System.out.print("]");
+				}
 				else
 				{
 					System.out.println();

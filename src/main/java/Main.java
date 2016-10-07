@@ -29,6 +29,10 @@ public class Main {
 				InterpreterText inte = new InterpreterText((String)options.valueOf("p"));
 				inte.check();
 			}
+			else if (options.has("rewrite")) {
+				InterpreterText inte = new InterpreterText((String)options.valueOf("p"));
+				inte.rewriteFile();
+			}
 			else {
 				Interpreter inte = new InterpreterText((String)options.valueOf("p"));
 				inte.executeFile();
