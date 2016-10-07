@@ -48,11 +48,23 @@ public class Jump implements Operator {
 
 			//Special case : (value of initiale memory case is already equals to 0)
 			if(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0){
+				char c;
 				while(nbOuvert != 0) {
 					instruction = buffer.readLine();
-					switch(instruction) {
-					case "JUMP": case "[": nbOuvert++; break;
-					case "BACK": case "]": nbOuvert--; break;
+					
+					if(!('A'<=instruction.trim().charAt(0) && 'Z'>=instruction.trim().charAt(0))){
+						for (int z=0;z<instruction.replaceAll("\\s", "").length();z++){
+							c = instruction.replaceAll("\\s", "").charAt(z);
+							switch(c) {
+								case '[': nbOuvert++; break;
+								case ']': nbOuvert--; break;
+							}
+						}
+					}else{
+						switch(instruction) {
+							case "JUMP": nbOuvert++; break;
+							case "BACK": nbOuvert--; break;
+						}
 					}
 				}
 				return false;
@@ -60,10 +72,20 @@ public class Jump implements Operator {
 
 			//Nominal case :
 			while(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
+				String chara;
 				while(nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
 					if (premierParcours == true) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
 						instruction = buffer.readLine();
-						file.add(instruction);
+						
+						if(!('A'<=instruction.trim().charAt(0) && 'Z'>=instruction.trim().charAt(0))){
+							for (int z=0;z<instruction.replaceAll("\\s", "").length();z++){
+								chara = instruction.replaceAll("\\s", "").substring(z,z+1);
+								file.add(chara);
+								System.out.println(chara);
+							}
+						}else{
+							file.add(instruction);
+						}
 
 						iteration(instruction, interpreter, false, 0);
 					} 
@@ -74,6 +96,7 @@ public class Jump implements Operator {
 						i++;
 					}
 				}
+				System.out.println("--------fin de boucle--------");
 				//Iteration suivante dans la boucle brainfuck :
 				premierParcours = false; //la première itération du while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
 				nbOuvert = 1;

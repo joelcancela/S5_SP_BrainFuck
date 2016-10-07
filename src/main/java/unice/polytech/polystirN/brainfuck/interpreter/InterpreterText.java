@@ -23,9 +23,32 @@ public class InterpreterText extends Interpreter {
 
 	@Override
 	public boolean executeFile() throws Exception {
-		String keyword;
+		String keyword="";
 		
-		while ((keyword = buffer.readLine()) != null) {
+		int c;
+        while ((c = buffer.read()) != -1) {
+        	if('A'<=c && 'Z'>=c){
+        		while((char) c!= '\r' && (char) c!= '\n' && keyword.length()<6){
+        			keyword=keyword+(char)c;
+        			c = buffer.read();
+        		}
+        		if (getOperatorsKeywords().get(keyword) == null) {
+        			System.out.println(keyword);
+                    throw new Exception("SyntaxError");
+                }
+                getOperatorsKeywords().get(keyword).doOperation(this);
+        	}else{
+        		 if (((char) c != '\r') && ((char) c != '\n')) {
+                     if (getOperatorsKeywords().get(Character.toString((char) c)) == null) {
+                         throw new Exception("SyntaxError");
+                     }
+                     getOperatorsKeywords().get(Character.toString((char) c)).doOperation(this);
+                 }
+        	}
+        }
+		
+		
+		/*while ((keyword = buffer.readLine()) != null) {
 			if (!keyword.trim().equals("")) {
 				if ('A'<=keyword.trim().charAt(0) && 'Z'>=keyword.trim().charAt(0)) {
 					if (getOperatorsKeywords().get(keyword.trim()) == null) {
@@ -39,7 +62,7 @@ public class InterpreterText extends Interpreter {
 					}
 				}
 			}
-		}
+		}*/
 		return false;
 	}
 
