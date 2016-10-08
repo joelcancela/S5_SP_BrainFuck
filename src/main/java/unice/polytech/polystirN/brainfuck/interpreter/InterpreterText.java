@@ -30,25 +30,10 @@ public class InterpreterText extends Interpreter {
         int c;
         while ((c = buffer.read()) != -1) {
             if ('A' <= c && 'Z' >= c) {
-                while ((char) c != '\r' && (char) c != '\n') {
+                while ((char) c != '\r' && (char) c != '\n' && c!=-1) {//c!=1 required because we read in the buffer
                     keyword += ((char) c);
                     c = buffer.read();
                 }
-                System.out.println(iteration);
-                System.out.println("Current word " + keyword);
-                System.out.println("Is it equals to INCR " + "INCR".equals(keyword));
-                System.out.println("INCR (typed) length= " + "INCR".length());
-                System.out.println("word length " + keyword.length());
-                for (int i = 0; i < "INCR".length(); i++) {
-                    System.out.print((int) "INCR".charAt(i) + "");
-                }
-                System.out.println("");
-                for (int i = 0; i < keyword.length(); i++) {
-                    System.out.print((int) keyword.charAt(i) + "");
-                }
-                System.out.println("");
-                System.out.println(getOperatorsKeywords().get("INCR"));
-                System.out.println("");
 
                 Operator op = getOperatorsKeywords().get(keyword);
                 if (op == null) {
