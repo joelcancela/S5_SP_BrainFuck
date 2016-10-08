@@ -22,14 +22,21 @@ public abstract class Interpreter {
      */
     private Memory memory;
     private HashMap<String, Operator> operatorsKeywords;
-    
-    
+
 
     /**
      * This method resets the memory and the pointer and
      * sets the correct operatorsKeywords to interpret as operators
      */
     public Interpreter(String inputFile, String outputFile) throws Exception {
+        this();
+        operatorsKeywords.put("IN", new In(inputFile));
+        operatorsKeywords.put("OUT", new Out(outputFile));
+        operatorsKeywords.put(",", new In(inputFile));
+        operatorsKeywords.put(".", new Out(outputFile));
+    }
+
+    public Interpreter() {
         operatorsKeywords = new HashMap<>();
         operatorsKeywords.put("INCR", new Increment());
         operatorsKeywords.put("DECR", new Decrement());
@@ -37,17 +44,16 @@ public abstract class Interpreter {
         operatorsKeywords.put("RIGHT", new Right());
         operatorsKeywords.put("JUMP", new Jump());
         operatorsKeywords.put("BACK", new Back());
-        operatorsKeywords.put("IN", new In(inputFile));
-        operatorsKeywords.put("OUT", new Out(outputFile));
         operatorsKeywords.put("+", new Increment());
         operatorsKeywords.put("-", new Decrement());
         operatorsKeywords.put("<", new Left());
         operatorsKeywords.put(">", new Right());
-        operatorsKeywords.put(",", new In(inputFile));
-        operatorsKeywords.put(".", new Out(outputFile));
         operatorsKeywords.put("[", new Jump());
-      	operatorsKeywords.put("]", new Back());
-
+        operatorsKeywords.put("]", new Back());
+        operatorsKeywords.put("IN", new In(null));
+        operatorsKeywords.put("OUT", new Out(null));
+        operatorsKeywords.put(",", new In(null));
+        operatorsKeywords.put(".", new Out(null));
         memory = new Memory();
     }
 
@@ -60,10 +66,11 @@ public abstract class Interpreter {
      * @throws SyntaxErrorException if the keyword isn't recognized as an operator
      */
     public abstract boolean rewriteFile() throws Exception;
-    
+
     public abstract boolean executeFile() throws Exception;
-    
+
     public abstract Object getBuffer();
+
     /**
      * getter for memory attribute
      *
@@ -72,14 +79,14 @@ public abstract class Interpreter {
     public Memory getMemory() {
         return memory;
     }
-    
+
     /**
      * getter for OperatorsKeywords
      *
      * @return operatorKeywords
      */
     public HashMap<String, Operator> getOperatorsKeywords() {
-    	return operatorsKeywords;
+        return operatorsKeywords;
     }
 
 }
