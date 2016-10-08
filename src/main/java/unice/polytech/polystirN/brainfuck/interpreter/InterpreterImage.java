@@ -13,8 +13,8 @@ public class InterpreterImage extends Interpreter {
      * This method resets the memory and the pointer and
      * sets the correct operatorsKeywords to interpret as operators
      */
-    public InterpreterImage(String filename) throws Exception {
-        super();
+    public InterpreterImage(String filename, String inputFile, String outputFile) throws Exception {
+        super(inputFile, outputFile);
         File img = new File(filename);
         buffer = ImageIO.read(img);
     }

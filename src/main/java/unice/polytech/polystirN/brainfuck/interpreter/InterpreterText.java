@@ -13,8 +13,8 @@ public class InterpreterText extends Interpreter {
      **/
     private BufferedReader buffer;
 
-    public InterpreterText(String filename) throws Exception {
-        super();
+    public InterpreterText(String filename, String inputFile, String outputFile) throws Exception {
+        super(inputFile, outputFile);
         if (!filename.matches("(.*).bf")) {
             throw new IncorrectFileTypeException(filename + " must have .bf extension");
         }
@@ -25,7 +25,6 @@ public class InterpreterText extends Interpreter {
     @Override
     public boolean executeFile() throws Exception {
         String keyword = "";
-        int iteration = 1;
 
         int c;
         while ((c = buffer.read()) != -1) {
@@ -41,7 +40,6 @@ public class InterpreterText extends Interpreter {
                 }
                 op.doOperation(this);
                 keyword = "";
-                iteration++;
             } else {
                 if (((char) c != '\r') && ((char) c != '\n')) {
                     if (getOperatorsKeywords().get(Character.toString((char) c)) == null) {
