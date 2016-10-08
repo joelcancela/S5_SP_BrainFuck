@@ -31,7 +31,7 @@ public class Out implements Operator {
 	@Override
 	public boolean doOperation(Interpreter interpreter) throws Exception {
 		if(filename==null) {
-			System.out.println((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
+			System.out.print((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
 		}
 		else {
 			try {

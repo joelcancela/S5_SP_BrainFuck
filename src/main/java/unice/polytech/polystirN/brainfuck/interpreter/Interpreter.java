@@ -29,7 +29,7 @@ public abstract class Interpreter {
      * This method resets the memory and the pointer and
      * sets the correct operatorsKeywords to interpret as operators
      */
-    public Interpreter() throws Exception {
+    public Interpreter(String inputFile, String outputFile) throws Exception {
         operatorsKeywords = new HashMap<>();
         operatorsKeywords.put("INCR", new Increment());
         operatorsKeywords.put("DECR", new Decrement());
@@ -37,14 +37,14 @@ public abstract class Interpreter {
         operatorsKeywords.put("RIGHT", new Right());
         operatorsKeywords.put("JUMP", new Jump());
         operatorsKeywords.put("BACK", new Back());
-        operatorsKeywords.put("IN", new In(null));
-        operatorsKeywords.put("OUT", new Out(null));
+        operatorsKeywords.put("IN", new In(inputFile));
+        operatorsKeywords.put("OUT", new Out(outputFile));
         operatorsKeywords.put("+", new Increment());
         operatorsKeywords.put("-", new Decrement());
         operatorsKeywords.put("<", new Left());
         operatorsKeywords.put(">", new Right());
-        operatorsKeywords.put(",", new In(null));
-        operatorsKeywords.put(".", new Out(null));
+        operatorsKeywords.put(",", new In(inputFile));
+        operatorsKeywords.put(".", new Out(outputFile));
         operatorsKeywords.put("[", new Jump());
       	operatorsKeywords.put("]", new Back());
 

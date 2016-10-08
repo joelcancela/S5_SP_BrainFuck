@@ -26,16 +26,30 @@ public class Main {
 		}
 		if (options.has("p")) {
 			if (options.has("check")) {
-				InterpreterText inte = new InterpreterText((String)options.valueOf("p"));
+				InterpreterText inte = new InterpreterText((String)options.valueOf("p"), null, null);
 				inte.check();
 			}
 			else if (options.has("rewrite")) {
-				InterpreterText inte = new InterpreterText((String)options.valueOf("p"));
+				InterpreterText inte = new InterpreterText((String)options.valueOf("p"), null, null);
 				inte.rewriteFile();
 			}
 			else {
-				Interpreter inte = new InterpreterText((String)options.valueOf("p"));
-				inte.executeFile();
+				if (options.has("i") && options.has("o")) {
+					Interpreter inte = new InterpreterText((String)options.valueOf("p"), (String)options.valueOf("i"), (String)options.valueOf("o"));
+					inte.executeFile();
+				}
+				else if (options.has("i")) {
+					Interpreter inte = new InterpreterText((String)options.valueOf("p"), (String)options.valueOf("i"), null);
+					inte.executeFile();
+				}
+				else if (options.has("o")) {
+					Interpreter inte = new InterpreterText((String)options.valueOf("p"), null, (String)options.valueOf("o"));
+					inte.executeFile();
+				}
+				else {
+					Interpreter inte = new InterpreterText((String)options.valueOf("p"), null, null);
+					inte.executeFile();
+				}
 			}
 		}
 	}
