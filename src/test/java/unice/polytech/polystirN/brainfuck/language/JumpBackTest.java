@@ -29,7 +29,7 @@ public class JumpBackTest {
     public void doOperation() throws Exception {
     	Interpreter a;
 
-        //Nominal case--------------------------------------------------------
+        //Nominal case (syntaxe longue)-------------------------
 	        //Test boucle simple operations---------------------
 	    	try {
 	            a = new InterpreterText("./examples/L2/JUMP0.bf");
@@ -96,13 +96,24 @@ public class JumpBackTest {
 	      //---------------------------------------------------
       //--------------------------------------------------------------------
 	        
-	  //Complete program : Hello world--------------------------------------
-	       /* try {
+	  //Anomaly case (syntaxe longue)---------------------------------------
+	        try {
+	            a = new InterpreterText("./examples/L2/JUMP5.bf");
+	            a.executeFile();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            assertEquals("BadLoopException", e.getClass().getSimpleName());
+	            assertEquals("Loop without end : Missing BACK operator", e.getMessage());
+	        }
+	  //--------------------------------------------------------------------     
+	        
+	  //Complete program : Hello world (syntaxe courte)---------------------
+	        try {
 	            a = new InterpreterText("./examples/helloworld.bf");
 	            a.executeFile();
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	        }*/
+	        }
 	 //--------------------------------------------------------------------
     }
 
