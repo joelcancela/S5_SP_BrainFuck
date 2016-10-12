@@ -34,7 +34,7 @@ Our group is called PolyStirN.
 
 ### Aghiles Dziri
 
-- [ ] s5
+- [x] s5
 - [x] s9
 - [ ] Rapport s5
 - [ ] Rapport s9
