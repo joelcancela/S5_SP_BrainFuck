@@ -104,8 +104,7 @@ public class Interpreter {
                 } else if (keyword.trim().equals("BACK")) {
                     System.out.print("]");
                 } else {
-                    System.out.println();
-                    throw new SyntaxErrorException("Invalid keyword operator");
+                    System.out.print(keyword.trim());
                 }
             }
         }
