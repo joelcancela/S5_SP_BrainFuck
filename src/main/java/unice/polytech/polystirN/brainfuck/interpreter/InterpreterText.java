@@ -29,7 +29,8 @@ public class InterpreterText extends Interpreter {
         int c;
         while ((c = buffer.read()) != -1) {
             if ('A' <= c && 'Z' >= c) {
-                while ((char) c != '\r' && (char) c != '\n' && c!=-1) {//c!=1 required because we read in the buffer
+                while ((char) c != '\r' && (char) c != '\n' && c!=-1) {
+                	//c!=1 required because we read in the buffer
                     keyword += ((char) c);
                     c = buffer.read();
                 }
