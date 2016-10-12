@@ -2,7 +2,6 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 /**
  * The main class of the project.
@@ -32,28 +31,28 @@ public class Main {
 					throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
 				case 1: //fichier texte
 					if (options.has("check")) {
-						InterpreterText inte = new InterpreterText((String)options.valueOf("p"), null, null);
+						Interpreter inte = new Interpreter((String)options.valueOf("p"), null, null);
 						inte.check();
 					}
 					else if (options.has("rewrite")) {
-						InterpreterText inte = new InterpreterText((String)options.valueOf("p"), null, null);
+						Interpreter inte = new Interpreter((String)options.valueOf("p"), null, null);
 						inte.rewriteFile();
 					}
 					else {
 						if (options.has("i") && options.has("o")) {
-							Interpreter inte = new InterpreterText((String)options.valueOf("p"), (String)options.valueOf("i"), (String)options.valueOf("o"));
+							Interpreter inte = new Interpreter((String)options.valueOf("p"), (String)options.valueOf("i"), (String)options.valueOf("o"));
 							inte.executeFile();
 						}
 						else if (options.has("i")) {
-							Interpreter inte = new InterpreterText((String)options.valueOf("p"), (String)options.valueOf("i"), null);
+							Interpreter inte = new Interpreter((String)options.valueOf("p"), (String)options.valueOf("i"), null);
 							inte.executeFile();
 						}
 						else if (options.has("o")) {
-							Interpreter inte = new InterpreterText((String)options.valueOf("p"), null, (String)options.valueOf("o"));
+							Interpreter inte = new Interpreter((String)options.valueOf("p"), null, (String)options.valueOf("o"));
 							inte.executeFile();
 						}
 						else {
-							Interpreter inte = new InterpreterText((String)options.valueOf("p"), null, null);
+							Interpreter inte = new Interpreter((String)options.valueOf("p"), null, null);
 							inte.executeFile();
 						}
 					}

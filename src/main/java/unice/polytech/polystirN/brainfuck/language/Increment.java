@@ -21,7 +21,7 @@ public class Increment implements Operator {
      *                                             is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryOverflowException             if the operation goes out of bounds of the memory
      */
-    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
+    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position

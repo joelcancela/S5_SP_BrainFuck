@@ -20,7 +20,7 @@ public class Back implements Operator {
      * @throws PointerPositionOutOfBoundsException if the pointer value is inferior to 0.
      */
 	@Override
-	public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException, Exception {
+	public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, Exception {
 		int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
 		
 		//Anomaly case :

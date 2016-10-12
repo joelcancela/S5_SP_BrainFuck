@@ -16,6 +16,6 @@ public interface Operator {
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity or pointer range position
      */
-    public boolean doOperation(Interpreter interpreter) throws Exception;
+    public boolean execute(Interpreter interpreter) throws Exception;
     
 }

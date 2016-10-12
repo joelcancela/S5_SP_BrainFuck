@@ -9,7 +9,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 /**
  * Class used to specify the Jump operator behaviour
@@ -32,7 +31,7 @@ public class Jump implements Operator {
 	 * @throws PointerPositionOutOfBoundsException if the pointer value is inferior to 0.
 	 */
 	@Override
-	public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException, Exception {
+	public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, Exception {
 		int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
 		int i = 0;
 		boolean premierParcours = true;
@@ -45,9 +44,9 @@ public class Jump implements Operator {
 		if (dp < 0)
 			throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
 
-		switch(interpreter.getClass().getSimpleName()) {
-		case "InterpreterText": //Dans le cas d'un fichier texte (.bf)
-			BufferedReader buffer = (BufferedReader) interpreter.getBuffer(); //Récupère le buffer adapté
+		switch(interpreter.getReader().getClass().getSimpleName()) {
+		case "TextReader": //Dans le cas d'un fichier texte (.bf)
+			BufferedReader buffer = (BufferedReader) interpreter.getReader().getBuffer(); //Récupère le buffer adapté
 
 			//Special case : (value of initiale memory case is already equals to 0)
 			if(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0){
@@ -55,7 +54,7 @@ public class Jump implements Operator {
 				while(nbOuvert != 0) {
 					c = buffer.read();
 					
-					instruction = getNextInstructionText(c, (InterpreterText)interpreter);
+					instruction = getNextInstructionText(c, interpreter);
 					switch(instruction) {
 						case "JUMP": case "[" : nbOuvert++; break;
 						case "BACK": case "]" : nbOuvert--; break;
@@ -71,7 +70,7 @@ public class Jump implements Operator {
 					if (premierParcours == true) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
 						c = buffer.read();
 
-						instruction = getNextInstructionText(c, (InterpreterText)interpreter);
+						instruction = getNextInstructionText(c, interpreter);
 						if(instruction!="-1"){
 					        file.add(instruction);
 					        iteration(instruction, interpreter, false, 0);
@@ -174,7 +173,7 @@ public class Jump implements Operator {
 		if (interpreter.getOperatorsKeywords().get(instruction) == null) {
 			throw new SyntaxErrorException("Invalid keyword operator");
 		}
-		return interpreter.getOperatorsKeywords().get(instruction.trim()).doOperation(interpreter);
+		return interpreter.getOperatorsKeywords().get(instruction.trim()).execute(interpreter);
 	}
 	
 	/**
@@ -186,9 +185,9 @@ public class Jump implements Operator {
 	 * @throws IOException
 	 * @throws BadLoopException 
 	 */
-	public String getNextInstructionText(int currentChar, InterpreterText interpreter) throws SyntaxErrorException, IOException, BadLoopException{
+	public String getNextInstructionText(int currentChar, Interpreter interpreter) throws SyntaxErrorException, IOException, BadLoopException{
 		String instruction="";
-		BufferedReader buffer = (BufferedReader) interpreter.getBuffer();
+		BufferedReader buffer = (BufferedReader) interpreter.getReader().getBuffer();
 		
 		if(currentChar==-1)
 			throw new BadLoopException("Loop without end : Missing BACK operator");

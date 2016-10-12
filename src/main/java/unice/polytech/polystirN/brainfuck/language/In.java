@@ -34,7 +34,7 @@ public class In implements Operator {
 	 *  @return true if the character was successfully written, false if not.
 	 */
 	@Override
-	public boolean doOperation(Interpreter interpreter) throws Exception {
+	public boolean execute(Interpreter interpreter) throws Exception {
 		if(filename == null) {
 			sc = new Scanner(System.in);
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);

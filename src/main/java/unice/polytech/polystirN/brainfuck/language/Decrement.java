@@ -20,7 +20,7 @@ public class Decrement implements Operator {
      * @throws PointerPositionOutOfBoundsException if the pointer position is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryUnderflowException            if the operation goes out of bounds of the memory
      */
-    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
+    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
