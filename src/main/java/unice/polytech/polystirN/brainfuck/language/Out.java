@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
@@ -13,6 +14,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 public class Out implements Operator {
 	
 	private String filename;
+	private File fichier;
 
 	/**
 	 * Constructor of the Out class
@@ -34,14 +36,11 @@ public class Out implements Operator {
 			System.out.print((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
 		}
 		else {
-			try {
+				fichier = new File(filename);
 				FileWriter fichierw = new FileWriter (filename,true);
 				fichierw.write(((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
 				fichierw.close();
-			}
-			catch (IOException exception) {
-				System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
-			}		
+				
 		}
 		return true;
 	}
