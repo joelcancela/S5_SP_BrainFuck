@@ -47,7 +47,7 @@ public class InterpreterText extends Interpreter {
                 op.doOperation(this);
                 keyword = "";
             } else {
-                if (((char) c != '\r') && ((char) c != '\n')) {
+                if (((char) c != '\r') && ((char) c != '\n') &&((char) c != '\t')&&((char) c != ' ') ) {
                     if (getOperatorsKeywords().get(Character.toString((char) c)) == null) {
                         throw new SyntaxErrorException("Incorrect short expression");
                     }

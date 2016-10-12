@@ -40,13 +40,10 @@ public class In implements Operator {
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);
 		}
 		else {
-			try {
+		
 				buffer = new BufferedReader(new FileReader(filename));
 				interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)buffer.read();
-			}
-			catch(Exception e) {
-				System.out.println(e.toString());
-			}
+			
 			buffer.close();
 		}
 		return true;
