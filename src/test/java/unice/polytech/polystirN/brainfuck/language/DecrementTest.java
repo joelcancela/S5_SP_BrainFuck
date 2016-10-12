@@ -31,7 +31,7 @@ public class DecrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-            a = new Interpreter("./examples/empty.bf");
+            a = new Interpreter("./examples/L1/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class DecrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-            a = new Interpreter("./examples/empty.bf");
+            a = new Interpreter("./examples/L1/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class DecrementTest {
 
         //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
         try {
-            a = new Interpreter("./examples/decrementSimple.bf");
+            a = new Interpreter("./examples/L2/decrementSimple.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class DecrementTest {
         //Anomaly cases
         //Anomaly case 1, decrementation of c0
         try {
-            a = new Interpreter("./examples/decrementError.bf");
+            a = new Interpreter("./examples/L2/decrementError.bf");
             a.executeFile();
         } catch (Exception e) {
             assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());

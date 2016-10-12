@@ -19,20 +19,16 @@ public class Back implements Operator {
      * @return true if the value is different to 0.
      * @throws PointerPositionOutOfBoundsException if the pointer value is inferior to 0.
      */
-	@Override
-	public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, Exception {
-		int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
-		
-		//Anomaly case :
+    @Override
+    public boolean execute(Interpreter interpreter) throws Exception {
+        int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
+
+        //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-		
+
         //Nominal case :
-        if (dp > 0){
-        	return true;
-        } else {
-        	return false;
-        }
-	}
-	
+        return (dp > 0);
+    }
+
 }

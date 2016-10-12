@@ -31,19 +31,19 @@ public class LeftTest {
 
         //Nominal cases
         //Nominal case 1, pointer at position 1
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(1);
         assertEquals(true, l.execute(a));
         assertEquals(0, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(14999);
         assertEquals(true, l.execute(a));
         assertEquals(14998, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29999
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(29999);
         assertEquals(true, l.execute(a));
         assertEquals(29998, a.getMemory().getP());
@@ -51,7 +51,7 @@ public class LeftTest {
         //Anomaly cases
         //Anomaly case 1, shift pointer to the left when it's at position 0
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
             l.execute(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
@@ -60,7 +60,7 @@ public class LeftTest {
 
         //Anomaly case 2, shift pointer to the left when it's at illegal position (30000)
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
         	a.getMemory().setP(30000);
             l.execute(a);
         } catch (Exception e) {

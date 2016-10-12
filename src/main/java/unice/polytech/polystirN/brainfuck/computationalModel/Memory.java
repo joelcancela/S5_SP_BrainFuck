@@ -2,15 +2,15 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
 
 /**
  * Class that represents the memory
- * It also use the pointer which is the index
+ * It also uses the pointer which is the index
  * of the current memory cell used
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
-    private byte[] cells = {-128};
-    private int p;
+    private byte[] cells = {-128}; //Cells are all initialized to 0 (-128 in unsigned byte)
+    private int p; //Pointer
 
     public Memory() {
         p = 0;

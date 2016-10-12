@@ -24,8 +24,6 @@ public class Interpreter {
     private Memory memory;
     private HashMap<String, Operator> operatorsKeywords;
     private Reader reader;
-    private String inputFile;
-    private String outputFile;
 
 
     /**
@@ -38,8 +36,6 @@ public class Interpreter {
         operatorsKeywords.put("OUT", new Out(outputFile));
         operatorsKeywords.put(",", new In(inputFile));
         operatorsKeywords.put(".", new Out(outputFile));
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
     }
 
     public Interpreter(String filename) throws Exception {
@@ -61,15 +57,15 @@ public class Interpreter {
         operatorsKeywords.put(",", new In(null));
         operatorsKeywords.put(".", new Out(null));
         memory = new Memory();
-        
-        if(filename.matches("(.*).bf")){
-        	reader = new TextReader(filename);
-        }else if(filename.matches("(.*).bmp")){
-        	reader = new ImageReader(filename);
-        }else{
-        	throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
+
+        if (filename.matches("(.*).bf")) {
+            reader = new TextReader(filename);
+        } else if (filename.matches("(.*).bmp")) {
+            reader = new ImageReader(filename);
+        } else {
+            throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
         }
-        
+
     }
 
     /**
@@ -80,11 +76,11 @@ public class Interpreter {
      * @return true if the file was successfully read, false if not.
      * @throws SyntaxErrorException if the keyword isn't recognized as an operator
      */
-    public boolean rewriteFile() throws Exception{
+    public boolean rewriteFile() throws Exception {
         String keyword;
 
         while (reader.hasNext()) {
-        	keyword =  reader.next();
+            keyword = reader.next();
             if (getOperatorsKeywords().get(keyword.trim()) == null) {
                 for (int i = 0; i < keyword.trim().length(); i++) {
                     if (getOperatorsKeywords().get(keyword.trim().substring(i, i + 1)) != null) {
@@ -116,28 +112,25 @@ public class Interpreter {
         return true;
     }
 
-    public boolean executeFile() throws Exception{
-    	  String keyword = "";
-          int c;
-          
-          while (reader.hasNext()) {
-        	  keyword = reader.next();
-              if(!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))){
-	        	  Operator op = getOperatorsKeywords().get(keyword);
-	              if (getOperatorsKeywords().get(keyword) == null) {
-	                  throw new SyntaxErrorException("Incorrect word operator");
-	              }
-	              op.execute(this);
-	              keyword = "";
-        	  }
-          }
-          
-          return true;
+    public boolean executeFile() throws Exception {
+        String keyword;
+        while (reader.hasNext()) {
+            keyword = reader.next();
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
+                Operator op = getOperatorsKeywords().get(keyword);
+                if (getOperatorsKeywords().get(keyword) == null) {
+                    throw new SyntaxErrorException("Incorrect word operator");
+                }
+                op.execute(this);
+            }
+        }
+
+        return true;
     }
 
-    public Reader getReader(){
-    	return reader;
-    };
+    public Reader getReader() {
+        return reader;
+    }
 
     /**
      * getter for memory attribute
@@ -156,7 +149,7 @@ public class Interpreter {
     public HashMap<String, Operator> getOperatorsKeywords() {
         return operatorsKeywords;
     }
-    
+
     public void check() {
         System.out.println("I checked the file !");
     }
