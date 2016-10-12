@@ -1,6 +1,5 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 
@@ -19,12 +18,7 @@ public class InterpreterText extends Interpreter {
 
     public InterpreterText(String filename) throws Exception{
         super();
-        if (!filename.matches("(.*).bf")) {
-            throw new IncorrectFileTypeException(filename + " must have .bf extension");
-        }
         buffer = new BufferedReader(new FileReader(filename));
-
-
     }
 
 
