@@ -1,6 +1,5 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 
@@ -14,17 +13,12 @@ public class InterpreterText extends Interpreter {
     private BufferedReader buffer;
 
     public InterpreterText(String filename, String inputFile, String outputFile) throws Exception {
-        this(filename);
+    	super(inputFile, outputFile);
+        buffer = new BufferedReader(new FileReader(filename));
     }
 
     public InterpreterText(String filename) throws Exception{
-        super();
-        if (!filename.matches("(.*).bf")) {
-            throw new IncorrectFileTypeException(filename + " must have .bf extension");
-        }
         buffer = new BufferedReader(new FileReader(filename));
-
-
     }
 
 
@@ -47,7 +41,7 @@ public class InterpreterText extends Interpreter {
                 op.doOperation(this);
                 keyword = "";
             } else {
-                if (((char) c != '\r') && ((char) c != '\n')) {
+                if (((char) c != '\r') && ((char) c != '\n') &&((char) c != '\t')&&((char) c != ' ') ) {
                     if (getOperatorsKeywords().get(Character.toString((char) c)) == null) {
                         throw new SyntaxErrorException("Incorrect short expression");
                     }
