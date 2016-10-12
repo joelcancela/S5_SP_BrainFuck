@@ -1,6 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 /**
  * Class used to specify the Jump operator behaviour
@@ -52,35 +54,12 @@ public class Jump implements Operator {
 				int c;
 				while(nbOuvert != 0) {
 					c = buffer.read();
-					instruction = "";
 					
-					if(c==-1)
-						throw new BadLoopException("Loop without end : Missing BACK operator");
-					 
-					 if ('A' <= c && 'Z' >= c) {
-						 while ((char) c != '\r' && (char) c != '\n' && c!=-1) {
-							 	instruction += ((char) c);
-			                    c = buffer.read();
-			                }
-						 Operator op = interpreter.getOperatorsKeywords().get(instruction);
-			             if (op == null) {
-			            	 throw new SyntaxErrorException("Incorrect word operator");
-			             }
-						 switch(instruction) {
-							case "JUMP": nbOuvert++; break;
-							case "BACK": nbOuvert--; break;
-						}
-					 }else {
-						 if (((char) c != '\r') && ((char) c != '\n')) {
-							 if (interpreter.getOperatorsKeywords().get(Character.toString((char) c)) == null) {
-								 throw new SyntaxErrorException("Incorrect short expression");
-			                  }
-							 switch(Character.toString((char) c)) {
-								case "[": nbOuvert++; break;
-								case "]": nbOuvert--; break;
-							}
-						 }
-					 } 
+					instruction = getNextInstructionText(c, (InterpreterText)interpreter);
+					switch(instruction) {
+						case "JUMP": case "[" : nbOuvert++; break;
+						case "BACK": case "]" : nbOuvert--; break;
+					}
 				}
 				return false;
 			}
@@ -91,31 +70,12 @@ public class Jump implements Operator {
 				while(nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
 					if (premierParcours == true) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
 						c = buffer.read();
-						
-						if(c==-1)
-							throw new BadLoopException("Loop without end : Missing BACK operator");
-						 
-						instruction = "";
-						 if ('A' <= c && 'Z' >= c) {
-							 while ((char) c != '\r' && (char) c != '\n' && c!=-1) {
-								 	instruction += ((char) c);
-				                    c = buffer.read();
-				                }
-							 Operator op = interpreter.getOperatorsKeywords().get(instruction);
-				             if (op == null) {
-				            	 throw new SyntaxErrorException("Incorrect word operator");
-				             }
-				             file.add(instruction);
-				             iteration(instruction, interpreter, false, 0);
-						 }else {
-							 if (((char) c != '\r') && ((char) c != '\n')) {
-								 if (interpreter.getOperatorsKeywords().get(Character.toString((char) c)) == null) {
-									 throw new SyntaxErrorException("Incorrect short expression");
-				                  }
-								 file.add(Character.toString((char) c));
-								 iteration(Character.toString((char) c), interpreter, false, 0);
-							 }
-						 }
+
+						instruction = getNextInstructionText(c, (InterpreterText)interpreter);
+						if(instruction!="-1"){
+					        file.add(instruction);
+					        iteration(instruction, interpreter, false, 0);
+						}
 					} 
 					else { //Exécute les instructions de la boucle englobante
 						instruction = file.get(i);
@@ -211,10 +171,47 @@ public class Jump implements Operator {
 	 * @throws Exception
 	 */
 	public boolean execute(String instruction, Interpreter interpreter) throws Exception{
-		if (interpreter.getOperatorsKeywords().get(instruction.trim()) == null) {
+		if (interpreter.getOperatorsKeywords().get(instruction) == null) {
 			throw new SyntaxErrorException("Invalid keyword operator");
 		}
 		return interpreter.getOperatorsKeywords().get(instruction.trim()).doOperation(interpreter);
 	}
+	
+	/**
+	 * 
+	 * @param currentChar
+	 * @param interpreter
+	 * @return
+	 * @throws SyntaxErrorException
+	 * @throws IOException
+	 * @throws BadLoopException 
+	 */
+	public String getNextInstructionText(int currentChar, InterpreterText interpreter) throws SyntaxErrorException, IOException, BadLoopException{
+		String instruction="";
+		BufferedReader buffer = (BufferedReader) interpreter.getBuffer();
+		
+		if(currentChar==-1)
+			throw new BadLoopException("Loop without end : Missing BACK operator");
+		
+		if ('A' <= currentChar && 'Z' >= currentChar) {
+			 while ((char) currentChar != '\r' && (char) currentChar != '\n' && currentChar!=-1) {
+				 instruction += ((char) currentChar);
+				 currentChar = buffer.read();
+               }
+			Operator op = interpreter.getOperatorsKeywords().get(instruction);
+            if (op == null) {
+           	 throw new SyntaxErrorException("Incorrect word operator");
+            }
+            return instruction;
+		 }else {
+			 if (((char) currentChar != '\r') && ((char) currentChar != '\n') && ((char) currentChar != '\t') && ((char) currentChar != ' ')) {
+				 if (interpreter.getOperatorsKeywords().get(Character.toString((char) currentChar)) == null) {
+					 throw new SyntaxErrorException("Incorrect short expression");
+                 }
+				 return Character.toString((char) currentChar);
+			 }
+		 }
+		return "-1";
+		}
 
 }
