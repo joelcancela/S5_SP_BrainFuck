@@ -15,7 +15,6 @@ import java.util.HashMap;
 public class ImageReader extends Reader {
     private BufferedImage buffer;
     private int width;
-    private int height;
     private int currentX;
     private int currentY;
     private HashMap<String, String> operatorsColors;
@@ -30,41 +29,43 @@ public class ImageReader extends Reader {
         this();
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
-        height = buffer.getHeight();
     }
 
     public ImageReader() throws Exception {
         operatorsColors = new HashMap<>();
-        operatorsColors.put("#255255255","+");
-        operatorsColors.put("#00255",">");
-        currentX=0;
-        currentY=0;
+        operatorsColors.put("#255255255", "+");
+        operatorsColors.put("#00255", ">");
+        currentX = 0;
+        currentY = 0;
     }
-    
+
     @Override
-    public boolean hasNext() throws Exception{
-    	if(currentX==width){
-    		return (isEnd(0,currentY+1));
-    	}else {
-    		return (isEnd(currentX+1,currentY));
-    	}
+    public boolean hasNext() throws Exception {
+            return (!isEnd(currentX, currentY));
+
     }
-    
+
     @Override
-    public String next() throws Exception{
-    	if(currentX==width){
-    		if (isPixelConform(0,currentY+1)) {
-    			return operatorsColors.get(printPixel(buffer.getRGB(0,currentY+1)));
-    		}else{
-    			throw new BadSquareColorException("Square number : 0 hasn't its pixels with same colors");
-    		}
-    	}else{
-    		if (isPixelConform(currentX+1,currentY)) {
-    			return operatorsColors.get(printPixel(buffer.getRGB(currentX+1,currentY)));
-    		}else{
-    			throw new BadSquareColorException("Square number : "+(currentX+1)+" hasn't its pixels with same colors");
-    		}//TODO joel fdp
-    	}
+    public String next() throws Exception {
+        int savedX = currentX;
+        int savedY = currentY;
+        if (currentX == (width - pixelSize)) {
+            if (isPixelConform(0, currentY + pixelSize)) {
+                currentX = 0;
+                currentY += pixelSize;
+
+            } else {
+                throw new BadSquareColorException("Square number : 0 hasn't its pixels with same colors");//TODO
+            }
+        } else {
+            if (isPixelConform(currentX + pixelSize, currentY)) {
+                currentX += pixelSize;
+            } else {
+                throw new BadSquareColorException("Square number : " + (currentX + 1) + " hasn't its pixels with same colors");//TODO
+            }
+        }
+        return operatorsColors.get(printPixel(buffer.getRGB(savedX, savedY)));
+
     }
 
     @Override
@@ -74,8 +75,8 @@ public class ImageReader extends Reader {
 
     public boolean isPixelConform(int currentX, int currentY) {
         int color = buffer.getRGB(currentX, currentY);
-        for (int y = currentY; y < currentY + 3; y++) {
-            for (int x = currentX; x < currentX + 3; x++) {
+        for (int y = currentY; y < currentY + (pixelSize - 1); y++) {
+            for (int x = currentX; x < currentX + (pixelSize - 1); x++) {
                 if (buffer.getRGB(x, y) != color) {
                     return false;
                 }
@@ -90,15 +91,12 @@ public class ImageReader extends Reader {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = (pixel) & 0xff;
-        return "#"+red+""+green+""+blue;
+        return "#" + red + "" + green + "" + blue;
 
     }
 
-    public boolean isEnd(int x,int y){
-        if(printPixel(buffer.getRGB(x,y)).equals("#255255255"))
-        	return true;
-
-        return false;
+    public boolean isEnd(int x, int y) {
+        return (printPixel(buffer.getRGB(x, y)).equals("#000"));
     }
 
 

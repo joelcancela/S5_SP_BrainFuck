@@ -122,8 +122,7 @@ public class Interpreter {
           
           while (reader.hasNext()) {
         	  keyword = reader.next();
-        	  
-        	  if(!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))){
+              if(!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))){
 	        	  Operator op = getOperatorsKeywords().get(keyword);
 	              if (getOperatorsKeywords().get(keyword) == null) {
 	                  throw new SyntaxErrorException("Incorrect word operator");
