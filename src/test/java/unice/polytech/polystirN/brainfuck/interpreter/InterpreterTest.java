@@ -49,6 +49,19 @@ public class InterpreterTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //Image Interpreter
+        try {
+            a = new Interpreter("./examples/images/54321to33441.bmp");
+            a.executeFile();
+            assertEquals(3, a.getMemory().getCells()[0]);
+            assertEquals(3, a.getMemory().getCells()[1]);
+            assertEquals(4, a.getMemory().getCells()[2]);
+            assertEquals(4, a.getMemory().getCells()[3]);
+            assertEquals(1, a.getMemory().getCells()[4]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         //Anomaly cases
         //Test with out of bounds left :

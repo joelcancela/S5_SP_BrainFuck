@@ -34,7 +34,13 @@ public class ImageReader extends Reader {
     public ImageReader() throws Exception {
         operatorsColors = new HashMap<>();
         operatorsColors.put("#255255255", "+");
+        operatorsColors.put("#750130","-");
+        operatorsColors.put("#1480211","<");
         operatorsColors.put("#00255", ">");
+        operatorsColors.put("#02550",".");
+        operatorsColors.put("#2552550",",");
+        operatorsColors.put("#2551270","[");
+        operatorsColors.put("#25500","]");
         currentX = 0;
         currentY = 0;
     }
