@@ -29,7 +29,7 @@ public class Main {
 			try {
 				switch (check_file_type((String)options.valueOf("p"))) {
 				case 0: //fichier invalide
-					throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf extension");
+					throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
 				case 1: //fichier texte
 					if (options.has("check")) {
 						InterpreterText inte = new InterpreterText((String)options.valueOf("p"), null, null);
