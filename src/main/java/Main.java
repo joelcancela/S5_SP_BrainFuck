@@ -76,6 +76,8 @@ public class Main {
 					System.exit(2);
 				case "IncorrectFileTypeException":
 					System.exit(3);
+				case "FileNotFoundException":
+					System.exit(3);
 				default:
 					break;
 

@@ -12,7 +12,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class In implements Operator {
-	
+
 	private String filename;
 	private Scanner sc;
 	private BufferedReader buffer;
@@ -40,10 +40,8 @@ public class In implements Operator {
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);
 		}
 		else {
-		
-				buffer = new BufferedReader(new FileReader(filename));
-				interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)buffer.read();
-			
+			buffer = new BufferedReader(new FileReader(filename));
+			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)buffer.read();	
 			buffer.close();
 		}
 		return true;

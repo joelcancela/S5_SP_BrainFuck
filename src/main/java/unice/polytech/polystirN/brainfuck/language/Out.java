@@ -12,7 +12,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Out implements Operator {
-	
+
 	private String filename;
 	private File fichier;
 
@@ -32,15 +32,14 @@ public class Out implements Operator {
 	 */
 	@Override
 	public boolean doOperation(Interpreter interpreter) throws Exception {
-		if(filename==null) {
+		if(filename == null) {
 			System.out.print((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
 		}
 		else {
-				fichier = new File(filename);
-				FileWriter fichierw = new FileWriter (filename,true);
-				fichierw.write(((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
-				fichierw.close();
-				
+			fichier = new File(filename);
+			FileWriter fichierw = new FileWriter (filename,true);
+			fichierw.write(((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
+			fichierw.close();		
 		}
 		return true;
 	}

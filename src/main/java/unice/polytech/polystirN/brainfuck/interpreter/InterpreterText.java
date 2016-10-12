@@ -13,11 +13,11 @@ public class InterpreterText extends Interpreter {
     private BufferedReader buffer;
 
     public InterpreterText(String filename, String inputFile, String outputFile) throws Exception {
-        this(filename);
+    	super(inputFile, outputFile);
+        buffer = new BufferedReader(new FileReader(filename));
     }
 
     public InterpreterText(String filename) throws Exception{
-        super();
         buffer = new BufferedReader(new FileReader(filename));
     }
 
