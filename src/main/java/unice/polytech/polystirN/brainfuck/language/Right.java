@@ -21,7 +21,7 @@ public class Right implements Operator {
      *                                             the value of 299999 so it can't be moved to the right or if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
+    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
         int p = interpreter.getMemory().getP();
 
         //Anomaly cases :

@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,7 +31,7 @@ public class JumpBackTest {
         //Nominal case (syntaxe longue)-------------------------
 	        //Test boucle simple operations---------------------
 	    	try {
-	            a = new InterpreterText("./examples/L2/JUMP0.bf");
+	            a = new Interpreter("./examples/L2/JUMP0.bf");
 	            a.executeFile();
 	            assertEquals(1, a.getMemory().getCells()[0]);
 	            assertEquals(0, a.getMemory().getCells()[1]);
@@ -40,7 +39,7 @@ public class JumpBackTest {
 	            e.printStackTrace();
 	        }
 	        try {
-	            a = new InterpreterText("./examples/L2/JUMP1.bf");
+	            a = new Interpreter("./examples/L2/JUMP1.bf");
 	            a.executeFile();
 	            assertEquals(5, a.getMemory().getCells()[a.getMemory().getP()]);
 	        } catch (Exception e) {
@@ -50,7 +49,7 @@ public class JumpBackTest {
 	        
         	//Boucles internes-----------------------------------
 	        try {
-	            a = new InterpreterText("./examples/L2/JUMP2.bf");
+	            a = new Interpreter("./examples/L2/JUMP2.bf");
 	            a.executeFile();
 	            assertEquals(0, a.getMemory().getCells()[0]);
 	            assertEquals(0, a.getMemory().getCells()[1]);
@@ -76,7 +75,7 @@ public class JumpBackTest {
 					System.out.println("e1 : "+e1 +" e2 : "+e2 +" e3 : "+e3);
 	    	 */
 	    	try {
-	            a = new InterpreterText("./examples/L2/JUMP4.bf");
+	            a = new Interpreter("./examples/L2/JUMP4.bf");
 	            a.executeFile();
 	            assertEquals(2, a.getMemory().getCells()[2]);
 	            assertEquals(3, a.getMemory().getCells()[3]);
@@ -85,7 +84,7 @@ public class JumpBackTest {
 	        }
 	    	
 	        try {
-	            a = new InterpreterText("./examples/L2/JUMP3.bf");
+	            a = new Interpreter("./examples/L2/JUMP3.bf");
 	            a.executeFile();
 	            assertEquals(2, a.getMemory().getCells()[3]);
 	            assertEquals(12, a.getMemory().getCells()[4]);
@@ -98,7 +97,7 @@ public class JumpBackTest {
 	        
 	  //Anomaly case (syntaxe longue)---------------------------------------
 	        try {
-	            a = new InterpreterText("./examples/L2/JUMP5.bf");
+	            a = new Interpreter("./examples/L2/JUMP5.bf");
 	            a.executeFile();
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -109,7 +108,7 @@ public class JumpBackTest {
 	        
 	  //Complete program : Hello world (syntaxe courte)---------------------
 	        try {
-	            a = new InterpreterText("./examples/helloworld.bf");
+	            a = new Interpreter("./examples/helloworld.bf");
 	            a.executeFile();
 	        } catch (Exception e) {
 	            e.printStackTrace();

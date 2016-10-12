@@ -21,7 +21,7 @@ public class Left implements Operator {
      *                                             the value of 0 so it can't be moved to the left or if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
      */
-    public boolean doOperation(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
+    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
         int p = interpreter.getMemory().getP();
 
         //Anomaly cases :

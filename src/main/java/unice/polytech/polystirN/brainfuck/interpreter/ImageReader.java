@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import unice.polytech.polystirN.brainfuck.exceptions.BadSquareColorException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 
@@ -11,10 +12,12 @@ import java.util.HashMap;
 /**
  * Created by Joel CANCELA VAZ on 05/10/2016.
  */
-public class InterpreterImage extends Interpreter {
+public class ImageReader extends Reader {
     private BufferedImage buffer;
     private int width;
     private int height;
+    private int currentX;
+    private int currentY;
     private HashMap<String, String> operatorsColors;
     private final int pixelSize = 3;
 
@@ -23,45 +26,45 @@ public class InterpreterImage extends Interpreter {
      * sets the correct operatorsKeywords to interpret as operators
      */
 
-    public InterpreterImage(String filename) throws Exception {
+    public ImageReader(String filename) throws Exception {
         this();
-        if (!filename.matches("(.*).bmp")) {
-            throw new IncorrectFileTypeException(filename + " must have .bmp extension");
-        }
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
         height = buffer.getHeight();
     }
 
-    public InterpreterImage() throws Exception {
-        super();
+    public ImageReader() throws Exception {
         operatorsColors = new HashMap<>();
         operatorsColors.put("#255255255","+");
         operatorsColors.put("#00255",">");
-
+        currentX=0;
+        currentY=0;
     }
-
+    
     @Override
-    public boolean rewriteFile() throws Exception {
-        return false;
+    public boolean hasNext() throws Exception{
+    	if(currentX==width){
+    		return (isEnd(0,currentY+1));
+    	}else {
+    		return (isEnd(currentX+1,currentY));
+    	}
     }
-
+    
     @Override
-    public boolean executeFile() throws Exception {
-        for (int y = 0; y < height; ) {
-            for (int x = 0; x < width; x += pixelSize) {
-                if (!isPixelConform(x, y)) {
-                    return false;
-                }
-                if(isEnd(x,y)){
-                    return true;
-                }
-                String operator = operatorsColors.get(printPixel(buffer.getRGB(x,y)));
-                getOperatorsKeywords().get(operator).doOperation(this);
-            }
-            y += pixelSize;
-        }
-        return true;
+    public String next() throws Exception{
+    	if(currentX==width){
+    		if (isPixelConform(0,currentY+1)) {
+    			return operatorsColors.get(printPixel(buffer.getRGB(0,currentY+1)));
+    		}else{
+    			throw new BadSquareColorException("Square number : 0 hasn't its pixels with same colors");
+    		}
+    	}else{
+    		if (isPixelConform(currentX+1,currentY)) {
+    			return operatorsColors.get(printPixel(buffer.getRGB(currentX+1,currentY)));
+    		}else{
+    			throw new BadSquareColorException("Square number : "+(currentX+1)+" hasn't its pixels with same colors");
+    		}//TODO joel fdp
+    	}
     }
 
     @Override
@@ -93,7 +96,7 @@ public class InterpreterImage extends Interpreter {
 
     public boolean isEnd(int x,int y){
         if(printPixel(buffer.getRGB(x,y)).equals("#255255255"))
-        return true;
+        	return true;
 
         return false;
     }

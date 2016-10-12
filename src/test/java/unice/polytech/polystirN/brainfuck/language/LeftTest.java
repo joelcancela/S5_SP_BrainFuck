@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,28 +31,28 @@ public class LeftTest {
 
         //Nominal cases
         //Nominal case 1, pointer at position 1
-        a = new InterpreterText("./examples/empty.bf");
+        a = new Interpreter("./examples/empty.bf");
         a.getMemory().setP(1);
-        assertEquals(true, l.doOperation(a));
+        assertEquals(true, l.execute(a));
         assertEquals(0, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
-        a = new InterpreterText("./examples/empty.bf");
+        a = new Interpreter("./examples/empty.bf");
         a.getMemory().setP(14999);
-        assertEquals(true, l.doOperation(a));
+        assertEquals(true, l.execute(a));
         assertEquals(14998, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29999
-        a = new InterpreterText("./examples/empty.bf");
+        a = new Interpreter("./examples/empty.bf");
         a.getMemory().setP(29999);
-        assertEquals(true, l.doOperation(a));
+        assertEquals(true, l.execute(a));
         assertEquals(29998, a.getMemory().getP());
 
         //Anomaly cases
         //Anomaly case 1, shift pointer to the left when it's at position 0
         try {
-        	a = new InterpreterText("./examples/empty.bf");
-            l.doOperation(a);
+        	a = new Interpreter("./examples/empty.bf");
+            l.execute(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
@@ -61,9 +60,9 @@ public class LeftTest {
 
         //Anomaly case 2, shift pointer to the left when it's at illegal position (30000)
         try {
-        	a = new InterpreterText("./examples/empty.bf");
+        	a = new Interpreter("./examples/empty.bf");
         	a.getMemory().setP(30000);
-            l.doOperation(a);
+            l.execute(a);
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer is at illegal position", e.getMessage());

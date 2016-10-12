@@ -31,7 +31,7 @@ public class Out implements Operator {
 	 *  @return true if the character was successfully written, false if not.
 	 */
 	@Override
-	public boolean doOperation(Interpreter interpreter) throws Exception {
+	public boolean execute(Interpreter interpreter) throws Exception {
 		if(filename == null) {
 			System.out.print((char)(interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
 		}

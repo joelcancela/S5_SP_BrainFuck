@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.interpreter.InterpreterText;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,7 +33,7 @@ public class IncrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-        	a = new InterpreterText("./examples/empty.bf");
+        	a = new Interpreter("./examples/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -43,7 +42,7 @@ public class IncrementTest {
 
         //Nominal case 2, incrementation of c0 255 times
         try {
-        	a = new InterpreterText("./examples/incrementMax255.bf");
+        	a = new Interpreter("./examples/incrementMax255.bf");
             a.executeFile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -52,7 +51,7 @@ public class IncrementTest {
 
         //Nominal case 3, incrementation of c0 7 times
         try {
-        	a = new InterpreterText("./examples/incrementC0by7.bf");
+        	a = new Interpreter("./examples/incrementC0by7.bf");
             a.executeFile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -62,7 +61,7 @@ public class IncrementTest {
         //Anomaly cases
         //Anomaly case 1, incrementation of c0 256 times
         try {
-        	a = new InterpreterText("./examples/L1/INCRError256.bf");
+        	a = new Interpreter("./examples/L1/INCRError256.bf");
             a.executeFile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
@@ -75,7 +74,7 @@ public class IncrementTest {
 
         //Anomaly case 2, incrementation of c-1
         try {
-        	a = new InterpreterText("./examples/incrementMax255.bf");
+        	a = new Interpreter("./examples/incrementMax255.bf");
             a.getMemory().setP(-1);
             a.executeFile();
         } catch (Exception e) {
@@ -90,7 +89,7 @@ public class IncrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-        	a = new InterpreterText("./examples/empty.bf");
+        	a = new Interpreter("./examples/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -99,7 +98,7 @@ public class IncrementTest {
 
         //Nominal case 2, incrementation of c0 255 times
         try {
-        	a = new InterpreterText("./examples/L1/INCRMax255.bf");
+        	a = new Interpreter("./examples/L1/INCRMax255.bf");
             a.executeFile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -108,7 +107,7 @@ public class IncrementTest {
 
         //Nominal case 3, incrementation of c0 7 times
         try {
-        	a = new InterpreterText("./examples/L1/INCRC0by7.bf");
+        	a = new Interpreter("./examples/L1/INCRC0by7.bf");
             a.executeFile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -118,7 +117,7 @@ public class IncrementTest {
         //Anomaly cases
         //Anomaly case 1, incrementation of c0 256 times
         try {
-        	a = new InterpreterText("./examples/L1/INCRError256.bf");
+        	a = new Interpreter("./examples/L1/INCRError256.bf");
             a.executeFile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
@@ -131,7 +130,7 @@ public class IncrementTest {
 
         //Anomaly case 2, incrementation of c-1
         try {
-        	a = new InterpreterText("./examples/L1/INCRMax255.bf");
+        	a = new Interpreter("./examples/L1/INCRMax255.bf");
             a.getMemory().setP(-1);
             a.executeFile();
         } catch (Exception e) {
