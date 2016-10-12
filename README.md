@@ -47,7 +47,7 @@ Our group is called PolyStirN.
 
 ### Week 39-40
 
-- [ ] Start Level 2, do s5 and s6
+- [x] Start Level 2, do s5 and s6
 - [x] Do the "Take a step back" review + justify all your choices
 - [x] Do some planification
 
