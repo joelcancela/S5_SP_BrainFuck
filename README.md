@@ -42,6 +42,7 @@ Our group is called PolyStirN.
 - [ ] Rapport s6
 - [ ] Keep calm and step back (L2)
 - [x] Adapt the main to be able to handle every flags
+
 ---
 
 ### Week 39-40
@@ -49,6 +50,7 @@ Our group is called PolyStirN.
 - [ ] Start Level 2, do s5 and s6
 - [x] Do the "Take a step back" review + justify all your choices
 - [x] Do some planification
+
 ---
 
 ### Week 37-38
