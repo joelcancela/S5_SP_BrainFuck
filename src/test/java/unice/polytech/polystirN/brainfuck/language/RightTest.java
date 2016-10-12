@@ -31,18 +31,18 @@ public class RightTest {
 
         //Nominal cases
         //Nominal case 1, pointer at position 0
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         assertEquals(true, r.execute(a));
         assertEquals(1, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(14999);
         assertEquals(true, r.execute(a));
         assertEquals(15000, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29998
-        a = new Interpreter("./examples/empty.bf");
+        a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(29998);
         assertEquals(true, r.execute(a));
         assertEquals(29999, a.getMemory().getP());
@@ -50,7 +50,7 @@ public class RightTest {
         //Anomaly cases
         //Anomaly case 1, shift pointer to the right when it's at illegal position (-1)
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
             a.getMemory().setP(-1);
             r.execute(a);
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class RightTest {
 
         //Anomaly case 2, shift pointer to the right when it's at position 29999
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
             a.getMemory().setP(29999);
             r.execute(a);
         } catch (Exception e) {

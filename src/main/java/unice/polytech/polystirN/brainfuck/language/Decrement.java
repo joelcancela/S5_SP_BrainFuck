@@ -15,7 +15,7 @@ public class Decrement implements Operator {
     /**
      * This method execute all the decrement operator operations.
      *
-     * @param memory is the current memory state
+     * @param interpreter is the current interpreter instance
      * @return true if the operation ended well, else false
      * @throws PointerPositionOutOfBoundsException if the pointer position is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryUnderflowException            if the operation goes out of bounds of the memory

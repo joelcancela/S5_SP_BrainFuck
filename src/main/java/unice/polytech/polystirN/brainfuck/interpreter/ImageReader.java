@@ -1,8 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
 import unice.polytech.polystirN.brainfuck.exceptions.BadSquareColorException;
-import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
-import unice.polytech.polystirN.brainfuck.language.Operator;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,44 +8,43 @@ import java.io.File;
 import java.util.HashMap;
 
 /**
- * Created by Joel CANCELA VAZ on 05/10/2016.
+ * Class used to read images and translate them into instructions
+ *
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-public class ImageReader extends Reader {
+class ImageReader extends Reader {
     private BufferedImage buffer;
     private int width;
     private int currentX;
     private int currentY;
-    private HashMap<String, String> operatorsColors;
-    private final int pixelSize = 3;
+    private HashMap<String, String> operatorsColors; //binds colors and operations
+    private final int pixelSize = 3; //pixel width and height
 
-    /**
-     * This method resets the memory and the pointer and
-     * sets the correct operatorsKeywords to interpret as operators
-     */
 
-    public ImageReader(String filename) throws Exception {
+    ImageReader(String filename) throws Exception {
         this();
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
     }
 
-    public ImageReader() throws Exception {
+    private ImageReader() throws Exception {
         operatorsColors = new HashMap<>();
         operatorsColors.put("#255255255", "+");
-        operatorsColors.put("#750130","-");
-        operatorsColors.put("#1480211","<");
+        operatorsColors.put("#750130", "-");
+        operatorsColors.put("#1480211", "<");
         operatorsColors.put("#00255", ">");
-        operatorsColors.put("#02550",".");
-        operatorsColors.put("#2552550",",");
-        operatorsColors.put("#2551270","[");
-        operatorsColors.put("#25500","]");
+        operatorsColors.put("#02550", ".");
+        operatorsColors.put("#2552550", ",");
+        operatorsColors.put("#2551270", "[");
+        operatorsColors.put("#25500", "]");
         currentX = 0;
         currentY = 0;
     }
 
     @Override
     public boolean hasNext() throws Exception {
-            return (!isEnd(currentX, currentY));
+        return (!isEnd(currentX, currentY));
 
     }
 
@@ -56,18 +53,22 @@ public class ImageReader extends Reader {
         int savedX = currentX;
         int savedY = currentY;
         if (currentX == (width - pixelSize)) {
-            if (isPixelConform(0, currentY + pixelSize)) {
+            if (isPixelConform(currentX, currentY)) {
                 currentX = 0;
                 currentY += pixelSize;
 
             } else {
-                throw new BadSquareColorException("Square number : 0 hasn't its pixels with same colors");//TODO
+                int b = (currentX / pixelSize) + 1;
+                throw new BadSquareColorException(b);
             }
         } else {
-            if (isPixelConform(currentX + pixelSize, currentY)) {
+            if (isPixelConform(currentX, currentY)) {
                 currentX += pixelSize;
             } else {
-                throw new BadSquareColorException("Square number : " + (currentX + 1) + " hasn't its pixels with same colors");//TODO
+                int a = width / pixelSize;
+                int b = (currentY / pixelSize) * a;
+                int c = (currentX / pixelSize) + 1;
+                throw new BadSquareColorException(b + c);
             }
         }
         return operatorsColors.get(printPixel(buffer.getRGB(savedX, savedY)));
@@ -79,10 +80,10 @@ public class ImageReader extends Reader {
         return buffer;
     }
 
-    public boolean isPixelConform(int currentX, int currentY) {
+    private boolean isPixelConform(int currentX, int currentY) {
         int color = buffer.getRGB(currentX, currentY);
-        for (int y = currentY; y < currentY + (pixelSize - 1); y++) {
-            for (int x = currentX; x < currentX + (pixelSize - 1); x++) {
+        for (int y = currentY; y < currentY + (pixelSize); y++) {
+            for (int x = currentX; x < currentX + (pixelSize); x++) {
                 if (buffer.getRGB(x, y) != color) {
                     return false;
                 }
@@ -93,7 +94,7 @@ public class ImageReader extends Reader {
     }
 
 
-    public String printPixel(int pixel) {
+    private String printPixel(int pixel) {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = (pixel) & 0xff;
@@ -101,7 +102,7 @@ public class ImageReader extends Reader {
 
     }
 
-    public boolean isEnd(int x, int y) {
+    private boolean isEnd(int x, int y) {
         return (printPixel(buffer.getRGB(x, y)).equals("#000"));
     }
 

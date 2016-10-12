@@ -1,7 +1,7 @@
 package unice.polytech.polystirN.brainfuck.exceptions;
 
 /**
- * Exception class for loop without end
+ * Exception class for malformed loops
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI

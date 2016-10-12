@@ -12,10 +12,10 @@ public interface Operator {
     /**
      * This method execute all the operations associated with the corresponding operator.
      *
-     * @param The interpreter of the brainfuck language
+     * @param interpreter is the current instance of the interpreter
      * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity or pointer range position
      */
-    public boolean execute(Interpreter interpreter) throws Exception;
-    
+    boolean execute(Interpreter interpreter) throws Exception;
+
 }

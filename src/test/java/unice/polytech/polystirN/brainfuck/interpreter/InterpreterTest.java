@@ -62,6 +62,39 @@ public class InterpreterTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        try {
+            a = new Interpreter("./examples/images/BadSquare1.bmp");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("Square #1 is not monochrome",e.getMessage());
+        }
+
+        try {
+            a = new Interpreter("./examples/images/BadSquare4.bmp");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("Square #4 is not monochrome",e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare7.bmp");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("Square #7 is not monochrome",e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare11.bmp");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("Square #11 is not monochrome",e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare25.bmp");
+            a.executeFile();
+        } catch (Exception e) {
+            assertEquals("Square #25 is not monochrome",e.getMessage());
+        }
         
         //Anomaly cases
         //Test with out of bounds left :
