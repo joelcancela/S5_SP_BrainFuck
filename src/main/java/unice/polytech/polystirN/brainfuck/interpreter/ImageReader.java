@@ -15,38 +15,34 @@ import java.util.HashMap;
  */
 class ImageReader extends Reader {
     private BufferedImage buffer;
-    private int width;
-    private int height;
-    private int currentX;
-    private int currentY;
+    private int width; //width of the picture
+    private int height; //height of the picture
+    private int currentX; //current x coordinate of the buffer
+    private int currentY; //current y coordinate of the buffer
     private HashMap<String, String> operatorsColors; //binds colors and operations
     private final int pixelSize = 3; //pixel width and height
 
 
     ImageReader(String filename) throws Exception {
-        this();
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
         height = buffer.getHeight();
-    }
-
-    private ImageReader() throws Exception {
         operatorsColors = new HashMap<>();
-        operatorsColors.put("#255255255", "+");
-        operatorsColors.put("#750130", "-");
-        operatorsColors.put("#1480211", "<");
-        operatorsColors.put("#00255", ">");
-        operatorsColors.put("#02550", ".");
-        operatorsColors.put("#2552550", ",");
-        operatorsColors.put("#2551270", "[");
-        operatorsColors.put("#25500", "]");
+        operatorsColors.put("#FFFFFF", "+");
+        operatorsColors.put("#4B0082", "-");
+        operatorsColors.put("#9400D3", "<");
+        operatorsColors.put("#0000FF", ">");
+        operatorsColors.put("#00FF00", ".");
+        operatorsColors.put("#FFFF00", ",");
+        operatorsColors.put("#FF7F00", "[");
+        operatorsColors.put("#FF0000", "]");
         currentX = 0;
         currentY = 0;
     }
 
     @Override
     public boolean hasNext() throws Exception {
-        return (!isEnd(currentX, currentY)) ;
+        return (!isEnd(currentX, currentY));
 
     }
 
@@ -100,12 +96,12 @@ class ImageReader extends Reader {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = (pixel) & 0xff;
-        return "#" + red + "" + green + "" + blue;
+        return String.format("#%02X%02X%02X", red, green, blue);
 
     }
 
     private boolean isEnd(int x, int y) {
-        return ((((x>=width)||(y>=height))) || (printPixel(buffer.getRGB(x, y)).equals("#000")));
+        return ((((x >= width) || (y >= height))) || (printPixel(buffer.getRGB(x, y)).equals("#000000")));
     }
 
 
