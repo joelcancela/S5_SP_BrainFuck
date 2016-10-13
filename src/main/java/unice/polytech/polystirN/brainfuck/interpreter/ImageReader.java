@@ -22,7 +22,12 @@ class ImageReader extends Reader {
     private HashMap<String, String> operatorsColors; //binds colors and operations
     private final int pixelSize = 3; //pixel width and height
 
-
+    /**
+     * Constructor for ImageReader
+     *
+     * @param filename is the image filename to open
+     * @throws Exception if the filename is incorrect or null
+     */
     ImageReader(String filename) throws Exception {
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
@@ -40,12 +45,23 @@ class ImageReader extends Reader {
         currentY = 0;
     }
 
+    /**
+     * Checks if there is another square to read on the picture
+     *
+     * @return true if this square is not the last to read, else false
+     */
     @Override
     public boolean hasNext() throws Exception {
         return (!isEnd(currentX, currentY));
 
     }
 
+    /**
+     * Reads a square and return the corresponding operator and increments the iteration
+     *
+     * @return String a string being the operator symbol
+     * @throws BadSquareColorException if a square doesn't have all its pixels with the same color
+     */
     @Override
     public String next() throws Exception {
         int savedX = currentX;
@@ -73,11 +89,23 @@ class ImageReader extends Reader {
 
     }
 
+    /**
+     * Getter of the buffer
+     *
+     * @return buffer being a BufferedImage
+     */
     @Override
     public Object getBuffer() {
         return buffer;
     }
 
+    /**
+     * Checks if a square has its pixels with the same colors
+     *
+     * @param currentX is the x coordinate of the top left pixel in the square
+     * @param currentY is the y coordinate of the top left pixel in the square
+     * @return true if the square is conform else false
+     */
     private boolean isPixelConform(int currentX, int currentY) {
         int color = buffer.getRGB(currentX, currentY);
         for (int y = currentY; y < currentY + (pixelSize); y++) {
@@ -91,7 +119,12 @@ class ImageReader extends Reader {
         return true;
     }
 
-
+    /**
+     * Prints the color of a pixel in hexadecimal notation #rrggbb
+     *
+     * @param pixel is an integer being the rgb color code of a pixel
+     * @return String being the hexadecimal notation of the color
+     */
     private String printPixel(int pixel) {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
@@ -100,6 +133,13 @@ class ImageReader extends Reader {
 
     }
 
+    /**
+     * Checks if the pixel is the last one
+     *
+     * @param x is the x coordinate of a pixel
+     * @param y is the y coordinate of a pixel
+     * @return true if the pixel is the last one or a black one, else false
+     */
     private boolean isEnd(int x, int y) {
         return ((((x >= width) || (y >= height))) || (printPixel(buffer.getRGB(x, y)).equals("#000000")));
     }

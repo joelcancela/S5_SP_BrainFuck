@@ -37,16 +37,16 @@ public class Main {
                     } else { //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) { 
                             Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
-                            inte.executeFile();
+                            inte.interpretFile();
                         } else if (options.has("i")) {
                             Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
-                            inte.executeFile();
+                            inte.interpretFile();
                         } else if (options.has("o")) {
                             Interpreter inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
-                            inte.executeFile();
+                            inte.interpretFile();
                         } else {
                             Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                            inte.executeFile();
+                            inte.interpretFile();
                         }
                     }
                 } else { //Error being thrown if the file type is invalid
