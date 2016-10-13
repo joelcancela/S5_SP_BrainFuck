@@ -32,7 +32,7 @@ public class DecrementTest {
         //Nominal case 1, with an empty file
         try {
             a = new Interpreter("./examples/L1/empty.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class DecrementTest {
         //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
         try {
             a = new Interpreter("./examples/L1/DECRSimple.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class DecrementTest {
         //Anomaly case 1, decrementation of c0
         try {
             a = new Interpreter("./examples/L1/DECRError.bf");
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
             assertEquals("value can't be negative", e.getMessage());
@@ -64,7 +64,7 @@ public class DecrementTest {
         //Nominal case 1, with an empty file
         try {
             a = new Interpreter("./examples/L1/empty.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class DecrementTest {
         //Nominal case 2, decrementation of c0 3 times then incrementation 3 times
         try {
             a = new Interpreter("./examples/L2/decrementSimple.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class DecrementTest {
         //Anomaly case 1, decrementation of c0
         try {
             a = new Interpreter("./examples/L2/decrementError.bf");
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
             assertEquals("value can't be negative", e.getMessage());

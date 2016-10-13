@@ -34,7 +34,7 @@ public class IncrementTest {
         //Nominal case 1, with an empty file
         try {
         	a = new Interpreter("./examples/L1/empty.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class IncrementTest {
         //Nominal case 2, incrementation of c0 255 times
         try {
         	a = new Interpreter("./examples/L2/incrementMax255.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class IncrementTest {
         //Nominal case 3, incrementation of c0 7 times
         try {
         	a = new Interpreter("./examples/L2/incrementC0by7.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class IncrementTest {
         //Anomaly case 1, incrementation of c0 256 times
         try {
         	a = new Interpreter("./examples/L1/INCRError256.bf");
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
             assertEquals("value can't be higher than 255", e.getMessage());
@@ -76,7 +76,7 @@ public class IncrementTest {
         try {
         	a = new Interpreter("./examples/L2/incrementMax255.bf");
             a.getMemory().setP(-1);
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
@@ -90,7 +90,7 @@ public class IncrementTest {
         //Nominal case 1, with an empty file
         try {
         	a = new Interpreter("./examples/L1/empty.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class IncrementTest {
         //Nominal case 2, incrementation of c0 255 times
         try {
         	a = new Interpreter("./examples/L1/INCRMax255.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,7 +108,7 @@ public class IncrementTest {
         //Nominal case 3, incrementation of c0 7 times
         try {
         	a = new Interpreter("./examples/L1/INCRC0by7.bf");
-            a.executeFile();
+            a.interpretFile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +118,7 @@ public class IncrementTest {
         //Anomaly case 1, incrementation of c0 256 times
         try {
         	a = new Interpreter("./examples/L1/INCRError256.bf");
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
             assertEquals("value can't be higher than 255", e.getMessage());
@@ -132,7 +132,7 @@ public class IncrementTest {
         try {
         	a = new Interpreter("./examples/L1/INCRMax255.bf");
             a.getMemory().setP(-1);
-            a.executeFile();
+            a.interpretFile();
         } catch (Exception e) {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
