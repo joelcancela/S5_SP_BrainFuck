@@ -16,6 +16,7 @@ import java.util.HashMap;
 class ImageReader extends Reader {
     private BufferedImage buffer;
     private int width;
+    private int height;
     private int currentX;
     private int currentY;
     private HashMap<String, String> operatorsColors; //binds colors and operations
@@ -26,6 +27,7 @@ class ImageReader extends Reader {
         this();
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
+        height = buffer.getHeight();
     }
 
     private ImageReader() throws Exception {
@@ -44,7 +46,7 @@ class ImageReader extends Reader {
 
     @Override
     public boolean hasNext() throws Exception {
-        return (!isEnd(currentX, currentY));
+        return (!isEnd(currentX, currentY)) ;
 
     }
 
@@ -103,7 +105,7 @@ class ImageReader extends Reader {
     }
 
     private boolean isEnd(int x, int y) {
-        return (printPixel(buffer.getRGB(x, y)).equals("#000"));
+        return ((((x>=width)||(y>=height))) || (printPixel(buffer.getRGB(x, y)).equals("#000")));
     }
 
 
