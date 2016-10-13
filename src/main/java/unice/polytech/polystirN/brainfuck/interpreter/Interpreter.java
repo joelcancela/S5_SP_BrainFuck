@@ -88,7 +88,7 @@ public class Interpreter {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
                 Operator op = getOperatorsKeywords().get(keyword);
-                if (getOperatorsKeywords().get(keyword) == null) {
+                if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
@@ -132,7 +132,12 @@ public class Interpreter {
                     System.out.print("[");
                 } else if (keyword.trim().equals("BACK")) {
                     System.out.print("]");
-                } else {
+                } else if (keyword.trim().equals("OUT")) {
+                    System.out.print(".");
+                } else if (keyword.trim().equals("IN")) {
+                    System.out.print(",");
+                } 
+                else {
                     System.out.print(keyword.trim());
                 }
             }
