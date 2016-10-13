@@ -1,6 +1,7 @@
 package unice.polytech.polystirN.brainfuck.language;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
@@ -14,14 +15,21 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 public class In implements Operator {
 
 	private String filename;
+	private BufferedReader buffer;
 
 	/**
 	 * Constructor of the In class
 	 * @param filename where In is supposed to read, or null if the operator
 	 * 		  is supposed to read on the standard input.
+	 * @throws FileNotFoundException 
 	 */
-	public In(String filename) {
+	public In(String filename) throws FileNotFoundException {
 		this.filename=filename;
+		buffer = new BufferedReader(new FileReader(filename));
+	}
+	
+	public In() throws FileNotFoundException {
+		this.filename = null;
 	}
 
 	/**
@@ -38,9 +46,7 @@ public class In implements Operator {
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);
 		}
 		else {
-			BufferedReader buffer = new BufferedReader(new FileReader(filename));
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)buffer.read();	
-			buffer.close();
 		}
 		return true;
 	}
