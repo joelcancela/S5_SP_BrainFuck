@@ -36,7 +36,7 @@ public class InterpreterTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         //Image Interpreter
         try {
             a = new Interpreter("./examples/images/12345.bmp");
@@ -68,41 +68,59 @@ public class InterpreterTest {
             a = new Interpreter("./examples/images/BadSquare1.bmp");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("Square #1 is not monochrome",e.getMessage());
+            assertEquals("Square #1 is not monochrome", e.getMessage());
         }
 
         try {
             a = new Interpreter("./examples/images/BadSquare4.bmp");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("Square #4 is not monochrome",e.getMessage());
+            assertEquals("Square #4 is not monochrome", e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare5.bmp");
+            a.interpretFile();
+        } catch (Exception e) {
+            assertEquals("Square #5 is not monochrome", e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare6.bmp");
+            a.interpretFile();
+        } catch (Exception e) {
+            assertEquals("Square #6 is not monochrome", e.getMessage());
         }
         try {
             a = new Interpreter("./examples/images/BadSquare7.bmp");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("Square #7 is not monochrome",e.getMessage());
+            assertEquals("Square #7 is not monochrome", e.getMessage());
         }
         try {
             a = new Interpreter("./examples/images/BadSquare11.bmp");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("Square #11 is not monochrome",e.getMessage());
+            assertEquals("Square #11 is not monochrome", e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/images/BadSquare12.bmp");
+            a.interpretFile();
+        } catch (Exception e) {
+            assertEquals("Square #12 is not monochrome", e.getMessage());
         }
         try {
             a = new Interpreter("./examples/images/BadSquare25.bmp");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("Square #25 is not monochrome",e.getMessage());
+            assertEquals("Square #25 is not monochrome", e.getMessage());
         }
-        
+
         //Anomaly cases
         //Test with out of bounds left :
         try {
             a = new Interpreter("./examples/L1/LEFTError.bf");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
         }
 
@@ -111,7 +129,7 @@ public class InterpreterTest {
             a = new Interpreter("./examples/L1/RIGHTError.bf");
             a.interpretFile();
         } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException",e.getClass().getSimpleName());
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
         }
     }
