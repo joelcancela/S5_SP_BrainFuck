@@ -3,6 +3,9 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 /**
  * TODO Maybe implement Iterable
  * Abstract class for the input reader
+ *
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public abstract class Reader {
 

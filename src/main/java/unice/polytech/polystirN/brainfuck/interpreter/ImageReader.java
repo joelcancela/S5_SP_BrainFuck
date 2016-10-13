@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 class ImageReader extends Reader {
-    private BufferedImage buffer;
+    private BufferedImage buffer; //buffer used to read pictures
     private int width; //width of the picture
     private int height; //height of the picture
     private int currentX; //current x coordinate of the buffer
