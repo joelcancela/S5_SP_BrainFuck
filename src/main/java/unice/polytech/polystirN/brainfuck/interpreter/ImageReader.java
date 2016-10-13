@@ -73,8 +73,8 @@ class ImageReader extends Reader {
 
             } else {
                 int a = (currentX / pixelSize) + 1;
-                int b = (currentY / pixelSize);
-                int c = a * (b + 1);
+                int b = (currentY / pixelSize) + 1;
+                int c = a * b;
                 throw new BadSquareColorException(c);
             }
         } else {
