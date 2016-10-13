@@ -28,10 +28,10 @@ public class Main {
             try {
                 if (check_file_type((String) options.valueOf("p"))) {
                     if (options.has("check")) {
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"), null, null);
+                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
                         inte.check();
                     } else if (options.has("rewrite")) {
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"), null, null);
+                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
                         inte.rewriteFile();
                     } else {
                         if (options.has("i") && options.has("o")) {
@@ -44,7 +44,7 @@ public class Main {
                             Interpreter inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
                             inte.executeFile();
                         } else {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), null, null);
+                            Interpreter inte = new Interpreter((String) options.valueOf("p"));
                             inte.executeFile();
                         }
                     }
