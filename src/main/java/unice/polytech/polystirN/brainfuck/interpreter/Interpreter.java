@@ -27,17 +27,11 @@ public class Interpreter {
 
 
     /**
-     * This method resets the memory and the pointer and
-     * sets the correct operatorsKeywords to interpret as operators
+     * Constructor for Interpreter
+     *
+     * @param filename is the name of the file to be interpreted
+     * @throws IncorrectFileTypeException if the filename has an invalid extension
      */
-    public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
-        this(filename);
-        operatorsKeywords.put("IN", new In(inputFile));
-        operatorsKeywords.put("OUT", new Out(outputFile));
-        operatorsKeywords.put(",", new In(inputFile));
-        operatorsKeywords.put(".", new Out(outputFile));
-    }
-
     public Interpreter(String filename) throws Exception {
         operatorsKeywords = new HashMap<>();
         operatorsKeywords.put("INCR", new Increment());
@@ -65,6 +59,42 @@ public class Interpreter {
         } else {
             throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
         }
+    }
+
+    /**
+     * Sets the correct operatorsKeywords to interpret as operators
+     *
+     * @param filename   is the name of the file to be interpreted
+     * @param inputFile  is the name of the file to replace the input (if null, keyboard by default)
+     * @param outputFile is the name of the file to replace the output (if null, console by default)
+     */
+    public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
+        this(filename);
+        operatorsKeywords.put("IN", new In(inputFile));
+        operatorsKeywords.put("OUT", new Out(outputFile));
+        operatorsKeywords.put(",", new In(inputFile));
+        operatorsKeywords.put(".", new Out(outputFile));
+    }
+
+    /**
+     * Interprets a file
+     *
+     * @return true if the interpretation has gone well
+     * @throws SyntaxErrorException if an invalid symbol or keyword is encountered
+     */
+    public boolean interpretFile() throws Exception {
+        String keyword;
+        while (reader.hasNext()) {
+            keyword = reader.next();
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
+                Operator op = getOperatorsKeywords().get(keyword);
+                if (getOperatorsKeywords().get(keyword) == null) {
+                    throw new SyntaxErrorException("Incorrect word operator");
+                }
+                op.execute(this);
+            }
+        }
+        return true;
     }
 
     /**
@@ -110,27 +140,26 @@ public class Interpreter {
         return true;
     }
 
-    public boolean executeFile() throws Exception {
-        String keyword;
-        while (reader.hasNext()) {
-            keyword = reader.next();
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
-                Operator op = getOperatorsKeywords().get(keyword);
-                if (getOperatorsKeywords().get(keyword) == null) {
-                    throw new SyntaxErrorException("Incorrect word operator");
-                }
-                op.execute(this);
-            }
-        }
-        return true;
+
+    /**
+     * TODO
+     * Checks if a program is well formed
+     */
+    public void check() {
+        System.out.println("I checked the file !");
     }
 
+    /**
+     * Getter for the reader attribute
+     *
+     * @return reader being the input reader of the interpreter
+     */
     public Reader getReader() {
         return reader;
     }
 
     /**
-     * getter for memory attribute
+     * Getter for the memory attribute
      *
      * @return memory
      */
@@ -139,16 +168,12 @@ public class Interpreter {
     }
 
     /**
-     * getter for OperatorsKeywords
+     * Getter for the OperatorsKeywords HashMap
      *
      * @return operatorKeywords
      */
     public HashMap<String, Operator> getOperatorsKeywords() {
         return operatorsKeywords;
-    }
-
-    public void check() {
-        System.out.println("I checked the file !");
     }
 
 }

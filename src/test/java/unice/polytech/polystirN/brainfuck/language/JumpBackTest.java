@@ -32,7 +32,7 @@ public class JumpBackTest {
 	        //Test boucle simple operations---------------------
 	    	try {
 	            a = new Interpreter("./examples/L2/JUMP0.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	            assertEquals(1, a.getMemory().getCells()[0]);
 	            assertEquals(0, a.getMemory().getCells()[1]);
 	        } catch (Exception e) {
@@ -40,7 +40,7 @@ public class JumpBackTest {
 	        }
 	        try {
 	            a = new Interpreter("./examples/L2/JUMP1.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	            assertEquals(5, a.getMemory().getCells()[a.getMemory().getP()]);
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -50,7 +50,7 @@ public class JumpBackTest {
         	//Boucles internes-----------------------------------
 	        try {
 	            a = new Interpreter("./examples/L2/JUMP2.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	            assertEquals(0, a.getMemory().getCells()[0]);
 	            assertEquals(0, a.getMemory().getCells()[1]);
 	            assertEquals(12, a.getMemory().getCells()[2]);
@@ -76,7 +76,7 @@ public class JumpBackTest {
 	    	 */
 	    	try {
 	            a = new Interpreter("./examples/L2/JUMP4.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	            assertEquals(2, a.getMemory().getCells()[2]);
 	            assertEquals(3, a.getMemory().getCells()[3]);
 	        } catch (Exception e) {
@@ -85,7 +85,7 @@ public class JumpBackTest {
 	    	
 	        try {
 	            a = new Interpreter("./examples/L2/JUMP3.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	            assertEquals(2, a.getMemory().getCells()[3]);
 	            assertEquals(12, a.getMemory().getCells()[4]);
 	            assertEquals(72, a.getMemory().getCells()[5]);
@@ -98,7 +98,7 @@ public class JumpBackTest {
 	  //Anomaly case (syntaxe longue)---------------------------------------
 	        try {
 	            a = new Interpreter("./examples/L2/JUMP5.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	        } catch (Exception e) {
 	            assertEquals("BadLoopException", e.getClass().getSimpleName());
 	            assertEquals("Loop without end : Missing BACK operator", e.getMessage());
@@ -108,7 +108,7 @@ public class JumpBackTest {
 	  //Complete program : Hello world (syntaxe courte)---------------------
 	        try {
 	            a = new Interpreter("./examples/L2/helloworld.bf");
-	            a.executeFile();
+	            a.interpretFile();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
