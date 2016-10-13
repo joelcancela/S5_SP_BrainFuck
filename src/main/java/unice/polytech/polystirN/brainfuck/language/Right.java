@@ -23,7 +23,6 @@ public class Right implements Operator {
      */
     public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
         int p = interpreter.getMemory().getP();
-
         //Anomaly cases :
         if (p == 29999)
             throw new PointerPositionOutOfBoundsException("pointer can't be moved to the right (already at position 29999)");

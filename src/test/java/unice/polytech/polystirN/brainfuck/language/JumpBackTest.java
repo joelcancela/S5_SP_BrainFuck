@@ -100,7 +100,6 @@ public class JumpBackTest {
 	            a = new Interpreter("./examples/L2/JUMP5.bf");
 	            a.executeFile();
 	        } catch (Exception e) {
-	            e.printStackTrace();
 	            assertEquals("BadLoopException", e.getClass().getSimpleName());
 	            assertEquals("Loop without end : Missing BACK operator", e.getMessage());
 	        }
@@ -108,7 +107,7 @@ public class JumpBackTest {
 	        
 	  //Complete program : Hello world (syntaxe courte)---------------------
 	        try {
-	            a = new Interpreter("./examples/helloworld.bf");
+	            a = new Interpreter("./examples/L2/helloworld.bf");
 	            a.executeFile();
 	        } catch (Exception e) {
 	            e.printStackTrace();

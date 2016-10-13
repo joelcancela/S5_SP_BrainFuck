@@ -33,7 +33,7 @@ public class IncrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class IncrementTest {
 
         //Nominal case 2, incrementation of c0 255 times
         try {
-        	a = new Interpreter("./examples/incrementMax255.bf");
+        	a = new Interpreter("./examples/L2/incrementMax255.bf");
             a.executeFile();
             assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class IncrementTest {
 
         //Nominal case 3, incrementation of c0 7 times
         try {
-        	a = new Interpreter("./examples/incrementC0by7.bf");
+        	a = new Interpreter("./examples/L2/incrementC0by7.bf");
             a.executeFile();
             assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class IncrementTest {
 
         //Anomaly case 2, incrementation of c-1
         try {
-        	a = new Interpreter("./examples/incrementMax255.bf");
+        	a = new Interpreter("./examples/L2/incrementMax255.bf");
             a.getMemory().setP(-1);
             a.executeFile();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class IncrementTest {
         //Nominal cases
         //Nominal case 1, with an empty file
         try {
-        	a = new Interpreter("./examples/empty.bf");
+        	a = new Interpreter("./examples/L1/empty.bf");
             a.executeFile();
             assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
         } catch (Exception e) {

@@ -15,7 +15,7 @@ public class Increment implements Operator {
     /**
      * This method execute all the Increment operator operations.
      *
-     * @param memory is the current Memory state
+     * @param interpreter is the current interpreter instance
      * @return true if the operation ended well, else false
      * @throws PointerPositionOutOfBoundsException if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
