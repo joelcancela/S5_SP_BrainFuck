@@ -52,9 +52,9 @@ public class Interpreter {
         operatorsKeywords.put(">", new Right());
         operatorsKeywords.put("[", new Jump());
         operatorsKeywords.put("]", new Back());
-        operatorsKeywords.put("IN", new In(null));
+        operatorsKeywords.put("IN", new In());
         operatorsKeywords.put("OUT", new Out(null));
-        operatorsKeywords.put(",", new In(null));
+        operatorsKeywords.put(",", new In());
         operatorsKeywords.put(".", new Out(null));
         memory = new Memory();
 
@@ -65,7 +65,6 @@ public class Interpreter {
         } else {
             throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
         }
-
     }
 
     /**
@@ -123,7 +122,6 @@ public class Interpreter {
                 op.execute(this);
             }
         }
-
         return true;
     }
 
