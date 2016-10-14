@@ -63,6 +63,14 @@ public class InterpreterTest {
             e.printStackTrace();
         }
 
+        try {
+            a = new Interpreter("./examples/images/out35.bmp");
+            a.interpretFile();
+            assertEquals(35, a.getMemory().getCells()[0]);//35 is # in ascii
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         try {
             a = new Interpreter("./examples/images/BadSquare1.bmp");

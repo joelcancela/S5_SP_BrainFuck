@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 
 /**
- * Model the virtual machine interpreting the
+ * Models the virtual machine interpreting the
  * brainfuck language.
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
@@ -17,12 +17,8 @@ import java.util.HashMap;
  */
 public class Interpreter {
 
-    /**
-     * memory represents the memory M
-     * operatorsKeywords is an HashMap linking each operator character to their correct operator
-     */
     private Memory memory;
-    private HashMap<String, Operator> operatorsKeywords;
+    private HashMap<String, Operator> operatorsKeywords; //HashMap linking each operator character to their correct operator
     private Reader reader;
 
 
@@ -136,8 +132,7 @@ public class Interpreter {
                     System.out.print(".");
                 } else if (keyword.trim().equals("IN")) {
                     System.out.print(",");
-                } 
-                else {
+                } else {
                     System.out.print(keyword.trim());
                 }
             }

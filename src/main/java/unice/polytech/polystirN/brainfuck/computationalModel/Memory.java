@@ -1,6 +1,7 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
-/**TODO Maybe transform into an ArrayList
+/**
+ * TODO Maybe transform into an ArrayList
  * Class that represents the memory
  * It also uses the pointer which is the index
  * of the current memory cell used
@@ -10,7 +11,7 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
  */
 public class Memory {
     private byte[] cells = {-128}; //Cells are all initialized to 0 (-128 in unsigned byte)
-    private int p; //Pointer
+    private int p; //Pointer to the current memory cell used
 
     /**
      * Constructor of Memory
@@ -23,7 +24,7 @@ public class Memory {
     /**
      * Gets the current memory state
      *
-     * @return cells being
+     * @return cells being all the data stored in memory
      */
     public byte[] getCells() {
         return cells;
@@ -32,7 +33,7 @@ public class Memory {
     /**
      * Gets the current memory cell index
      *
-     * @return Which memory cell is selected.
+     * @return p being the pointer
      */
     public int getP() {
         return p;
@@ -41,7 +42,7 @@ public class Memory {
     /**
      * Sets a new value to the memory cell index
      *
-     * @param nP New value of p.
+     * @param nP new value for the pointer p
      */
     public void setP(int nP) {
         p = nP;

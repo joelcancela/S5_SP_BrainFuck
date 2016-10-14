@@ -1,10 +1,11 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
-import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
  * Class used to specify the In operator behaviour
@@ -21,7 +22,7 @@ public class In implements Operator {
 	 * Constructor of the In class
 	 * @param filename where In is supposed to read, or null if the operator
 	 * 		  is supposed to read on the standard input.
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException if the filename is incorrect
 	 */
 	public In(String filename) throws FileNotFoundException {
 		this.filename=filename;
