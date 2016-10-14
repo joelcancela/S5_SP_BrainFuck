@@ -70,6 +70,7 @@ public class InterpreterTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println();
 
 
         try {
