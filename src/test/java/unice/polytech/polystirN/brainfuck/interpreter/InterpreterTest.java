@@ -141,5 +141,38 @@ public class InterpreterTest {
             assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
             assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
         }
+        
+        //Check tests :
+        //Bien formé :
+        try {
+            a = new Interpreter("./examples/L2/helloworld.bf");
+            a.check();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        //Mal formé :
+        try {
+            a = new Interpreter("./examples/L2/JUMP5.bf");
+            a.check();
+        } catch (Exception e) {
+            assertEquals("BadLoopException", e.getClass().getSimpleName());
+            assertEquals("Loop without end : Missing BACK operator", e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/L2/JUMPBACK6.bf");
+            a.check();
+        } catch (Exception e) {
+            assertEquals("BadLoopException", e.getClass().getSimpleName());
+            assertEquals("Loop without start : Missing JUMP operator", e.getMessage());
+        }
+        try {
+            a = new Interpreter("./examples/L2/BADPROG.bf");
+            a.check();
+        } catch (Exception e) {
+            assertEquals("SyntaxErrorException", e.getClass().getSimpleName());
+            assertEquals("Incorrect word operator", e.getMessage());
+        }
+
     }
 }

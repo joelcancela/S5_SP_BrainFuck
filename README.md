@@ -13,7 +13,7 @@ Our group is called PolyStirN.
 ---
 
 ##TODO
-[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)
+[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)<br/>
 [Lien des slides soutenance #1](https://www.icloud.com/keynote/0dPYGMDIF4jh_7oab-MVELDrA#PresentationBrainfuckSI3)
 
 ### Aghiles
@@ -32,7 +32,7 @@ Our group is called PolyStirN.
 
 ### Pierre
 
-- [ ] s10
+- [x] s10
 - [x] s11
 - [ ] Rapport s10
 - [ ] Rapport s11

@@ -59,6 +59,7 @@ public class Jump implements Operator {
                                 break;
                         }
                     }
+                    interpreter.endALoop();
                     return false;
                 }
 

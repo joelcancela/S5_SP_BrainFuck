@@ -1,6 +1,7 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
+import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.*;
@@ -145,11 +146,31 @@ public class Interpreter {
 
 
     /**
-     * TODO
+     *
      * Checks if a program is well formed
      */
-    public void check() {
-        System.out.println("I checked the file !");
+    public void check() throws Exception {
+        String keyword;
+        int nbOuvert = 0;
+        
+        while (reader.hasNext()) {
+            keyword = reader.next();
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
+                Operator op = getOperatorsKeywords().get(keyword);
+                if (op == null) {
+                    throw new SyntaxErrorException("Incorrect word operator");
+                }
+                if(keyword.equals("JUMP") || keyword.equals("["))
+                	nbOuvert++;
+                if(keyword.equals("BACK") || keyword.equals("]"))
+                	nbOuvert--;
+            }
+        }
+        if(nbOuvert>0)
+        	throw new BadLoopException("Loop without end : Missing BACK operator");
+        if(nbOuvert<0)
+        	throw new BadLoopException("Loop without start : Missing JUMP operator");
+        System.out.println("The program is well formed");
     }
 
     /**
