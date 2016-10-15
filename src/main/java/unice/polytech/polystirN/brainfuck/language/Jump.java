@@ -5,7 +5,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsE
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,18 +41,13 @@ public class Jump implements Operator {
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-
-        switch (interpreter.getReader().getClass().getSimpleName()) {
-            case "TextReader": //Dans le cas d'un fichier texte (.bf)
-                BufferedReader buffer = (BufferedReader) interpreter.getReader().getBuffer(); //Récupère le buffer adapté
-
+        
+        interpreter.startALoop();
                 //Special case : (value of initiale memory case is already equals to 0)
                 if (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0) {
-                    int c;
                     while (nbOuvert != 0) {
-                        c = buffer.read();
 
-                        instruction = getNextInstructionText(c, interpreter);
+                        instruction = getNextInstruction(interpreter);
                         switch (instruction) {
                             case "JUMP":
                             case "[":
@@ -70,13 +64,11 @@ public class Jump implements Operator {
 
                 //Nominal case :
                 while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
-                    int c;
                     while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
                         if (premierParcours) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
-                            c = buffer.read();
 
-                            instruction = getNextInstructionText(c, interpreter);
-                            if (!instruction.equals("-1")) {
+                            instruction = getNextInstruction(interpreter);
+                            if (!instruction.equals("NOI")) {
                                 file.add(instruction);
                                 iteration(instruction, interpreter, false, 0);
                             }
@@ -92,11 +84,7 @@ public class Jump implements Operator {
                     nbOuvert = 1;
                     i = 0;
                 }
-                break;
-
-            case "InterpreterImage": //Dans le cas d'une image
-                break;
-        }
+        interpreter.endALoop();
         return true;
     }
 
@@ -184,38 +172,28 @@ public class Jump implements Operator {
     }
 
     /**
-     * @param currentChar is the char
      * @param interpreter is the current interpreter instance
      * @return String being the next instruction
      * @throws SyntaxErrorException if the keyword is invalid
      * @throws BadLoopException is the loop has no closing
      */
-    private String getNextInstructionText(int currentChar, Interpreter interpreter) throws Exception {
-        String instruction = "";
-        BufferedReader buffer = (BufferedReader) interpreter.getReader().getBuffer();
-
-        if (currentChar == -1)
-            throw new BadLoopException("Loop without end : Missing BACK operator");
-
-        if ('A' <= currentChar && 'Z' >= currentChar) {
-            while ((char) currentChar != '\r' && (char) currentChar != '\n' && currentChar != -1) {
-                instruction += ((char) currentChar);
-                currentChar = buffer.read();
-            }
+    private String getNextInstruction(Interpreter interpreter) throws Exception {
+    	String instruction="";
+    	
+        if(interpreter.getReader().hasNext()==false)
+        	throw new BadLoopException("Loop without end : Missing BACK operator");
+        
+        instruction = interpreter.getReader().next();
+        
+        if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" "))) {
             Operator op = interpreter.getOperatorsKeywords().get(instruction);
             if (op == null) {
                 throw new SyntaxErrorException("Incorrect word operator");
             }
             return instruction;
-        } else {
-            if (((char) currentChar != '\r') && ((char) currentChar != '\n') && ((char) currentChar != '\t') && ((char) currentChar != ' ')) {
-                if (interpreter.getOperatorsKeywords().get(Character.toString((char) currentChar)) == null) {
-                    throw new SyntaxErrorException("Incorrect short expression");
-                }
-                return Character.toString((char) currentChar);
-            }
         }
-        return "-1";
+        
+        return "NOI";
     }
 
 }

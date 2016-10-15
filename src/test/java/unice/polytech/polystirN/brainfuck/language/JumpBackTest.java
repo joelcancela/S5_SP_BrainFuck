@@ -103,7 +103,30 @@ public class JumpBackTest {
 	            assertEquals("BadLoopException", e.getClass().getSimpleName());
 	            assertEquals("Loop without end : Missing BACK operator", e.getMessage());
 	        }
-	  //--------------------------------------------------------------------     
+	  //--------------------------------------------------------------------
+	        
+	 //Tests avec des fichiers bmp------------------------------------------
+		//Test boucle simple operations---------------------
+	        try {
+	            a = new Interpreter("./examples/images/NormalLoop.bmp");
+	            a.interpretFile();
+	            assertEquals(5, a.getMemory().getCells()[a.getMemory().getP()]);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }  
+	    //---------------------------------------------------
+	    //Boucles internes-----------------------------------
+	        try {
+	            a = new Interpreter("./examples/images/InternalLoop.bmp");
+	            a.interpretFile();
+	            assertEquals(0, a.getMemory().getCells()[0]);
+	            assertEquals(0, a.getMemory().getCells()[1]);
+	            assertEquals(12, a.getMemory().getCells()[2]);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    //---------------------------------------------------
+	 //--------------------------------------------------------------------
 	        
 	  //Complete program : Hello world (syntaxe courte)---------------------
 	        try {

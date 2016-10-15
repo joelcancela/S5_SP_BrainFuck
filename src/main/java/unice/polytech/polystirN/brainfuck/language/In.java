@@ -17,6 +17,7 @@ public class In implements Operator {
 
 	private String filename;
 	private BufferedReader buffer;
+	private Scanner sc;
 
 	/**
 	 * Constructor of the In class
@@ -43,7 +44,7 @@ public class In implements Operator {
 	@Override
 	public boolean execute(Interpreter interpreter) throws Exception {
 		if(filename == null) {
-			Scanner sc = new Scanner(System.in);
+			sc = new Scanner(System.in);
 			interpreter.getMemory().getCells()[interpreter.getMemory().getP()]=(byte)sc.next().charAt(0);
 		}
 		else {

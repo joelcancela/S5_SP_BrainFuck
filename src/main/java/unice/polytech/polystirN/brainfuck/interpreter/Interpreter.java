@@ -20,6 +20,7 @@ public class Interpreter {
     private Memory memory;
     private HashMap<String, Operator> operatorsKeywords; //HashMap linking each operator character to their correct operator
     private Reader reader;
+    private boolean inALoop;
 
 
     /**
@@ -55,6 +56,8 @@ public class Interpreter {
         } else {
             throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
         }
+        
+        inALoop = false;
     }
 
     /**
@@ -175,5 +178,27 @@ public class Interpreter {
     public HashMap<String, Operator> getOperatorsKeywords() {
         return operatorsKeywords;
     }
-
+    
+    /**
+     * Return true if the execution thread is in a loop
+     * 
+     * @return inALoop
+     */
+    public boolean isInALoop(){
+    	return inALoop;
+    }
+    
+    /**
+     * Change the status of inALoop to true
+     */
+    public void startALoop(){
+    	inALoop = true;
+    }
+    
+    /**
+     * Change the status of inALoop to false
+     */
+    public void endALoop(){
+    	inALoop = false;
+    }
 }

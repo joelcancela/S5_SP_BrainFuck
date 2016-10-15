@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
@@ -26,7 +27,10 @@ public class Back implements Operator {
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-
+        if(interpreter.isInALoop()==false)
+        	throw new BadLoopException("Loop without start : Missing JUMP operator");
+        
+        
         //Nominal case :
         return (dp > 0);
     }
