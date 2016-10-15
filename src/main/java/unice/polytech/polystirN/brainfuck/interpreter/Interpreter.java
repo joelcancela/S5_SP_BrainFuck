@@ -164,6 +164,9 @@ public class Interpreter {
                 	nbOuvert++;
                 if(keyword.equals("BACK") || keyword.equals("]"))
                 	nbOuvert--;
+                
+                if(nbOuvert<0)
+                	throw new BadLoopException("Loop without start : Missing JUMP operator");
             }
         }
         if(nbOuvert>0)
