@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.MemoryOverflowException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
@@ -24,7 +25,7 @@ public class Increment implements Operator {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
-        if ((p < 0) || (p > 29999)) {
+        if ((p < 0) || (p > Memory.size-1)) {
             throw new PointerPositionOutOfBoundsException("pointer must be between 0 and 29999 included");
         }
         //Test overflow

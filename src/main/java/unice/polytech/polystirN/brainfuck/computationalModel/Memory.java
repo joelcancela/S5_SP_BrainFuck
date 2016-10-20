@@ -12,13 +12,14 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
 public class Memory {
     private byte[] cells = {-128}; //Cells are all initialized to 0 (-128 in unsigned byte)
     private int p; //Pointer to the current memory cell used
+    public final static int size = 30000;
 
     /**
      * Constructor of Memory
      */
     public Memory() {
         p = 0;
-        cells = new byte[30000];
+        cells = new byte[size];
     }
 
     /**

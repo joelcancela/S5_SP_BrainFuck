@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.MemoryUnderflowException;
 import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
@@ -23,8 +24,8 @@ public class Decrement implements Operator {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
-        if (p < 0 || p > 29999) {
-            throw new PointerPositionOutOfBoundsException("pointer must be between 0 and 29999 included");
+        if (p < 0 || p > Memory.size-1) {
+            throw new PointerPositionOutOfBoundsException("pointer must be between 0 and "+(Memory.size-1)+" included");
         }
         //Test underflow
         if (((interpreter.getMemory().getCells()[p]) & 0xFF) == 0) {
