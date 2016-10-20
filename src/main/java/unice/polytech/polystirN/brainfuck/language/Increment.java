@@ -16,12 +16,11 @@ public class Increment implements Operator {
      * This method execute all the Increment operator operations.
      *
      * @param interpreter is the current interpreter instance
-     * @return true if the operation ended well, else false
      * @throws PointerPositionOutOfBoundsException if the pointer position
      *                                             is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryOverflowException             if the operation goes out of bounds of the memory
      */
-    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
+    public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
@@ -33,7 +32,6 @@ public class Increment implements Operator {
             throw new MemoryOverflowException("value can't be higher than 255");
         }
         interpreter.getMemory().getCells()[p]++;
-        return true;
     }
 }
 

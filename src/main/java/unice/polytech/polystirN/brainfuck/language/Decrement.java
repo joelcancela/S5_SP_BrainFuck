@@ -16,11 +16,10 @@ public class Decrement implements Operator {
      * This method execute all the decrement operator operations.
      *
      * @param interpreter is the current interpreter instance
-     * @return true if the operation ended well, else false
      * @throws PointerPositionOutOfBoundsException if the pointer position is recognized as invalid (out of bounds of memory capacity)
      * @throws MemoryUnderflowException            if the operation goes out of bounds of the memory
      */
-    public boolean execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
+    public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
@@ -32,7 +31,6 @@ public class Decrement implements Operator {
             throw new MemoryUnderflowException("value can't be negative");
         }
         interpreter.getMemory().getCells()[p]--;
-        return true;
     }
 
 

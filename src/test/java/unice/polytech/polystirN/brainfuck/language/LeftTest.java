@@ -33,19 +33,19 @@ public class LeftTest {
         //Nominal case 1, pointer at position 1
         a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(1);
-        assertEquals(true, l.execute(a));
+        l.execute(a);
         assertEquals(0, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
         a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(14999);
-        assertEquals(true, l.execute(a));
+        l.execute(a);
         assertEquals(14998, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29999
         a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(29999);
-        assertEquals(true, l.execute(a));
+        l.execute(a);
         assertEquals(29998, a.getMemory().getP());
 
         //Anomaly cases

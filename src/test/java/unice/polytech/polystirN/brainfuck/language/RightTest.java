@@ -32,19 +32,19 @@ public class RightTest {
         //Nominal cases
         //Nominal case 1, pointer at position 0
         a = new Interpreter("./examples/L1/empty.bf");
-        assertEquals(true, r.execute(a));
+        r.execute(a);
         assertEquals(1, a.getMemory().getP());
 
         //Nominal case 2, pointer at position 14999
         a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(14999);
-        assertEquals(true, r.execute(a));
+        r.execute(a);
         assertEquals(15000, a.getMemory().getP());
 
         //Nominal case 3, pointer at position 29998
         a = new Interpreter("./examples/L1/empty.bf");
         a.getMemory().setP(29998);
-        assertEquals(true, r.execute(a));
+        r.execute(a);
         assertEquals(29999, a.getMemory().getP());
 
         //Anomaly cases

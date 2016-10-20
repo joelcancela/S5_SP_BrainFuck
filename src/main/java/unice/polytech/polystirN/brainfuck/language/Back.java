@@ -17,22 +17,18 @@ public class Back implements Operator {
      * This method checks the content of the current memory cell.
      *
      * @param interpreter memory (M and P) of the current program and all of the following operations.
-     * @return true if the value is different to 0.
      * @throws PointerPositionOutOfBoundsException if the pointer value is inferior to 0.
      */
     @Override
-    public boolean execute(Interpreter interpreter) throws Exception {
+    public void execute(Interpreter interpreter) throws Exception {
         int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
 
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-        if(interpreter.isInALoop()==false)
+        if(!interpreter.isInALoop())
         	throw new BadLoopException("Loop without start : Missing JUMP operator");
-        
-        
-        //Nominal case :
-        return (dp > 0);
+
     }
 
 }

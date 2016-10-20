@@ -28,10 +28,9 @@ public class Out implements Operator {
      * Write the current cell memory content as an ASCII character, either on the standard output or in a file.
      *
      * @param interpreter is the current instance of interpreter
-     * @return true if the character was successfully written, false if not.
      */
     @Override
-    public boolean execute(Interpreter interpreter) throws Exception {
+    public void execute(Interpreter interpreter) throws Exception {
         if (filename == null) {
             System.out.print((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
         } else {
@@ -39,6 +38,5 @@ public class Out implements Operator {
             fichierw.write(((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
             fichierw.close();
         }
-        return true;
     }
 }

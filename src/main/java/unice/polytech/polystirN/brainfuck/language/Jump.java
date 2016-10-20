@@ -25,11 +25,10 @@ public class Jump implements Operator {
      * Else, this operator will read the next instruction until he meet the BACK operator. All operators encountered are executed if the memory cell is different to 0.
      *
      * @param interpreter memory (M and P) of the current program and all of the following operations.
-     * @return true if the loop is over.
      * @throws PointerPositionOutOfBoundsException if the pointer value is inferior to 0.
      */
     @Override
-    public boolean execute(Interpreter interpreter) throws Exception {
+    public void execute(Interpreter interpreter) throws Exception {
         int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
         int i = 0;
         boolean premierParcours = true;
@@ -60,7 +59,6 @@ public class Jump implements Operator {
                         }
                     }
                     interpreter.endALoop();
-                    return false;
                 }
 
                 //Nominal case :
@@ -86,7 +84,6 @@ public class Jump implements Operator {
                     i = 0;
                 }
         interpreter.endALoop();
-        return true;
     }
 
     /**
@@ -169,7 +166,8 @@ public class Jump implements Operator {
         if (interpreter.getOperatorsKeywords().get(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
-        return interpreter.getOperatorsKeywords().get(instruction.trim()).execute(interpreter);
+        interpreter.getOperatorsKeywords().get(instruction.trim()).execute(interpreter);
+        return true;
     }
 
     /**
