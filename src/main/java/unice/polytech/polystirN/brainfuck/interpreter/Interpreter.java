@@ -94,6 +94,7 @@ public class Interpreter {
                 op.execute(this);
             }
         }
+        System.out.println("C"+memory.getP()+": "+memory.getCells()[memory.getP()]);
         return true;
     }
 
