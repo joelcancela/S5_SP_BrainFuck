@@ -54,8 +54,6 @@ public class Interpreter {
             reader = new TextReader(filename);
         } else if (filename.matches("(.*).bmp")) {
             reader = new ImageReader(filename);
-        } else {
-            throw new IncorrectFileTypeException("Invalid type of file (not .bf and not .bmp");
         }
         
         inALoop = false;
@@ -147,7 +145,6 @@ public class Interpreter {
 
 
     /**
-     *
      * Checks if a program is well formed
      */
     public void check() throws Exception {
@@ -158,22 +155,18 @@ public class Interpreter {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
                 Operator op = getOperatorsKeywords().get(keyword);
-                if (op == null) {
+                if (op == null)
                     throw new SyntaxErrorException("Incorrect word operator");
-                }
                 if(keyword.equals("JUMP") || keyword.equals("["))
                 	nbOuvert++;
                 if(keyword.equals("BACK") || keyword.equals("]"))
-                	nbOuvert--;
-                
+                	nbOuvert--;         
                 if(nbOuvert<0)
                 	throw new BadLoopException("Loop without start : Missing JUMP operator");
             }
         }
         if(nbOuvert>0)
         	throw new BadLoopException("Loop without end : Missing BACK operator");
-        if(nbOuvert<0)
-        	throw new BadLoopException("Loop without start : Missing JUMP operator");
         System.out.println("The program is well formed");
     }
 
