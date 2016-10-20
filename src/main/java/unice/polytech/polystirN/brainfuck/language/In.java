@@ -26,8 +26,10 @@ public class In implements Operator {
 	 * @throws FileNotFoundException if the filename is incorrect
 	 */
 	public In(String filename) throws FileNotFoundException {
-		this.filename=filename;
-		buffer = new BufferedReader(new FileReader(filename));
+		this.filename = filename;
+		if (filename != null) {
+			buffer = new BufferedReader(new FileReader(filename));
+		}
 	}
 	
 	public In() throws FileNotFoundException {
