@@ -50,7 +50,7 @@ class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         int c;
-        String keyword = "";
+        String keyword ="";
 
         buffer.reset();
         c = buffer.read();
@@ -63,7 +63,6 @@ class TextReader extends Reader {
         } else {
             keyword = Character.toString((char) c);
         }
-
         return keyword;
     }
 

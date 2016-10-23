@@ -10,7 +10,7 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
-    private byte[] cells = {-128}; //Cells are all initialized to 0 (-128 in unsigned byte)
+    private byte[] cells; //Cells are all initialized to 0 (-128 in unsigned byte)
     private int p; //Pointer to the current memory cell used
     public final static int size = 30000;
 

@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class Interpreter {
 
     private Memory memory;
-    private HashMap<String, Operator> operatorsKeywords; //HashMap linking each operator character to their correct operator
+    private InstructionFactory factory;
     private Reader reader;
     private boolean inALoop;
 
@@ -31,24 +31,8 @@ public class Interpreter {
      * @throws IncorrectFileTypeException if the filename has an invalid extension
      */
     public Interpreter(String filename) throws Exception {
-        operatorsKeywords = new HashMap<>();
-        operatorsKeywords.put("INCR", new Increment());
-        operatorsKeywords.put("DECR", new Decrement());
-        operatorsKeywords.put("LEFT", new Left());
-        operatorsKeywords.put("RIGHT", new Right());
-        operatorsKeywords.put("JUMP", new Jump());
-        operatorsKeywords.put("BACK", new Back());
-        operatorsKeywords.put("+", new Increment());
-        operatorsKeywords.put("-", new Decrement());
-        operatorsKeywords.put("<", new Left());
-        operatorsKeywords.put(">", new Right());
-        operatorsKeywords.put("[", new Jump());
-        operatorsKeywords.put("]", new Back());
-        operatorsKeywords.put("IN", new In());
-        operatorsKeywords.put("OUT", new Out(null));
-        operatorsKeywords.put(",", new In());
-        operatorsKeywords.put(".", new Out(null));
-        memory = new Memory();
+        factory =new InstructionFactory();
+    	memory = new Memory();
 
         if (filename.matches("(.*).bf")) {
             reader = new TextReader(filename);
@@ -68,10 +52,7 @@ public class Interpreter {
      */
     public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
         this(filename);
-        operatorsKeywords.put("IN", new In(inputFile));
-        operatorsKeywords.put("OUT", new Out(outputFile));
-        operatorsKeywords.put(",", new In(inputFile));
-        operatorsKeywords.put(".", new Out(outputFile));
+        factory =new InstructionFactory( inputFile,outputFile);
     }
 
     /**
@@ -85,14 +66,14 @@ public class Interpreter {
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
-                Operator op = getOperatorsKeywords().get(keyword);
+            	Operator op = getFactory().getInstruction(keyword);
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
             }
         }
-        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()]);
+        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
         return true;
     }
 
@@ -109,9 +90,9 @@ public class Interpreter {
 
         while (reader.hasNext()) {
             keyword = reader.next();
-            if (getOperatorsKeywords().get(keyword.trim()) == null) {
+            if (getFactory().getInstruction(keyword.trim()) == null) {
                 for (int i = 0; i < keyword.trim().length(); i++) {
-                    if (getOperatorsKeywords().get(keyword.trim().substring(i, i + 1)) != null) {
+                    if (getFactory().getInstruction(keyword.trim().substring(i, i + 1)) != null) {
                         System.out.print(keyword.trim().substring(i, i + 1));
                     } else {
                         System.out.println();
@@ -154,12 +135,12 @@ public class Interpreter {
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
-                Operator op = getOperatorsKeywords().get(keyword);
+                Operator op = getFactory().getInstruction(keyword);
                 if (op == null)
                     throw new SyntaxErrorException("Incorrect word operator");
-                if(keyword.equals("JUMP") || keyword.equals("["))
+                if(keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00") )
                 	nbOuvert++;
-                if(keyword.equals("BACK") || keyword.equals("]"))
+                if(keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
                 	nbOuvert--;         
                 if(nbOuvert<0)
                 	throw new BadLoopException("Loop without start : Missing JUMP operator");
@@ -193,8 +174,8 @@ public class Interpreter {
      *
      * @return operatorKeywords
      */
-    public HashMap<String, Operator> getOperatorsKeywords() {
-        return operatorsKeywords;
+    public InstructionFactory getFactory() {
+        return factory;
     }
     
     /**

@@ -29,7 +29,7 @@ public class Jump implements Operator {
      */
     @Override
     public void execute(Interpreter interpreter) throws Exception {
-        int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()];
+        int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF;
         int i = 0;
         boolean premierParcours = true;
         String instruction;
@@ -100,10 +100,12 @@ public class Jump implements Operator {
         switch (instruction) {
             case "JUMP":
             case "[":
+            case "#FF7F00" :
                 nbOuvert++;
                 break;
             case "BACK":
             case "]":
+            case "#FF0000":
                 nbOuvert--;
                 break;
         }
@@ -111,7 +113,7 @@ public class Jump implements Operator {
 
         //Si on est pas dans la première itération du while et qu'on exécute :
         if (execute) {
-            if (file.get(index).equals("JUMP") || file.get(index).equals("[")) {
+            if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
                 index = internalLoop(index, interpreter); //Crée une boucle interne
             } else {
                 execute(instruction, interpreter); //Exécute l'opération
@@ -136,9 +138,9 @@ public class Jump implements Operator {
         //DEBUT BOUBLE INTERNE
         while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que cette boucle n'est pas terminée
             index = originalIndex;
-            while ((!file.get(index).equals("BACK")) && (!file.get(index).equals("]"))) {
+            while ((!file.get(index).equals("BACK")) && (!file.get(index).equals("]") && (!file.get(index).equals("#FF0000") ))) {
                 index++;
-                if (file.get(index).equals("JUMP") || file.get(index).equals("[")) { //Si on a une boucle dans cette boucle
+                if (file.get(index).equals("JUMP") || file.get(index).equals("[") || file.get(index).equals("#FF7F00")) { //Si on a une boucle dans cette boucle
                     nbOuvert++;
                     internalIndex = internalLoop(index, interpreter); //Lance récursivement des boucles internes et récupère l'index dans la liste des instructions
                     index = internalIndex + 1;
@@ -163,10 +165,10 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     public boolean execute(String instruction, Interpreter interpreter) throws Exception {
-        if (interpreter.getOperatorsKeywords().get(instruction) == null) {
+        if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
-        interpreter.getOperatorsKeywords().get(instruction.trim()).execute(interpreter);
+        interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
         return true;
     }
 
@@ -185,7 +187,7 @@ public class Jump implements Operator {
         instruction = interpreter.getReader().next();
         
         if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" "))) {
-            Operator op = interpreter.getOperatorsKeywords().get(instruction);
+            Operator op = interpreter.getFactory().getInstruction(instruction);
             if (op == null) {
                 throw new SyntaxErrorException("Incorrect word operator");
             }

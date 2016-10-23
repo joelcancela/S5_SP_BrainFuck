@@ -19,7 +19,6 @@ class ImageReader extends Reader {
     private int height; //height of the picture
     private int currentX; //current x coordinate of the buffer
     private int currentY; //current y coordinate of the buffer
-    private HashMap<String, String> operatorsColors; //binds colors and operations
     private final int pixelSize = 3; //pixel width and height
 
     /**
@@ -32,15 +31,6 @@ class ImageReader extends Reader {
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
         height = buffer.getHeight();
-        operatorsColors = new HashMap<>();
-        operatorsColors.put("#FFFFFF", "+");
-        operatorsColors.put("#4B0082", "-");
-        operatorsColors.put("#9400D3", "<");
-        operatorsColors.put("#0000FF", ">");
-        operatorsColors.put("#00FF00", ".");
-        operatorsColors.put("#FFFF00", ",");
-        operatorsColors.put("#FF7F00", "[");
-        operatorsColors.put("#FF0000", "]");
         currentX = 0;
         currentY = 0;
     }
@@ -87,7 +77,7 @@ class ImageReader extends Reader {
                 throw new BadSquareColorException(b + c);
             }
         }
-        return operatorsColors.get(printPixel(buffer.getRGB(savedX, savedY)));
+        return printPixel(buffer.getRGB(savedX, savedY)).trim();
 
     }
 
