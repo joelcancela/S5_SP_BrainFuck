@@ -1,6 +1,7 @@
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
+import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 /**
@@ -18,7 +19,8 @@ public class Main {
         //First, we got to configure the parser.
         OptionParser parser = new OptionParser("p:i:o:"); //: after a character means that an argument is mandatory for this flag.
         parser.accepts("check");
-        parser.accepts("rewrite"); //here we add the longs options.
+        parser.accepts("rewrite");
+        parser.accepts("translate");//here we add the longs options.
 
         OptionSet options = parser.parse(args); //Handle the args of the command line with the options.
 
@@ -34,8 +36,11 @@ public class Main {
                     } else if (options.has("rewrite")) { //Do we need to rewrite it ?
                         Interpreter inte = new Interpreter((String) options.valueOf("p"));
                         inte.rewriteFile();
+                    } else if (options.has("translate")) {
+                        ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
+                        iw.translate();
                     } else { //This else condition execute the file, with the proper input/output files
-                        if (options.has("i") && options.has("o")) { 
+                        if (options.has("i") && options.has("o")) {
                             Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
                             inte.interpretFile();
                         } else if (options.has("i")) {
