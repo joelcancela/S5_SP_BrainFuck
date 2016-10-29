@@ -150,7 +150,7 @@ public class Jump implements Operator {
             //FIN BOUCLE INTERNE
 
         }
-        while ((!(file.get(index).equals("BACK"))) && (!(file.get(index).equals("]")))) {//Permet de ne pas repasser par les instructions de la boucle si la case mémoire vaut 0
+        while ((!(file.get(index).equals("BACK"))) && (!(file.get(index).equals("]"))) && (!(file.get(index).equals("#FF0000")))) {//Permet de ne pas repasser par les instructions de la boucle si la case mémoire vaut 0
             index++;
         }
         nbOuvert--;
