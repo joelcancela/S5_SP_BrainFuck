@@ -25,11 +25,11 @@ public class Main {
         OptionSet options = parser.parse(args); //Handle the args of the command line with the options.
 
         if (args.length == 0) {
-            print_empty_message(); //Show a man-like message if no options have been given.
+            printEmptyMessage(); //Show a man-like message if no options have been given.
         }
         if (options.has("p")) { //Is there a file ?
             try {
-                if (check_file_type((String) options.valueOf("p"))) { //Is the type of the file valid ?
+                if (checkFileType((String) options.valueOf("p"))) { //Is the type of the file valid ?
                     if (options.has("check")) { //Do we need to check it ?
                         Interpreter inte = new Interpreter((String) options.valueOf("p"));
                         inte.check();
@@ -91,7 +91,7 @@ public class Main {
      * It shows a man-like message, allowing the user to know how to use
      * the program.
      */
-    private static void print_empty_message() {
+    private static void printEmptyMessage() {
         System.out.println("usage: bfck [-p <filename>] [-i <filename>] [-o <filename>]\n"
                 + "            [--rewrite] [--translate] [--check]\n"
                 + "BRAINFUCK [Mül93] is a programming language created in 1993 by Urban Müller,"
@@ -103,7 +103,7 @@ public class Main {
      * This static method is called to check the type of the file.
      * Our program only handle .bf and .bmp files.
      */
-    private static boolean check_file_type(String filename) {
+    private static boolean checkFileType(String filename) {
         return (filename.matches("(.*).bf") || filename.matches("(.*).bmp"));
     }
 }
