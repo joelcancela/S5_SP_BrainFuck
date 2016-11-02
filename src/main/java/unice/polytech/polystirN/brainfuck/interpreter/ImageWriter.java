@@ -2,7 +2,7 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
@@ -14,43 +14,42 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
  */
 public class ImageWriter {
     private BufferedImage img;
-    private BufferedReader buffer;
+    private TextReader buffer;
     private String filename;
     private final int pixelSize = 3;
 
 
-    public ImageWriter(String filename) throws FileNotFoundException {
+    public ImageWriter(String filename) throws Exception {
         this.filename = filename;
-        buffer = new BufferedReader(new FileReader(filename));
+        buffer = new TextReader(filename);
     }
 
-    public void translate() throws IOException {
+    public void translate() throws Exception {
         InstructionFactory factory = new InstructionFactory();
         int instructionsNumber = 0;
-        while (buffer.read() != -1) {
+        while (buffer.hasNext()) {
             instructionsNumber++;
         }
-        buffer.close();
-        buffer = new BufferedReader(new FileReader(filename));
+        buffer = new TextReader(filename);
         int pictureWidthSquares = 0;
         while ((pictureWidthSquares * pictureWidthSquares) < (instructionsNumber)) {
             pictureWidthSquares++;
         }
         int pictureWidth = pictureWidthSquares * pixelSize;
-        img = new BufferedImage(pictureWidth,pictureWidth,TYPE_INT_RGB);
-        //TODO Long syntax
-        int c;
+        img = new BufferedImage(pictureWidth, pictureWidth, TYPE_INT_RGB);
         int x = 0;
         int y = 0;
-        while ((c = buffer.read()) != -1) {
-            int col = factory.getColor(Character.toString((char) c));
-            fillPixelSquare(x, y, col);
-            if (x + pixelSize == pictureWidth) {
-                x = 0;
-                y += pixelSize;
-            }
-            else{
-                x+=pixelSize;
+        while (buffer.hasNext()) {
+            String s = buffer.next();
+            if (!s.equals("\n")) {
+                int col = factory.getColor(s);
+                fillPixelSquare(x, y, col);
+                if (x + pixelSize == pictureWidth) {
+                    x = 0;
+                    y += pixelSize;
+                } else {
+                    x += pixelSize;
+                }
             }
 
         }
