@@ -68,12 +68,16 @@ public class Main {
                         break;
                     case "PointerPositionOutOfBoundsException":
                         System.exit(2);
+                        break;
                     case "IncorrectFileTypeException":
                         System.exit(3);
+                        break;
                     case "FileNotFoundException":
                         System.exit(3);
+                        break;
                     case "BadLoopException":
                     	System.exit(4);
+                    	break;
                     default:
                         break;
 
