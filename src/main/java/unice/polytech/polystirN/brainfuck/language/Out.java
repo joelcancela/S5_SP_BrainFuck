@@ -23,6 +23,9 @@ public class Out implements Operator {
     public Out(String filename) {
         this.filename = filename;
     }
+    public Out() {
+        this(null);
+    }
 
     /**
      * Write the current cell memory content as an ASCII character, either on the standard output or in a file.

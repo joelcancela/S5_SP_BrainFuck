@@ -18,7 +18,7 @@ public class InstructionFactory {
         LEFT = new Left();
         RIGHT = new Right();
         IN = new In();
-        OUT = new Out(null);
+        OUT = new Out();
         JUMP = new Jump();
         BACK = new Back();
     }
