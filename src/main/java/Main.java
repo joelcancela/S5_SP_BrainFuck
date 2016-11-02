@@ -72,6 +72,8 @@ public class Main {
                         System.exit(3);
                     case "FileNotFoundException":
                         System.exit(3);
+                    case "BadLoopException":
+                    	System.exit(4);
                     default:
                         break;
 
