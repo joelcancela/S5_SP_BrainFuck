@@ -100,21 +100,21 @@ public class Interpreter {
                     }
                 }
             } else {
-                if (keyword.trim().equals("INCR")) {
+                if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
-                } else if (keyword.trim().equals("DECR")) {
+                } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {
                     System.out.print("-");
-                } else if (keyword.trim().equals("RIGHT")) {
+                } else if (keyword.trim().equals("RIGHT")||keyword.trim().equals("#0000FF")) {
                     System.out.print(">");
-                } else if (keyword.trim().equals("LEFT")) {
+                } else if (keyword.trim().equals("LEFT")||keyword.trim().equals("#9400D3")) {
                     System.out.print("<");
-                } else if (keyword.trim().equals("JUMP")) {
+                } else if (keyword.trim().equals("JUMP")||keyword.trim().equals("#FF7F00")) {
                     System.out.print("[");
-                } else if (keyword.trim().equals("BACK")) {
+                } else if (keyword.trim().equals("BACK")||keyword.trim().equals("#FF0000")) {
                     System.out.print("]");
-                } else if (keyword.trim().equals("OUT")) {
+                } else if (keyword.trim().equals("OUT")||keyword.trim().equals("#00FF00")) {
                     System.out.print(".");
-                } else if (keyword.trim().equals("IN")) {
+                } else if (keyword.trim().equals("IN")||keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
                 } else {
                     System.out.print(keyword.trim());
