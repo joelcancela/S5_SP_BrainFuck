@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -13,25 +14,110 @@ import static org.junit.Assert.assertEquals;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class InterpreterTest {
-    Interpreter intrptr;
+    private Interpreter intrptr;
+    private int mask = 0xff;
+    private String inputMock = getClass().getResource("/L2/mocks/input.txt").getFile();
 
-    @Before
-    public void setUp() throws Exception {
+    @Test
+    public void interpretBfLongUsualFiles() throws Exception {
 
+        //Simple decrements after increments
+        intrptr = new Interpreter(getClass().getResource("/L1/usual/DECRSimple.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
+
+        //Empty file
+        intrptr = new Interpreter(getClass().getResource("/L1/usual/empty.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
+
+        //Increment 7 times
+        intrptr = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
+        assertEquals(7, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:7
+
+        //Increment 255 times
+        intrptr = new Interpreter(getClass().getResource("/L1/usual/INCRMax255.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
+        assertEquals(255, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:255
+
+        //Moving the pointer left and right
+        intrptr = new Interpreter(getClass().getResource("/L1/usual/LEFT&RIGHT.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(1, intrptr.getMemory().getP());//Pointer has moved to 1 at the end
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void interpretBfLongErrorFiles() throws Exception {
+
+        //Value of the current cell goes under 0
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L1/errors/DECRError.bf").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("MemoryUnderflowException", e.getClass().getSimpleName());
+            assertEquals("value can't be negative", e.getMessage());
+        }
+
+        //Value of the current cell goes above 255
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L1/errors/INCRError256.bf").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
+            assertEquals("value can't be higher than 255", e.getMessage());
+        }
+
+        //Value of the pointer goes under 0
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L1/errors/LEFTError.bf").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
+        }
+
+        //Value of the pointer goes above 29999 (Max capacity-1)
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L1/errors/RIGHTError.bf").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+            assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
+        }
 
     }
 
     @Test
-    public void interpretBfFiles() throws Exception {
-        //Nominal case
-        //Test left&right operations :
-        intrptr = new Interpreter("./examples/L1/LEFT&RIGHT.bf");
+    public void interpretBfShortUsualFiles() throws Exception {
+        //Writes "Bonjour" using loops
+        intrptr = new Interpreter(getClass().getResource("/L2/usual/bonjour.bf").getFile());
         intrptr.interpretFile();
-        assertEquals(1, intrptr.getMemory().getP());
+        assertEquals(6, intrptr.getMemory().getP());//Result of this program is C6:114
+        assertEquals(66, intrptr.getMemory().getCells()[0] & mask);//66 is B in ascii
+        assertEquals(111, intrptr.getMemory().getCells()[1] & mask);//111 is o in ascii
+        assertEquals(110, intrptr.getMemory().getCells()[2] & mask);//110 is n in ascii
+        assertEquals(106, intrptr.getMemory().getCells()[3] & mask);//106 is j in ascii
+        assertEquals(111, intrptr.getMemory().getCells()[4] & mask);//111 is o in ascii
+        assertEquals(117, intrptr.getMemory().getCells()[5] & mask);//117 is u in ascii
+        assertEquals(114, intrptr.getMemory().getCells()[6] & mask);//114 is r in ascii
+
+    }
+
+    @Test
+    public void interpretBfShortErrorFiles() throws Exception {
+//        //Prints a cat of the inputMock file
+//        intrptr = new Interpreter(getClass().getResource("/L2/errors/cat.bf").getFile(),inputMock,null);
+//        intrptr.interpretFile();
     }
 
     @Test
