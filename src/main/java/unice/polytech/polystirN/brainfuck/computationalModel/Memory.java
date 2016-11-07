@@ -1,44 +1,49 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
 /**
+ * TODO Maybe transform into an ArrayList
  * Class that represents the memory
- * It also use the pointer which is the index
+ * It also uses the pointer which is the index
  * of the current memory cell used
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
-    private byte[] cells = {-128};
-    private int p;
+    private byte[] cells; //Cells are all initialized to 0 (-128 in unsigned byte)
+    private int p; //Pointer to the current memory cell used
+    public final static int size = 30000;
 
+    /**
+     * Constructor of Memory
+     */
     public Memory() {
         p = 0;
-        cells = new byte[30000];
+        cells = new byte[size];
     }
 
     /**
-     * Get the current memory.
+     * Gets the current memory state
      *
-     * @return The current state of the memory.
+     * @return cells being all the data stored in memory
      */
     public byte[] getCells() {
         return cells;
     }
 
     /**
-     * Get the current memory cell index
+     * Gets the current memory cell index
      *
-     * @return Which memory cell is selected.
+     * @return p being the pointer
      */
     public int getP() {
         return p;
     }
 
     /**
-     * Set the current memory cell index.
+     * Sets a new value to the memory cell index
      *
-     * @param nP New value of p.
+     * @param nP new value for the pointer p
      */
     public void setP(int nP) {
         p = nP;

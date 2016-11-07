@@ -11,10 +11,10 @@
 #--------------------------------------------------------------------#
 
 # Name of the jar compiled
-jarFileToLaunch="bfck.jar"
+jarFileToLaunch="BrainFuckSI3-1.0-SNAPSHOT.jar"
 
 # Name of the path to the jar to launch
-jarFile="./out/$jarFileToLaunch"
+jarFile="./target/$jarFileToLaunch"
 
 #--------------------------------------------------------------------
 

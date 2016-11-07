@@ -20,3 +20,6 @@ bin
 target/
 .settings/
 src/main/resources/
+
+# Brainfuck outputs
+*.bmp

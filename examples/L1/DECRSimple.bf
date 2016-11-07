@@ -1,6 +1,11 @@
 INCR
+
 INCR
+
 DECR
+
 INCR
+
 DECR
+
 DECR
