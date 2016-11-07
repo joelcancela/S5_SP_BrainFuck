@@ -20,7 +20,7 @@ public class In implements Operator {
     private Scanner sc;
 
     /**
-     * Constructor of the In class
+     * In constructor
      *
      * @param filename where In is supposed to read, or null if the operator
      *                 is supposed to read on the standard input.

@@ -20,31 +20,31 @@ public class Interpreter {
     private Reader reader;
     private boolean inALoop;
 
-    //metrics
-    long startTime = 0; // get the current system time, in milliseconds
-    long programSize = 0; // the number of instructions in the program
-    long execMove = 0; // the number of times the execution pointer was moved to execute this program
-    long dataMove = 0; // the number of time the data pointer was moved to execute this program
-    long dataWrite = 0; // the number of time the memory was accessed to change its contents while executing this program
-    long dataRead = 0; // the number of times the memory was accessed to read its contents
+    //Metrics attributes
+    private long startTime = 0; // get the current system time, in milliseconds
+    private long programSize = 0; // the number of instructions in the program
+    private long execMove = 0; // the number of times the execution pointer was moved to execute this program
+    private long dataMove = 0; // the number of time the data pointer was moved to execute this program
+    private long dataWrite = 0; // the number of time the memory was accessed to change its contents while executing this program
+    private long dataRead = 0; // the number of times the memory was accessed to read its contents
 
 
     /**
-     * Constructor for Interpreter
+     * Interpreter constructor
      *
      * @param filename is the name of the file to be interpreted
      * @throws IncorrectFileTypeException if the filename has an invalid extension
      */
     public Interpreter(String filename) throws Exception {
-        factory =new InstructionFactory();
-    	memory = new Memory();
+        factory = new InstructionFactory();
+        memory = new Memory();
 
         if (filename.matches("(.*).bf")) {
             reader = new TextReader(filename);
         } else if (filename.matches("(.*).bmp")) {
             reader = new ImageReader(filename);
         }
-        
+
         inALoop = false;
     }
 
@@ -57,7 +57,7 @@ public class Interpreter {
      */
     public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
         this(filename);
-        factory =new InstructionFactory( inputFile,outputFile);
+        factory = new InstructionFactory(inputFile, outputFile);
     }
 
     /**
@@ -73,14 +73,14 @@ public class Interpreter {
             programSize++;
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
-            	Operator op = getFactory().getInstruction(keyword);
+                Operator op = getFactory().getInstruction(keyword);
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
             }
         }
-        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
+        System.out.println("\nC" + memory.getP() + ": " + memory.getCells()[memory.getP()]);
     }
 
     /**
@@ -105,21 +105,21 @@ public class Interpreter {
                     }
                 }
             } else {
-                if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
+                if (keyword.trim().equals("INCR") || keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
-                } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {
+                } else if (keyword.trim().equals("DECR") || keyword.trim().equals("#4B0082")) {
                     System.out.print("-");
-                } else if (keyword.trim().equals("RIGHT")||keyword.trim().equals("#0000FF")) {
+                } else if (keyword.trim().equals("RIGHT") || keyword.trim().equals("#0000FF")) {
                     System.out.print(">");
-                } else if (keyword.trim().equals("LEFT")||keyword.trim().equals("#9400D3")) {
+                } else if (keyword.trim().equals("LEFT") || keyword.trim().equals("#9400D3")) {
                     System.out.print("<");
-                } else if (keyword.trim().equals("JUMP")||keyword.trim().equals("#FF7F00")) {
+                } else if (keyword.trim().equals("JUMP") || keyword.trim().equals("#FF7F00")) {
                     System.out.print("[");
-                } else if (keyword.trim().equals("BACK")||keyword.trim().equals("#FF0000")) {
+                } else if (keyword.trim().equals("BACK") || keyword.trim().equals("#FF0000")) {
                     System.out.print("]");
-                } else if (keyword.trim().equals("OUT")||keyword.trim().equals("#00FF00")) {
+                } else if (keyword.trim().equals("OUT") || keyword.trim().equals("#00FF00")) {
                     System.out.print(".");
-                } else if (keyword.trim().equals("IN")||keyword.trim().equals("#FFFF00")) {
+                } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
                 } else {
                     System.out.print(keyword.trim());
@@ -135,29 +135,32 @@ public class Interpreter {
     public void check() throws Exception {
         String keyword;
         int nbOuvert = 0;
-        
+
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
                 Operator op = getFactory().getInstruction(keyword);
                 if (op == null)
                     throw new SyntaxErrorException("Incorrect word operator");
-                if(keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00") )
-                	nbOuvert++;
-                if(keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
-                	nbOuvert--;         
-                if(nbOuvert<0)
-                	throw new BadLoopException("Loop without start : Missing JUMP operator");
+                if (keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00"))
+                    nbOuvert++;
+                if (keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
+                    nbOuvert--;
+                if (nbOuvert < 0)
+                    throw new BadLoopException("Loop without start : Missing JUMP operator");
             }
         }
-        if(nbOuvert>0)
-        	throw new BadLoopException("Loop without end : Missing BACK operator");
+        if (nbOuvert > 0)
+            throw new BadLoopException("Loop without end : Missing BACK operator");
         System.out.println("The program is well formed");
     }
 
+    /**
+     * Displays the metrics for the currently executing program
+     */
     public void printMetrics() {
         System.out.println("PROG_SIZE = " + programSize);
-        System.out.println("EXEC_TIME = " + (System.nanoTime()- startTime) + " ns" );
+        System.out.println("EXEC_TIME = " + (System.nanoTime() - startTime) + " ns");
         System.out.println("EXEC_MOVE = " + execMove);
         System.out.println("DATA_MOVE = " + dataMove);
         System.out.println("DATA_WRITE = " + dataWrite);
@@ -190,27 +193,27 @@ public class Interpreter {
     public InstructionFactory getFactory() {
         return factory;
     }
-    
+
     /**
      * Return true if the execution thread is in a loop
-     * 
+     *
      * @return inALoop
      */
-    public boolean isInALoop(){
-    	return inALoop;
+    public boolean isInALoop() {
+        return inALoop;
     }
-    
+
     /**
      * Change the status of inALoop to true
      */
-    public void startALoop(){
-    	inALoop = true;
+    public void startALoop() {
+        inALoop = true;
     }
-    
+
     /**
      * Change the status of inALoop to false
      */
-    public void endALoop(){
-    	inALoop = false;
+    public void endALoop() {
+        inALoop = false;
     }
 }

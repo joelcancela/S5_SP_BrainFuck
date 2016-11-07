@@ -13,7 +13,7 @@ class TextReader extends Reader {
     private BufferedReader buffer; //buffer used to read pictures
 
     /**
-     * Constructor for TextReader
+     * TextReader constructor
      *
      * @param filename is the name of the file to be read
      */
@@ -50,7 +50,7 @@ class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         int c;
-        String keyword ="";
+        String keyword = "";
 
         buffer.reset();
         c = buffer.read();

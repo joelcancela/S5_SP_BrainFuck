@@ -1,7 +1,7 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
 /**
- * TODO Maybe transform into an ArrayList
+ * TODO maybe transform into an ArrayList - see diff with metrics
  * Class that represents the memory
  * It also uses the pointer which is the index
  * of the current memory cell used
@@ -15,7 +15,7 @@ public class Memory {
     public final static int size = 30000;
 
     /**
-     * Constructor of Memory
+     * Memory constructor
      */
     public Memory() {
         p = 0;

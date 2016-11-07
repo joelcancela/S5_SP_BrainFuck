@@ -24,8 +24,8 @@ public class Decrement implements Operator {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
-        if (p < 0 || p > Memory.size-1) {
-            throw new PointerPositionOutOfBoundsException("pointer must be between 0 and "+(Memory.size-1)+" included");
+        if (p < 0 || p > Memory.size - 1) {
+            throw new PointerPositionOutOfBoundsException("pointer must be between 0 and " + (Memory.size - 1) + " included");
         }
         //Test underflow
         if (((interpreter.getMemory().getCells()[p]) & 0xFF) == 0) {

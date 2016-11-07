@@ -21,13 +21,13 @@ public class Back implements Operator {
      */
     @Override
     public void execute(Interpreter interpreter) throws Exception {
-        int dp = (interpreter.getMemory().getCells()[interpreter.getMemory().getP() ] & 0x00FF);
+        int dp = (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0x00FF);
 
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-        if(!interpreter.isInALoop())
-        	throw new BadLoopException("Loop without start : Missing JUMP operator");
+        if (!interpreter.isInALoop())
+            throw new BadLoopException("Loop without start : Missing JUMP operator");
 
     }
 

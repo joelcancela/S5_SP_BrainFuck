@@ -15,7 +15,7 @@ public class Out implements Operator {
     private String filename;
 
     /**
-     * Constructor of the Out class
+     * Out constructor
      *
      * @param filename is where out is supposed to write, or null if the operator
      *                 is supposed to write on the standard output.

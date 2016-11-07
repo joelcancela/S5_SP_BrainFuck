@@ -4,13 +4,21 @@ import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.FileNotFoundException;
 
+/**
+ * TODO Constants
+ * Class used to make translations between constants and instructions
+ *
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
+ */
 public class InstructionFactory {
+
     private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
 
     /**
-     * Constructor for InstructionFactory
+     * InstructionFactory constructor
      *
-     * @throws FileNotFoundException if the inputfile not exist
+     * @throws FileNotFoundException if the input file does not exist
      */
     public InstructionFactory() throws FileNotFoundException {
         INCR = new Increment();
@@ -24,11 +32,11 @@ public class InstructionFactory {
     }
 
     /**
-     * Constructor for InstructionFactory
+     * InstructionFactory constructor with in and out
      *
-     * @param inputFile  is the name of the file to replace the input (if null, keyboard by default)
-     * @param outputFile is the name of the file to replace the output (if null, console by default)
-     * @throws FileNotFoundException if the inputfile not exist
+     * @param inputFile  is the filename to replace the input (if null, keyboard by default)
+     * @param outputFile is the filename to replace the output (if null, console by default)
+     * @throws FileNotFoundException if the input file does not exist
      */
     public InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
         this();
@@ -38,10 +46,10 @@ public class InstructionFactory {
     }
 
     /**
-     * methode getInstruction return operation for the specified instruction
+     * Translate instructions into operators
      *
      * @param instruction a string to be translated into an operator
-     * @return Operator
+     * @return Operator being the translation of the instruction
      */
 
     public Operator getInstruction(String instruction) {
@@ -85,7 +93,12 @@ public class InstructionFactory {
 
     }
 
-
+    /**
+     * Translate instructions into colors
+     *
+     * @param instruction is the long or short syntax string to translate into a color
+     * @return Integer being the RGB hexadecimal code of the color
+     */
     public int getColor(String instruction) {
         switch (instruction) {
             case "INCR":

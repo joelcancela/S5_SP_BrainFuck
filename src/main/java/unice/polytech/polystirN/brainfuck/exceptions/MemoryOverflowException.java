@@ -8,12 +8,9 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class MemoryOverflowException extends Exception {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4610418598834851745L;
+    private static final long serialVersionUID = 4610418598834851745L;
 
-	public MemoryOverflowException(String message) {
+    public MemoryOverflowException(String message) {
         super(message);
     }
 }
