@@ -14,6 +14,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  */
 public class Main {
 
+
     public static void main(String[] args) throws Exception {
 
         //First, we got to configure the parser.
@@ -40,19 +41,21 @@ public class Main {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
                     } else { //This else condition execute the file, with the proper input/output files
+                        Interpreter inte;
                         if (options.has("i") && options.has("o")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
+                            inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
                             inte.interpretFile();
                         } else if (options.has("i")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
+                            inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
                             inte.interpretFile();
                         } else if (options.has("o")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
+                            inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
                             inte.interpretFile();
                         } else {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"));
+                            inte = new Interpreter((String) options.valueOf("p"));
                             inte.interpretFile();
                         }
+                        inte.printMetrics();
                     }
                 } else { //Error being thrown if the file type is invalid
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");

@@ -6,7 +6,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 
-
 /**
  * Models the virtual machine interpreting the
  * brainfuck language.
@@ -20,6 +19,14 @@ public class Interpreter {
     private InstructionFactory factory;
     private Reader reader;
     private boolean inALoop;
+
+    //metrics
+    long startTime = 0; // get the current system time, in milliseconds
+    long programSize = 0; // the number of instructions in the program
+    long execMove = 0; // the number of times the execution pointer was moved to execute this program
+    long dataMove = 0; // the number of time the data pointer was moved to execute this program
+    long dataWrite = 0; // the number of time the memory was accessed to change its contents while executing this program
+    long dataRead = 0; // the number of times the memory was accessed to read its contents
 
 
     /**
@@ -61,7 +68,10 @@ public class Interpreter {
      */
     public boolean interpretFile() throws Exception {
         String keyword;
+
+        startTime = System.nanoTime();
         while (reader.hasNext()) {
+            programSize++;
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
             	Operator op = getFactory().getInstruction(keyword);
@@ -147,6 +157,15 @@ public class Interpreter {
         if(nbOuvert>0)
         	throw new BadLoopException("Loop without end : Missing BACK operator");
         System.out.println("The program is well formed");
+    }
+
+    public void printMetrics() {
+        System.out.println("PROG_SIZE = " + programSize);
+        System.out.println("EXEC_TIME = " + (System.nanoTime()- startTime) + " ns" );
+        System.out.println("EXEC_MOVE = " + execMove);
+        System.out.println("DATA_MOVE = " + dataMove);
+        System.out.println("DATA_WRITE = " + dataWrite);
+        System.out.println("DATA_READ = " + dataRead);
     }
 
     /**
