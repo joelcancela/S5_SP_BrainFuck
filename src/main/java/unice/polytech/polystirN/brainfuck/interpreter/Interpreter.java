@@ -63,10 +63,9 @@ public class Interpreter {
     /**
      * Interprets a file
      *
-     * @return true if the interpretation has gone well
      * @throws SyntaxErrorException if an invalid symbol or keyword is encountered
      */
-    public boolean interpretFile() throws Exception {
+    public void interpretFile() throws Exception {
         String keyword;
 
         startTime = System.nanoTime();
@@ -82,7 +81,6 @@ public class Interpreter {
             }
         }
         System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
-        return true;
     }
 
     /**
@@ -90,10 +88,9 @@ public class Interpreter {
      * Throws an error when a character in the file isn't supported
      * by the brainfuck language.
      *
-     * @return true if the file was successfully read, false if not.
      * @throws SyntaxErrorException if the keyword isn't recognized as an operator
      */
-    public boolean rewriteFile() throws Exception {
+    public void rewriteFile() throws Exception {
         String keyword;
 
         while (reader.hasNext()) {
@@ -129,7 +126,6 @@ public class Interpreter {
                 }
             }
         }
-        return true;
     }
 
 
