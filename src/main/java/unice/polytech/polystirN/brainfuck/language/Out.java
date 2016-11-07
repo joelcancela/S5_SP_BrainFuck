@@ -23,6 +23,10 @@ public class Out implements Operator {
     public Out(String filename) {
         this.filename = filename;
     }
+
+    /**
+     * Out constructor without filename, uses standard output instead (console)
+     */
     public Out() {
         this(null);
     }
@@ -37,9 +41,9 @@ public class Out implements Operator {
         if (filename == null) {
             System.out.print((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
         } else {
-            FileWriter fichierw = new FileWriter(filename, true);
-            fichierw.write(((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
-            fichierw.close();
+            FileWriter outputFile = new FileWriter(filename, true);
+            outputFile.write(((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
+            outputFile.close();
         }
     }
 }

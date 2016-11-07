@@ -32,30 +32,30 @@ public class Main {
             try {
                 if (checkFileType((String) options.valueOf("p"))) { //Is the type of the file valid ?
                     if (options.has("check")) { //Do we need to check it ?
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                        inte.check();
+                        Interpreter intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr.check();
                     } else if (options.has("rewrite")) { //Do we need to rewrite it ?
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                        inte.rewriteFile();
+                        Interpreter intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr.rewriteFile();
                     } else if (options.has("translate")) {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
                     } else { //This else condition execute the file, with the proper input/output files
-                        Interpreter inte;
+                        Interpreter intrptr;
                         if (options.has("i") && options.has("o")) {
-                            inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
+                            intrptr.interpretFile();
                         } else if (options.has("i")) {
-                            inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
+                            intrptr.interpretFile();
                         } else if (options.has("o")) {
-                            inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
+                            intrptr.interpretFile();
                         } else {
-                            inte = new Interpreter((String) options.valueOf("p"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"));
+                            intrptr.interpretFile();
                         }
-                        inte.printMetrics();
+                        intrptr.printMetrics();
                     }
                 } else { //Error being thrown if the file type is invalid
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
@@ -79,8 +79,8 @@ public class Main {
                         System.exit(3);
                         break;
                     case "BadLoopException":
-                    	System.exit(4);
-                    	break;
+                        System.exit(4);
+                        break;
                     default:
                         break;
 

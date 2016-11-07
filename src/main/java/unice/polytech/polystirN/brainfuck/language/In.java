@@ -17,7 +17,6 @@ public class In implements Operator {
 
     private String filename;
     private BufferedReader buffer;
-    private Scanner sc;
 
     /**
      * In constructor
@@ -33,7 +32,10 @@ public class In implements Operator {
         }
     }
 
-    public In() throws FileNotFoundException {
+    /**
+     * In constructor without filename, uses standard input instead (keyboard)
+     */
+    public In() {
         this.filename = null;
     }
 
@@ -47,7 +49,7 @@ public class In implements Operator {
     @Override
     public void execute(Interpreter interpreter) throws Exception {
         if (filename == null) {
-            sc = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
             interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) sc.next().charAt(0);
         } else {
             interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) buffer.read();
