@@ -12,6 +12,14 @@ Our group is called PolyStirN.
 
 ---
 
+##Upcoming Demos
+
+Démo #2:
+Semaine #47, mercredi 23 novembre ou vendredi 25 novembre après midi (sur le créneau de controle continu)
+
+Démo #3:
+Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). Potentiellement en visio-conférence pour une session.
+
 ##TODO
 
 
