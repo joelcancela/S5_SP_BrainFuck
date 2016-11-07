@@ -1,8 +1,8 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import java.io.FileNotFoundException;
-
 import unice.polytech.polystirN.brainfuck.language.*;
+
+import java.io.FileNotFoundException;
 
 public class InstructionFactory {
     private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;

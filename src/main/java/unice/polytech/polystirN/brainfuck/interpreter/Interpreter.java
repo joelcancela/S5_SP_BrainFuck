@@ -4,9 +4,7 @@ import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
-import unice.polytech.polystirN.brainfuck.language.*;
-
-import java.util.HashMap;
+import unice.polytech.polystirN.brainfuck.language.Operator;
 
 
 /**

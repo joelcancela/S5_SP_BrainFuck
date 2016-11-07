@@ -5,7 +5,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.BadSquareColorException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Class used to read images and translate them into instructions
