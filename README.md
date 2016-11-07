@@ -12,37 +12,53 @@ Our group is called PolyStirN.
 
 ---
 
+##Upcoming Demos
+
+Démo #2:
+Semaine #47, mercredi 23 novembre ou vendredi 25 novembre après midi (sur le créneau de controle continu)
+
+Démo #3:
+Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). Potentiellement en visio-conférence pour une session.
+
 ##TODO
-[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)<br/>
-[Lien des slides soutenance #1](https://www.icloud.com/keynote/0dPYGMDIF4jh_7oab-MVELDrA#PresentationBrainfuckSI3)
+
 
 ### Aghiles
 
-- [x] s5
-- [x] s9
-- [ ] Rapport s5
-- [ ] Rapport s9
+- [ ] s15
+- [ ] s16
+- [ ] Rapport s15
+- [ ] Rapport s16
 
 ### Joel
 
-- [x] s7
-- [ ] s8
-- [ ] Rapport s7
-- [ ] Rapport s8
+- [ ] s17
+- [ ] Rapport s17
 
 ### Pierre
 
-- [x] s10
-- [x] s11
-- [ ] Rapport s10
-- [ ] Rapport s11
+- [ ] s13
+- [ ] s14
+- [ ] Rapport s13
+- [ ] Rapport s14
 
 ### Tanguy
 
-- [x] s6
-- [ ] Rapport s6
-- [ ] Keep calm and step back (L2)
+- [ ] s12
+- [ ] Rapport s12
+
+---
+
+### Week 41-45
+
+- [x] Oral presentation
+- [x] End level 2
+- [x] Rapport level 2
+- [x] Keep calm and step back (L2)
 - [x] Adapt the main to be able to handle every flags
+
+[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)<br/>
+[Lien des slides soutenance #1](https://www.icloud.com/keynote/0dPYGMDIF4jh_7oab-MVELDrA#PresentationBrainfuckSI3)
 
 ---
 
@@ -50,7 +66,7 @@ Our group is called PolyStirN.
 
 - [x] Start Level 2, do s5 and s6
 - [x] Do the "Take a step back" review + justify all your choices
-- [x] Do some planification
+- [x] Do some scheduling
 
 ---
 
