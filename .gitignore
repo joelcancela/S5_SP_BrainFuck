@@ -22,4 +22,4 @@ target/
 src/main/resources/
 
 # Brainfuck outputs
-*.bmp
+outputTranslate.bmp
