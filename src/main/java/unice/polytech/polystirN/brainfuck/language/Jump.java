@@ -186,12 +186,18 @@ public class Jump implements Operator {
 
         instruction = interpreter.getReader().next();
 
-        if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" "))) {
+        if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" ") || instruction.equals("#"))) {
             Operator op = interpreter.getFactory().getInstruction(instruction);
             if (op == null) {
                 throw new SyntaxErrorException("Incorrect word operator");
             }
             return instruction;
+        }else if (instruction.equals("#")){
+        	instruction = interpreter.getReader().next();
+        	while(interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))){
+        		instruction = interpreter.getReader().next();
+        	}
+        	instruction="NOI";
         }
 
         return "NOI";

@@ -38,8 +38,14 @@ class TextReader extends Reader {
      */
     @Override
     public boolean hasNext() throws Exception {
+    	boolean returnValue = false;
+    	
         buffer.mark(1);
-        return (buffer.read() != -1);
+        if(buffer.read() != -1)
+        	returnValue = true;
+        buffer.reset();
+        
+        return returnValue;
     }
 
     /**
@@ -52,7 +58,6 @@ class TextReader extends Reader {
         int c;
         String keyword = "";
 
-        buffer.reset();
         c = buffer.read();
 
         if ('A' <= c && 'Z' >= c) {

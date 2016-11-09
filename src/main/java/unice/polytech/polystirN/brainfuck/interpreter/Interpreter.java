@@ -1,5 +1,7 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import java.io.BufferedReader;
+
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
@@ -70,14 +72,19 @@ public class Interpreter {
 
         startTime = System.nanoTime();
         while (reader.hasNext()) {
-            programSize++;
             keyword = reader.next();
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#"))) {
                 Operator op = getFactory().getInstruction(keyword);
+                programSize++;
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
+            }else if (keyword.equals("#")){
+            	keyword = reader.next();
+            	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
+            		keyword = reader.next();
+            	}
             }
         }
         System.out.println("\nC" + memory.getP() + ": " + memory.getCells()[memory.getP()]);
