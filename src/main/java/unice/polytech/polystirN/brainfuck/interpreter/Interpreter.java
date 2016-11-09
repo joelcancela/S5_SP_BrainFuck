@@ -28,7 +28,6 @@ public class Interpreter {
     private long execMove = 0; // the number of times the execution pointer was moved to execute this program
     private long dataMove = 0; // the number of time the data pointer was moved to execute this program
     private long dataWrite = 0; // the number of time the memory was accessed to change its contents while executing this program
-
     private long dataRead = 0; // the number of times the memory was accessed to read its contents
 
 
@@ -264,4 +263,6 @@ public class Interpreter {
     public void incrementProg_Size() {
         programSize++;
     }
+
+    public void incrementData_Read() { dataRead++;}
 }

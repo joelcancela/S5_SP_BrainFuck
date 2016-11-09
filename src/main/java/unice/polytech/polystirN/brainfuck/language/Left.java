@@ -33,5 +33,4 @@ public class Left implements Operator {
         interpreter.getMemory().setP(p - 1);
         interpreter.incrementData_Move();
     }
-
 }

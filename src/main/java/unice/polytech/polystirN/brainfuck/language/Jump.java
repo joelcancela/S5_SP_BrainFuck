@@ -117,7 +117,7 @@ public class Jump implements Operator {
             if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
                 index = internalLoop(index, interpreter); //Crée une boucle interne
             } else {
-                execute(instruction, interpreter); //Exécute l'opération
+                executeInstruction(instruction, interpreter); //Exécute l'opération
             }
             return index;
         }
@@ -146,7 +146,7 @@ public class Jump implements Operator {
                     internalIndex = internalLoop(index, interpreter); //Lance récursivement des boucles internes et récupère l'index dans la liste des instructions
                     index = internalIndex + 1;
                 }
-                execute(file.get(index), interpreter); //Les "JUMP" dans un JUMP ne sont donc jamais exécutés pour ne pas perdre les instructions stockées dans "file"
+                executeInstruction(file.get(index), interpreter); //Les "JUMP" dans un JUMP ne sont donc jamais exécutés pour ne pas perdre les instructions stockées dans "file"
             }
             //FIN BOUCLE INTERNE
 
@@ -165,7 +165,8 @@ public class Jump implements Operator {
      * @param interpreter memory (M and P) of the current program and all of the following operations.
      * @throws SyntaxErrorException if the keyword is invalid
      */
-    public boolean execute(String instruction, Interpreter interpreter) throws Exception {
+    public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
+        interpreter.incrementData_Read();
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
