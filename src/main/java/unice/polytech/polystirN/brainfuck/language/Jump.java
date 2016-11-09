@@ -42,6 +42,7 @@ public class Jump implements Operator {
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
         
         interpreter.startALoop();
+
                 //Special case : (value of initial memory case is already equals to 0)
                 if (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0) {
                     while (nbOuvert != 0) {
@@ -166,11 +167,9 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
-        interpreter.incrementData_Read();
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
-        interpreter.incrementExec_Move();
         interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
         return true;
     }
