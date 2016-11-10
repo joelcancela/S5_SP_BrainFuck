@@ -45,5 +45,6 @@ public class Out implements Operator {
             outputFile.write(((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF)));
             outputFile.close();
         }
+        interpreter.incrementData_Read();
     }
 }

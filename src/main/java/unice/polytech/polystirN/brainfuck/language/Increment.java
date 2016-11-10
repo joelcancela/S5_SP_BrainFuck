@@ -33,6 +33,7 @@ public class Increment implements Operator {
             throw new MemoryOverflowException("value can't be higher than 255");
         }
         interpreter.getMemory().getCells()[p]++;
+        interpreter.incrementData_Write();
     }
 }
 

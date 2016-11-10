@@ -142,5 +142,37 @@ public class InstructionFactory {
     public int getAttMacro(){
     	return multi_decr.getNbDecr();
     }
+
+    public String getShortSyntax(String instruction){
+        switch (instruction) {
+            case "INCR":
+            case "#FFFFFF":
+                return "+";
+            case "DECR":
+            case "#4B0082":
+                return "-";
+            case "LEFT":
+            case "#9400D3":
+                return "<";
+            case "RIGHT":
+            case "#0000FF":
+                return ">";
+            case "IN":
+            case "#FFFF00":
+                return ",";
+            case "OUT":
+            case "#00FF00":
+                return ".";
+            case "JUMP":
+            case "#FF7F00":
+                return "[";
+            case "BACK":
+            case "#FF0000":
+                return "]";
+            default:
+                return instruction;
+        }
+
+    }
 }
 

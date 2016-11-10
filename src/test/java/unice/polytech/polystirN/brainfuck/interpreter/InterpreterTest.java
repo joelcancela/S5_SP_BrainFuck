@@ -110,7 +110,18 @@ public class InterpreterTest {
         assertEquals(111, intrptr.getMemory().getCells()[4] & mask);//111 is o in ascii
         assertEquals(117, intrptr.getMemory().getCells()[5] & mask);//117 is u in ascii
         assertEquals(114, intrptr.getMemory().getCells()[6] & mask);//114 is r in ascii
-
+        
+        //Comments
+        intrptr = new Interpreter("./examples/L3/prog_com.bf");
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(1, intrptr.getMemory().getCells()[0] & mask);
+        
+        intrptr = new Interpreter("./examples/L3/prog_com&indente.bf");
+        intrptr.interpretFile();
+        
+        intrptr = new Interpreter("./examples/L3/prog_fullcom.bf");
+        intrptr.interpretFile();
     }
 
     @Test
