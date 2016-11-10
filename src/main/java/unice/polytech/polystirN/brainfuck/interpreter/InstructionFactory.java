@@ -13,8 +13,8 @@ import java.io.FileNotFoundException;
  */
 public class InstructionFactory {
 
-    private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
-
+    private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK, to_digit;
+    private Multi_decr multi_decr;
     /**
      * InstructionFactory constructor
      *
@@ -29,6 +29,8 @@ public class InstructionFactory {
         OUT = new Out();
         JUMP = new Jump();
         BACK = new Back();
+        to_digit=new To_digit();
+        multi_decr=new Multi_decr();
     }
 
     /**
@@ -53,7 +55,6 @@ public class InstructionFactory {
      */
 
     public Operator getInstruction(String instruction) {
-
         switch (instruction) {
             case "INCR":
             case "+":
@@ -87,13 +88,18 @@ public class InstructionFactory {
             case "]":
             case "#FF0000":
                 return BACK;
+            case "TO_DIGIT":
+            	return to_digit;
+            case "MULTI_DECR":
+            	return multi_decr;
             default:
                 return null;
         }
 
     }
 
-    /**
+
+	/**
      * Translate instructions into colors
      *
      * @param instruction is the long or short syntax string to translate into a color
@@ -128,6 +134,13 @@ public class InstructionFactory {
             default:
                 return -1;
         }
+    }
+    
+    public void setAttMacro(int arg){
+    	multi_decr.setNbDecr(arg);
+    }
+    public int getAttMacro(){
+    	return multi_decr.getNbDecr();
     }
 }
 

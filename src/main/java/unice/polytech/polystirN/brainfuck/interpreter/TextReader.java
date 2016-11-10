@@ -10,14 +10,19 @@ import java.io.FileReader;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 class TextReader extends Reader {
-    private BufferedReader buffer; //buffer used to read pictures
-
+	private BufferedReader buffer; //buffer used to read pictures
+	private int c;
+	private InstructionFactory factory=new InstructionFactory();
+	
     /**
      * TextReader constructor
      *
      * @param filename is the name of the file to be read
      */
-    TextReader(String filename) throws Exception {
+    public TextReader(String filename,Interpreter inte) throws Exception {
+        buffer = new BufferedReader(new FileReader(filename));
+    }
+    public TextReader(String filename) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
     }
 
@@ -50,19 +55,30 @@ class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         int c;
-        String keyword = "";
+        String keyword ="";
+        String macros="MULTI_DECR",macros1="TO_DIGIT";
+        String defineMacro="DEFINE ";
 
         buffer.reset();
         c = buffer.read();
 
-        if ('A' <= c && 'Z' >= c) {
+        if (( 'A' <= c && 'Z' >= c ) || ('a' <= c && 'z' >= c)) {
             while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
                 keyword += ((char) c);
                 c = buffer.read();
             }
-        } else {
+            if(keyword.length()>9){
+            	if(keyword.substring(0,macros.length()+1).equals(macros+" ")){
+            		factory.setAttMacro(Integer.parseInt(keyword.substring(macros.length(),keyword.length()).trim()));
+            		return macros;
+            	}
+            }
+            
+        }
+        else {
             keyword = Character.toString((char) c);
         }
+        
         return keyword;
     }
 

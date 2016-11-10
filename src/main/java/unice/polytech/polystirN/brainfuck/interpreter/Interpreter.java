@@ -4,7 +4,9 @@ import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
+import unice.polytech.polystirN.brainfuck.language.Multi_decr;
 import unice.polytech.polystirN.brainfuck.language.Operator;
+import unice.polytech.polystirN.brainfuck.language.To_digit;
 
 /**
  * Models the virtual machine interpreting the
@@ -19,7 +21,6 @@ public class Interpreter {
     private InstructionFactory factory;
     private Reader reader;
     private boolean inALoop;
-
     //Metrics attributes
     private long startTime = 0; // get the current system time, in milliseconds
     private long programSize = 0; // the number of instructions in the program
@@ -40,7 +41,7 @@ public class Interpreter {
         memory = new Memory();
 
         if (filename.matches("(.*).bf")) {
-            reader = new TextReader(filename);
+            reader = new TextReader(filename,this);
         } else if (filename.matches("(.*).bmp")) {
             reader = new ImageReader(filename);
         }
@@ -121,7 +122,11 @@ public class Interpreter {
                     System.out.print(".");
                 } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
-                } else {
+                } else if (keyword.trim().equals("TO_DIGIT")) {
+                    ((To_digit) (this.getFactory().getInstruction("TO_DIGIT"))).rewrite();
+                } else if (keyword.trim().equals("MULTI_DECR")) {
+                        ( ((Multi_decr) this.getFactory().getInstruction("MULTI_DECR"))).rewrite();
+                }else {
                     System.out.print(keyword.trim());
                 }
             }
@@ -216,4 +221,8 @@ public class Interpreter {
     public void endALoop() {
         inALoop = false;
     }
+   
+	
+    
+    
 }
