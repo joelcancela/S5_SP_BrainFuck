@@ -205,5 +205,9 @@ public class Jump implements Operator {
         
         return "NOI";
     }
+    @Override
+    public String toString(){
+    	return "[";
+    }
 
 }

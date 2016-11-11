@@ -32,5 +32,9 @@ public class Right implements Operator {
         interpreter.getMemory().setP(p + 1);
         interpreter.incrementData_Move();
     }
+    @Override
+    public String toString(){
+    	return ">";
+    }
 
 }

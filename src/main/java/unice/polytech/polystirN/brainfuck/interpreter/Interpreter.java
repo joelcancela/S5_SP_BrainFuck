@@ -79,7 +79,7 @@ public class Interpreter {
         startTime = System.nanoTime();
         while (reader.hasNext()) {
             keyword = reader.next();
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#"))) {
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
                 Operator op = getFactory().getInstruction(keyword);
                 programSize++;
                 execMove++;
@@ -121,6 +121,7 @@ public class Interpreter {
                     }
                 }
             } else {
+            	keyword=factory.getEquivalentInstruction(keyword);
                 if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
                 } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {

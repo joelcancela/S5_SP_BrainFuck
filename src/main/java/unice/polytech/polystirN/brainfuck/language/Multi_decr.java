@@ -46,7 +46,10 @@ public class Multi_decr implements Operator {
 		return nbDecr;
 	}
 	
-	
+	@Override
+    public String toString(){
+    	return "MULTI_DECR";
+    }
 	
 	
 

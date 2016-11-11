@@ -19,5 +19,9 @@ public class To_digit implements Operator {
 	public void rewrite(){
 		multi_decr.rewrite(48);
 	}
+	@Override
+    public String toString(){
+    	return "TO_DIGIT";
+    }
 
 }

@@ -56,4 +56,8 @@ public class In implements Operator {
         }
         interpreter.incrementData_Write();
     }
+    @Override
+    public String toString(){
+    	return ",";
+    }
 }

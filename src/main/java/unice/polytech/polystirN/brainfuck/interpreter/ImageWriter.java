@@ -38,7 +38,7 @@ public class ImageWriter {
         InstructionFactory factory = new InstructionFactory();
         int instructionsNumber = 0;
         while (buffer.hasNext()) {
-        	String a=buffer.next();
+        	String a=factory.getEquivalentInstruction(buffer.next());
         	if(a.equals("TO_DIGIT"))
         		instructionsNumber+=48;
         		else if(a.equals("MULTI_DECR"))
@@ -52,13 +52,12 @@ public class ImageWriter {
         }
         int pictureWidth = pictureWidthSquares * pixelSize;
         img = new BufferedImage(pictureWidth, pictureWidth, TYPE_INT_RGB);
-        System.out.println(pictureWidth+" ||||| " +pictureWidth);
         while (buffer.hasNext()) {
-            String s = buffer.next();
+            String s = factory.getEquivalentInstruction(buffer.next());
             if(s.equals("MULTI_DECR")||s.equals("TO_DIGIT")){
-            	this.translateMacros(pictureWidth,factory,(s.equals("MULTI_DECR"))?factory.getAttMacro():48);
+            	this.translateMacros(pictureWidth,factory,(s.equals("MULTI_DECR"))?(factory.getAttMacro()):(48));
             }
-            else if (!s.equals("\n")) {
+            else if (!s.equals("\n") && !s.equals("")) {
                 int col = factory.getColor(s);
                 fillPixelSquare(x, y, col);
                 if (x + pixelSize == pictureWidth) {
@@ -92,6 +91,7 @@ public class ImageWriter {
      */
     public void translateMacros(int pictureWidth,InstructionFactory factory,int n) throws Exception {
                int col = factory.getColor("-");
+            
                for(int i=0;i<n;i++){
             	   fillPixelSquare(x, y, col);
             	   if (x + pixelSize == pictureWidth) {
@@ -111,7 +111,6 @@ public class ImageWriter {
      * @param color is the color to fill
      */
     private void fillPixelSquare(int x, int y, int color) {
-    	System.out.println(x+"  "+y);
         for (int yAxis = y; yAxis < y + (pixelSize); yAxis++) {
             for (int xAxis = x; xAxis < x + (pixelSize); xAxis++) {
                 img.setRGB(xAxis, yAxis, color);

@@ -2,6 +2,9 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+
+import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 
 /**
  * Class used to read texts and translate them into instructions
@@ -62,8 +65,8 @@ class TextReader extends Reader {
     public String next() throws Exception {
         int c;
         String keyword ="";
-        String macros="MULTI_DECR",macros1="TO_DIGIT";
-        String defineMacro="DEFINE ";
+        String macros="MULTI_DECR";
+        
 
         c = buffer.read();
 
@@ -81,10 +84,39 @@ class TextReader extends Reader {
             
         }
         else {
-            keyword = Character.toString((char) c);
+        	
+            keyword = this.macrosRead(c);
         }
         
         return keyword;
+    }
+    public String macrosRead(int c) throws Exception{
+    	String define="DEFINE";
+    	String tab[];
+    	if(c!='$')
+    		return Character.toString((char) c);
+    	else {
+    		String macros = buffer.readLine();
+    		if(!macros.substring(0,define.length()).equals(define))
+    			throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
+    		else{
+    			macros=macros.substring(define.length(),macros.length()).trim();
+    			tab=macros.split(" ");
+    			if(tab.length==3)
+    				if(tab[1].equals("MULTI_DECR")){
+    					factory.put(tab[0],Integer.parseInt(tab[2]));
+    				return "";
+    				}
+    		if(tab.length==2){
+    			if(tab[1].equals("MULTI_DECR"))
+    				throw new SyntaxErrorException("$DEFINE <your word> <MULTI_DECR param>");
+    			factory.putI(tab[0].trim(), factory.getInstruction(tab[1].trim()));
+    			return "";
+    		}
+    		else throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
+    		}
+    	}
+		
     }
 
 }

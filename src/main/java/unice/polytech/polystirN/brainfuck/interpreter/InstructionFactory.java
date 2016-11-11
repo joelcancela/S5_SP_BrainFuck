@@ -3,6 +3,7 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 /**
  * TODO Constants
@@ -14,7 +15,13 @@ import java.io.FileNotFoundException;
 public class InstructionFactory {
 
     private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK, to_digit;
-    private Multi_decr multi_decr;
+    private static HashMap<String,Integer> map = new HashMap();
+    private static HashMap<String,Operator> mapI = new HashMap();
+    
+
+	
+
+	private Multi_decr multi_decr;
     /**
      * InstructionFactory constructor
      *
@@ -93,11 +100,27 @@ public class InstructionFactory {
             case "MULTI_DECR":
             	return multi_decr;
             default:
-                return null;
+            	if(map.get(instruction)!=null){
+            		this.setAttMacro(map.get(instruction));
+            		return multi_decr;
+            	}
+            	if(mapI.get(instruction) instanceof To_digit)
+            		this.setAttMacro(48);
+            		return mapI.get(instruction);
         }
 
     }
-
+    public String getEquivalentInstruction(String macros){
+    	if(map.get(macros)!=null){
+    		this.setAttMacro(map.get(macros));
+    		return "MULTI_DECR";
+    	}
+    	if(mapI.get(macros) instanceof To_digit)
+    		this.setAttMacro(48);
+    	if(mapI.get(macros)!=null)
+    		return mapI.get(macros).toString();
+    	return macros;
+    }
 
 	/**
      * Translate instructions into colors
@@ -136,12 +159,7 @@ public class InstructionFactory {
         }
     }
     
-    public void setAttMacro(int arg){
-    	multi_decr.setNbDecr(arg);
-    }
-    public int getAttMacro(){
-    	return multi_decr.getNbDecr();
-    }
+   
 
     public String getShortSyntax(String instruction){
         switch (instruction) {
@@ -172,7 +190,19 @@ public class InstructionFactory {
             default:
                 return instruction;
         }
-
     }
+    public void setAttMacro(int arg){
+    	multi_decr.setNbDecr(arg);
+    }
+    public int getAttMacro(){
+    	return multi_decr.getNbDecr();
+    }
+	public static void put(String s,int nbDecr) {
+		map.put(s, nbDecr);
+	}
+
+	public static void putI(String macros,Operator instruction) {
+		mapI.put(macros, instruction);
+	}
 }
 
