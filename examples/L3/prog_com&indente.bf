@@ -1,4 +1,4 @@
-  ++++++++++ # Donne la valeur 10 à la case mémoire qui va stocker le nombre d'itérations
+  ++++++++++ # Donne la valeur 10 Ã  la case mÃ©moire qui va stocker le nombre d'itÃ©rations
   [	#Boucle initiale qui affecte des valeurs utiles au tableau
 	>+++++++>++++++++++>+++>+<<<<- #Boucle initiale qui affecte des valeurs utiles au tableau
   ]#	Fin de la boucle
