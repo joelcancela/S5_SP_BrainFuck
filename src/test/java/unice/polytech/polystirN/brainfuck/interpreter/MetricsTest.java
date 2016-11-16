@@ -64,7 +64,7 @@ public class MetricsTest {
     public void JUMP0MetricsExecMove() throws Exception {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple.bf").getFile());
         inte.interpretFile();
-        assertEquals(2,inte.getMetrics().getExecMove());
+        assertEquals(3,inte.getMetrics().getExecMove());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class MetricsTest {
     public void JumpSimple2MetricsExecMove() throws Exception {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         inte.interpretFile();
-        assertEquals(32,inte.getMetrics().getExecMove());
+        assertEquals(38,inte.getMetrics().getExecMove());
     }
 
     @Test
@@ -121,5 +121,19 @@ public class MetricsTest {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         inte.interpretFile();
         assertEquals(10,inte.getMetrics().getDataRead());
+    }
+
+    @Test
+    public void JumpInternalLoopMetricsProgramSize() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop.bf").getFile());
+        inte.interpretFile();
+        assertEquals(18,inte.getMetrics().getProgramSize());
+    }
+
+    @Test
+    public void JumpInternalLoopMetricsExecMove() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop.bf").getFile());
+        inte.interpretFile();
+        assertEquals(0,inte.getMetrics().getProgramSize());
     }
 }

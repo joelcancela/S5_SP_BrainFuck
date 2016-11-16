@@ -40,54 +40,58 @@ public class Jump implements Operator {
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
-        
+
         interpreter.startALoop();
 
-                //Special case : (value of initial memory case is already equals to 0)
-                if (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0) {
-                    while (nbOuvert != 0) {
+        //Special case : (value of initial memory case is already equals to 0)
+        if (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0) {
+            interpreter.getMetrics().incrementDataRead();
+            while (nbOuvert != 0) {
+                instruction = getNextInstruction(interpreter);
+                switch (instruction) {
+                    case "JUMP":
+                    case "[":
+                        nbOuvert++;
+                        break;
+                    case "BACK":
+                    case "]":
+                        nbOuvert--;
+                        break;
+                }
+                if (!instruction.equals("NOI")) {
+                    interpreter.getMetrics().incrementProgSize();
+                }
+            }
+            interpreter.endALoop();
+            interpreter.getMetrics().incrementExecMove();
+        } else {
+
+            //Nominal case :
+            interpreter.getMetrics().incrementDataRead();
+            while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
+                interpreter.getMetrics().incrementDataRead();
+                while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
+                    if (premierParcours) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
                         instruction = getNextInstruction(interpreter);
-                        switch (instruction) {
-                            case "JUMP":
-                                interpreter.getMetrics().incrementDataRead();
-                            case "[":
-                                nbOuvert++;
-                                break;
-                            case "BACK":
-                                interpreter.getMetrics().incrementDataRead();
-                            case "]":
-                                nbOuvert--;
-                                break;
-                        }
                         if (!instruction.equals("NOI")) {
+                            file.add(instruction);
+                            iteration(instruction, interpreter, false, 0);
                             interpreter.getMetrics().incrementProgSize();
                         }
+                    } else { //Exécute les instructions de la boucle englobante
+                        instruction = file.get(i);
+                        i = iteration(instruction, interpreter, true, i);
+                        i++;
                     }
-                    interpreter.endALoop();
                 }
+                //Iteration suivante dans la boucle brainfuck :
+                premierParcours = false; //la première itération du     while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
+                nbOuvert = 1;
+                i = 0;
+            }
+            interpreter.endALoop();
+        }
 
-                //Nominal case :
-                while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
-                    while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
-                        if (premierParcours) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
-                            instruction = getNextInstruction(interpreter);
-                            if (!instruction.equals("NOI")) {
-                                file.add(instruction);
-                                iteration(instruction, interpreter, false, 0);
-                                interpreter.getMetrics().incrementProgSize();
-                            }
-                        } else { //Exécute les instructions de la boucle englobante
-                            instruction = file.get(i);
-                            i = iteration(instruction, interpreter, true, i);
-                            i++;
-                        }
-                    }
-                    //Iteration suivante dans la boucle brainfuck :
-                    premierParcours = false; //la première itération du     while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
-                    nbOuvert = 1;
-                    i = 0;
-                }
-        interpreter.endALoop();
     }
 
     /**
@@ -106,11 +110,13 @@ public class Jump implements Operator {
             case "[":
             case "#FF7F00" :
                 nbOuvert++;
+                interpreter.getMetrics().incrementExecMove();
                 break;
             case "BACK":
             case "]":
             case "#FF0000":
                 nbOuvert--;
+                interpreter.getMetrics().incrementExecMove();
                 break;
         }
         //------------------------------------------------------
@@ -140,8 +146,10 @@ public class Jump implements Operator {
         int internalIndex; //Index à la sortie, utile si et seulement si on a une autre boucle dans cette boucle et ainsi desuite
 
         //DEBUT BOUBLE INTERNE
+        interpreter.getMetrics().incrementDataRead();
         while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que cette boucle n'est pas terminée
             index = originalIndex;
+            interpreter.getMetrics().incrementDataRead();
             while ((!file.get(index).equals("BACK")) && (!file.get(index).equals("]") && (!file.get(index).equals("#FF0000") ))) {
                 index++;
                 if (file.get(index).equals("JUMP") || file.get(index).equals("[") || file.get(index).equals("#FF7F00")) { //Si on a une boucle dans cette boucle
@@ -184,11 +192,11 @@ public class Jump implements Operator {
      * @throws BadLoopException is the loop has no closing
      */
     private String getNextInstruction(Interpreter interpreter) throws Exception {
-    	String instruction="";
+        String instruction="";
 
         if(interpreter.getReader().hasNext()==false)
-        	throw new BadLoopException("Loop without end : Missing BACK operator");
-        
+            throw new BadLoopException("Loop without end : Missing BACK operator");
+
         instruction = interpreter.getReader().next();
 
         if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" ") || instruction.equals("#"))) {
@@ -198,18 +206,18 @@ public class Jump implements Operator {
             }
             return instruction;
         }else if (instruction.equals("#")){
-        	instruction = interpreter.getReader().next();
-        	while(interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))){
-        		instruction = interpreter.getReader().next();
-        	}
-        	instruction="NOI";
+            instruction = interpreter.getReader().next();
+            while(interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))){
+                instruction = interpreter.getReader().next();
+            }
+            instruction="NOI";
         }
-        
+
         return "NOI";
     }
     @Override
     public String toString(){
-    	return "[";
+        return "[";
     }
 
 }

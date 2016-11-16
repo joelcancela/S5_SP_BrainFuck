@@ -21,8 +21,6 @@ public class Metrics {
         startTime = System.currentTimeMillis();
     }
 
-    public void incrementExec_Move() {execMove++;}
-
     public long getStartTime() {
         return startTime;
     }

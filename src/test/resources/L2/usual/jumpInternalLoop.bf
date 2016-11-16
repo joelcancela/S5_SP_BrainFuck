@@ -2,17 +2,17 @@ INCR
 INCR
 INCR
 INCR
-JUMP
-RIGHT
-INCR
-JUMP
-RIGHT
-INCR
-INCR
-INCR
-LEFT
-DECR
-BACK
-LEFT
-DECR
-BACK
+    JUMP
+    RIGHT
+    INCR
+        JUMP
+        RIGHT
+        INCR
+        INCR
+        INCR
+        LEFT
+        DECR
+        BACK
+    LEFT
+    DECR
+    BACK
