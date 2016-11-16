@@ -76,7 +76,7 @@ public class Interpreter {
     public boolean interpretFile() throws Exception {
         String keyword;
 
-        startTime = System.nanoTime();
+        startTime = System.currentTimeMillis();
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
@@ -179,7 +179,7 @@ public class Interpreter {
 
     public void printMetrics() {
         System.out.println("PROG_SIZE = " + programSize);
-        System.out.println("EXEC_TIME = " + (System.nanoTime()- startTime) + " ns" );
+        System.out.println("EXEC_TIME = " + (System.currentTimeMillis()- startTime) + " ms" );
         System.out.println("EXEC_MOVE = " + execMove);
         System.out.println("DATA_MOVE = " + dataMove);
         System.out.println("DATA_WRITE = " + dataWrite);
