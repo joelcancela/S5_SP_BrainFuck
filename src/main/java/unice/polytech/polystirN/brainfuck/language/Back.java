@@ -31,5 +31,10 @@ public class Back implements Operator {
             throw new BadLoopException("Loop without start : Missing JUMP operator");
 
     }
+    @Override
+    public String toString(){
+    	return "]";
+    }
+    
 
 }

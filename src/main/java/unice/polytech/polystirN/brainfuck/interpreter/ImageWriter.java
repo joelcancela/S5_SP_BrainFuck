@@ -17,8 +17,7 @@ public class ImageWriter {
     private TextReader buffer;//Buffer used to read the program
     private String filename;//Filename of the program
     private final int pixelSize = 3;//pixels squares' width and height
-
-
+    private static int x = 0,y = 0;
     /**
      * ImageWriter constructor
      *
@@ -39,7 +38,12 @@ public class ImageWriter {
         InstructionFactory factory = new InstructionFactory();
         int instructionsNumber = 0;
         while (buffer.hasNext()) {
-            instructionsNumber++;
+        	String a=factory.getEquivalentInstruction(buffer.next());
+        	if(a.equals("TO_DIGIT"))
+        		instructionsNumber+=48;
+        		else if(a.equals("MULTI_DECR"))
+        			instructionsNumber+=factory.getAttMacro();
+        			else instructionsNumber++;
         }
         buffer = new TextReader(filename);
         int pictureWidthSquares = 0;
@@ -48,11 +52,12 @@ public class ImageWriter {
         }
         int pictureWidth = pictureWidthSquares * pixelSize;
         img = new BufferedImage(pictureWidth, pictureWidth, TYPE_INT_RGB);
-        int x = 0;
-        int y = 0;
         while (buffer.hasNext()) {
-            String s = buffer.next();
-            if (!s.equals("\n")) {
+            String s = factory.getEquivalentInstruction(buffer.next());
+            if(s.equals("MULTI_DECR")||s.equals("TO_DIGIT")){
+            	this.translateMacros(pictureWidth,factory,(s.equals("MULTI_DECR"))?(factory.getAttMacro()):(48));
+            }
+            else if (!s.equals("\n") && !s.equals("")) {
                 int col = factory.getColor(s);
                 fillPixelSquare(x, y, col);
                 if (x + pixelSize == pictureWidth) {
@@ -62,6 +67,7 @@ public class ImageWriter {
                     x += pixelSize;
                 }
             }
+            
 
         }
 
@@ -76,7 +82,27 @@ public class ImageWriter {
     public void translate() throws Exception {
         translate("outputTranslate.bmp");
     }
-
+    /**
+     * translate a macro to the image
+     * @param pictureWidth
+     * @param factory
+     * @param n le nombre de - a faire
+     * @throws Exception
+     */
+    public void translateMacros(int pictureWidth,InstructionFactory factory,int n) throws Exception {
+               int col = factory.getColor("-");
+            
+               for(int i=0;i<n;i++){
+            	   fillPixelSquare(x, y, col);
+            	   if (x + pixelSize == pictureWidth) {
+            		   x = 0;
+            		   y += pixelSize;
+               		} else {
+               			x += pixelSize;
+               		}
+               }
+          
+    }
     /**
      * Fills pixels squares with the same color
      *

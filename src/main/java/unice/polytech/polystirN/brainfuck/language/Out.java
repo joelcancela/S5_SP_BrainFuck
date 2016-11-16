@@ -47,4 +47,8 @@ public class Out implements Operator {
         }
         interpreter.incrementData_Read();
     }
+    @Override
+    public String toString(){
+    	return ".";
+    }
 }

@@ -2,6 +2,9 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+
+import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 
 /**
  * Class used to read texts and translate them into instructions
@@ -10,14 +13,19 @@ import java.io.FileReader;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 class TextReader extends Reader {
-    private BufferedReader buffer; //buffer used to read pictures
-
+	private BufferedReader buffer; //buffer used to read pictures
+	private int c;
+	private InstructionFactory factory=new InstructionFactory();
+	
     /**
      * TextReader constructor
      *
      * @param filename is the name of the file to be read
      */
-    TextReader(String filename) throws Exception {
+    public TextReader(String filename,Interpreter inte) throws Exception {
+        buffer = new BufferedReader(new FileReader(filename));
+    }
+    public TextReader(String filename) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
     }
 
@@ -56,19 +64,59 @@ class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         int c;
-        String keyword = "";
+        String keyword ="";
+        String macros="MULTI_DECR";
+        
 
         c = buffer.read();
 
-        if ('A' <= c && 'Z' >= c) {
+        if (( 'A' <= c && 'Z' >= c ) || ('a' <= c && 'z' >= c)) {
             while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
                 keyword += ((char) c);
                 c = buffer.read();
             }
-        } else {
-            keyword = Character.toString((char) c);
+            if(keyword.length()>9){
+            	if(keyword.substring(0,macros.length()+1).equals(macros+" ")){
+            		factory.setAttMacro(Integer.parseInt(keyword.substring(macros.length(),keyword.length()).trim()));
+            		return macros;
+            	}
+            }
+            
         }
+        else {
+        	
+            keyword = this.macrosRead(c);
+        }
+        
         return keyword;
+    }
+    public String macrosRead(int c) throws Exception{
+    	String define="DEFINE";
+    	String tab[];
+    	if(c!='$')
+    		return Character.toString((char) c);
+    	else {
+    		String macros = buffer.readLine();
+    		if(!macros.substring(0,define.length()).equals(define))
+    			throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
+    		else{
+    			macros=macros.substring(define.length(),macros.length()).trim();
+    			tab=macros.split(" ");
+    			if(tab.length==3)
+    				if(tab[1].equals("MULTI_DECR")){
+    					factory.put(tab[0],Integer.parseInt(tab[2]));
+    				return "";
+    				}
+    		if(tab.length==2){
+    			if(tab[1].equals("MULTI_DECR"))
+    				throw new SyntaxErrorException("$DEFINE <your word> <MULTI_DECR param>");
+    			factory.putI(tab[0].trim(), factory.getInstruction(tab[1].trim()));
+    			return "";
+    		}
+    		else throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
+    		}
+    	}
+		
     }
 
 }
