@@ -25,6 +25,7 @@ public class Interpreter {
     private InstructionFactory factory;
     private Reader reader;
     private boolean inALoop;
+    private String programName;
     //Metrics attributes
 
     //metrics
@@ -51,6 +52,8 @@ public class Interpreter {
         } else if (filename.matches("(.*).bmp")) {
             reader = new ImageReader(filename);
         }
+        
+        programName = filename.substring(0, filename.length()-4);
         
         inALoop = false;
     }
@@ -273,6 +276,10 @@ public class Interpreter {
 
     public void incrementProg_Size() {
         programSize++;
+    }
+    
+    public void interpretAndTrace(){
+    	
     }
 
     public void incrementData_Read() { dataRead++;}
