@@ -49,10 +49,12 @@ public class Jump implements Operator {
                         instruction = getNextInstruction(interpreter);
                         switch (instruction) {
                             case "JUMP":
+                                interpreter.incrementData_Read();
                             case "[":
                                 nbOuvert++;
                                 break;
                             case "BACK":
+                                interpreter.incrementData_Read();
                             case "]":
                                 nbOuvert--;
                                 break;
@@ -81,7 +83,7 @@ public class Jump implements Operator {
                         }
                     }
                     //Iteration suivante dans la boucle brainfuck :
-                    premierParcours = false; //la première itération du while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
+                    premierParcours = false; //la première itération du     while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
                     nbOuvert = 1;
                     i = 0;
                 }
