@@ -1,7 +1,5 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import java.io.BufferedReader;
-
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
@@ -10,7 +8,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Multi_decr;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 import unice.polytech.polystirN.brainfuck.language.To_digit;
-import unice.polytech.polystirN.brainfuck.language.*;
+import unice.polytech.polystirN.brainfuck.metrics.Metrics;
 
 /**
  * Models the virtual machine interpreting the
@@ -26,16 +24,7 @@ public class Interpreter {
     private Reader reader;
     private boolean inALoop;
     private String programName;
-    //Metrics attributes
-
-    //metrics
-    private long startTime = 0; // get the current system time, in milliseconds
-    private long programSize = 0; // the number of instructions in the program
-    private long execMove = 0; // the number of times the execution pointer was moved to execute this program
-    private long dataMove = 0; // the number of time the data pointer was moved to execute this program
-    private long dataWrite = 0; // the number of time the memory was accessed to change its contents while executing this program
-    private long dataRead = 0; // the number of times the memory was accessed to read its contents
-
+    private Metrics metrics;
 
     /**
      * Constructor for Interpreter
@@ -44,8 +33,9 @@ public class Interpreter {
      * @throws IncorrectFileTypeException if the filename has an invalid extension
      */
     public Interpreter(String filename) throws Exception {
-        factory =new InstructionFactory();
+        factory = new InstructionFactory();
     	memory = new Memory();
+        metrics = new Metrics();
 
         if (filename.matches("(.*).bf")) {
             reader = new TextReader(filename,this);
@@ -79,13 +69,12 @@ public class Interpreter {
     public boolean interpretFile() throws Exception {
         String keyword;
 
-        startTime = System.nanoTime();
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
                 Operator op = getFactory().getInstruction(keyword);
-                programSize++;
-                execMove++;
+                metrics.incrementProgSize();
+                metrics.incrementExecMove();
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
@@ -180,15 +169,6 @@ public class Interpreter {
         System.out.println("The program is well formed");
     }
 
-    public void printMetrics() {
-        System.out.println("PROG_SIZE = " + programSize);
-        System.out.println("EXEC_TIME = " + (System.nanoTime()- startTime) + " ns" );
-        System.out.println("EXEC_MOVE = " + execMove);
-        System.out.println("DATA_MOVE = " + dataMove);
-        System.out.println("DATA_WRITE = " + dataWrite);
-        System.out.println("DATA_READ = " + dataRead);
-    }
-
     /**
      * Getter for the reader attribute
      *
@@ -239,48 +219,11 @@ public class Interpreter {
     	inALoop = false;
     }
 
-    public void incrementExec_Move() {execMove++;}
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getProgramSize() {
-        return programSize;
-    }
-
-
-    public long getExecMove() {
-        return execMove;
-    }
-
-    public long getDataMove() {
-        return dataMove;
-    }
-
-    public long getDataWrite() {
-        return dataWrite;
-    }
-
-    public long getDataRead() {
-        return dataRead;
-    }
-
-    public void incrementData_Move() {
-        dataMove++;
-    }
-
-    public void incrementData_Write() {
-        dataWrite++;
-    }
-
-    public void incrementProg_Size() {
-        programSize++;
+    public Metrics getMetrics() {
+        return metrics;
     }
     
-    public void interpretAndTrace(){
-    	
-    }
-
-    public void incrementData_Read() { dataRead++;}
+	public void interpretAndTrace(){
+		
+	}
 }

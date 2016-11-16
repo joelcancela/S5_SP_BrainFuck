@@ -49,18 +49,18 @@ public class Jump implements Operator {
                         instruction = getNextInstruction(interpreter);
                         switch (instruction) {
                             case "JUMP":
-                                interpreter.incrementData_Read();
+                                interpreter.getMetrics().incrementDataRead();
                             case "[":
                                 nbOuvert++;
                                 break;
                             case "BACK":
-                                interpreter.incrementData_Read();
+                                interpreter.getMetrics().incrementDataRead();
                             case "]":
                                 nbOuvert--;
                                 break;
                         }
                         if (!instruction.equals("NOI")) {
-                            interpreter.incrementProg_Size();
+                            interpreter.getMetrics().incrementProgSize();
                         }
                     }
                     interpreter.endALoop();
@@ -74,7 +74,7 @@ public class Jump implements Operator {
                             if (!instruction.equals("NOI")) {
                                 file.add(instruction);
                                 iteration(instruction, interpreter, false, 0);
-                                interpreter.incrementProg_Size();
+                                interpreter.getMetrics().incrementProgSize();
                             }
                         } else { //Exécute les instructions de la boucle englobante
                             instruction = file.get(i);
@@ -169,7 +169,7 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
-        interpreter.incrementExec_Move();
+        interpreter.getMetrics().incrementExecMove();
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }

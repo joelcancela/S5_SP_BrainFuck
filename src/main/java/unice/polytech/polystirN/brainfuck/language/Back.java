@@ -22,8 +22,8 @@ public class Back implements Operator {
     @Override
     public void execute(Interpreter interpreter) throws Exception {
         int dp = (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0x00FF);
-        interpreter.incrementData_Read();
-        interpreter.incrementData_Read();
+        interpreter.getMetrics().incrementDataRead();
+        interpreter.getMetrics().incrementDataRead();
 
         //Anomaly case :
         if (dp < 0)

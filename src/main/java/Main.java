@@ -60,7 +60,7 @@ public class Main {
                             intrptr = new Interpreter((String) options.valueOf("p"));
                             intrptr.interpretFile();
                         }
-                        intrptr.printMetrics();
+                        System.out.println(intrptr.getMetrics().toString());
                     }
                 } else { //Error being thrown if the file type is invalid
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
