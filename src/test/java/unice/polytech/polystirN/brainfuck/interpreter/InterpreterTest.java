@@ -154,24 +154,36 @@ public class InterpreterTest {
         assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
         assertEquals(255, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:255
 
-        //TODO
+
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop2.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop3.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpSimple.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(1, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:1
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(1, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C1:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/left&right1.bf").getFile());
         intrptr.interpretFile();
+        assertEquals(1, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C1:0
 
 
     }
@@ -388,11 +400,17 @@ public class InterpreterTest {
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(1, intrptr.getMemory().getCells()[0] & mask);
 
+        //
         intrptr = new Interpreter("./examples/L3/prog_com&indente.bf");
         intrptr.interpretFile();
+        assertEquals(4, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);
 
+        //Does nothing only have comments
         intrptr = new Interpreter("./examples/L3/prog_fullcom.bf");
         intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);
     }
 
 }
