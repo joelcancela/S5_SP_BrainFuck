@@ -54,7 +54,7 @@ public class In implements Operator {
         } else {
             interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) buffer.read();
         }
-        interpreter.incrementData_Write();
+        interpreter.getMetrics().incrementDataWrite();
     }
     @Override
     public String toString(){
