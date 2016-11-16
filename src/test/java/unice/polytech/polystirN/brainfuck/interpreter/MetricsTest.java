@@ -80,4 +80,46 @@ public class MetricsTest {
         inte.interpretFile();
         assertEquals(1,inte.getDataRead());
     }
+
+    @Test
+    public void JUMP0MetricsDataWrite() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple.bf").getFile());
+        inte.interpretFile();
+        assertEquals(1,inte.getDataWrite());
+    }
+
+    @Test
+    public void JumpSimple2MetricsProgramSize() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
+        inte.interpretFile();
+        assertEquals(12,inte.getProgramSize());
+    }
+
+    @Test
+    public void JumpSimple2MetricsExecMove() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
+        inte.interpretFile();
+        assertEquals(32,inte.getExecMove());
+    }
+
+    @Test
+    public void JumpSimple2MetricsDataMove() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
+        inte.interpretFile();
+        assertEquals(11,inte.getDataMove());
+    }
+
+    @Test
+    public void JumpSimple2MetricsDataWrite() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
+        inte.interpretFile();
+        assertEquals(15,inte.getDataWrite());
+    }
+
+    @Test
+    public void JumpSimple2MetricsDataRead() throws Exception {
+        Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
+        inte.interpretFile();
+        assertEquals(10,inte.getDataRead());
+    }
 }

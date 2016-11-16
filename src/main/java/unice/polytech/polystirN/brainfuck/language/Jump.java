@@ -169,6 +169,7 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
+        interpreter.incrementExec_Move();
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }

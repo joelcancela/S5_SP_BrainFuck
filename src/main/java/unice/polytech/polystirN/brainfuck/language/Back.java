@@ -23,6 +23,7 @@ public class Back implements Operator {
     public void execute(Interpreter interpreter) throws Exception {
         int dp = (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0x00FF);
         interpreter.incrementData_Read();
+        interpreter.incrementData_Read();
 
         //Anomaly case :
         if (dp < 0)
