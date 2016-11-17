@@ -75,6 +75,7 @@ public class Interpreter {
                 Operator op = getFactory().getInstruction(keyword);
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
+                System.out.println( metrics.getExecMove()+" file : "+keyword);
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }

@@ -31,8 +31,8 @@ public class Jump implements Operator {
     public void execute(Interpreter interpreter) throws Exception {
         int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF;
         int i = 0;
-        boolean premierParcours = true;
         String instruction;
+        int nbParcours = 0;
 
         nbOuvert = 1;
         file = new ArrayList<>();
@@ -64,14 +64,18 @@ public class Jump implements Operator {
             }
             interpreter.endALoop();
             interpreter.getMetrics().incrementExecMove();
+            System.out.println(interpreter.getMetrics().getExecMove()+" : BACK");
         } else {
-
             //Nominal case :
             interpreter.getMetrics().incrementDataRead();
             while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
-                interpreter.getMetrics().incrementDataRead();
-                while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
-                    if (premierParcours) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
+            	interpreter.getMetrics().incrementDataRead();
+            	if (nbParcours>1){
+	            	interpreter.getMetrics().incrementExecMove();
+	        		System.out.println(interpreter.getMetrics().getExecMove()+" : JUMP");
+            	}
+            	while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
+                    if (nbParcours==0) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
                         instruction = getNextInstruction(interpreter);
                         if (!instruction.equals("NOI")) {
                             file.add(instruction);
@@ -85,7 +89,7 @@ public class Jump implements Operator {
                     }
                 }
                 //Iteration suivante dans la boucle brainfuck :
-                premierParcours = false; //la première itération du     while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
+            	nbParcours++;
                 nbOuvert = 1;
                 i = 0;
             }
@@ -110,13 +114,11 @@ public class Jump implements Operator {
             case "[":
             case "#FF7F00" :
                 nbOuvert++;
-                interpreter.getMetrics().incrementExecMove();
                 break;
             case "BACK":
             case "]":
             case "#FF0000":
                 nbOuvert--;
-                interpreter.getMetrics().incrementExecMove();
                 break;
         }
         //------------------------------------------------------
@@ -124,7 +126,9 @@ public class Jump implements Operator {
         //Si on est pas dans la première itération du while et qu'on exécute :
         if (execute) {
             if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
-                index = internalLoop(index, interpreter); //Crée une boucle interne
+            	interpreter.getMetrics().incrementExecMove();
+            	System.out.println(interpreter.getMetrics().getExecMove()+" intern : JUMP");
+            	index = internalLoop(index, interpreter); //Crée une boucle interne
             } else {
                 executeInstruction(instruction, interpreter); //Exécute l'opération
             }
@@ -177,10 +181,11 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
-        interpreter.getMetrics().incrementExecMove();
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
+        interpreter.getMetrics().incrementExecMove();
+        System.out.println(interpreter.getMetrics().getExecMove()+" exec : "+instruction);
         interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
         return true;
     }
