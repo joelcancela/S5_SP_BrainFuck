@@ -32,7 +32,7 @@ public class Decrement implements Operator {
             throw new MemoryUnderflowException("value can't be negative");
         }
         interpreter.getMemory().getCells()[p]--;
-        interpreter.incrementData_Write();
+        interpreter.getMetrics().incrementDataWrite();
     }
     @Override
     public String toString(){
@@ -40,4 +40,3 @@ public class Decrement implements Operator {
     }
 
 }
-
