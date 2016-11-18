@@ -14,20 +14,18 @@ import java.util.HashMap;
  */
 public class InstructionFactory {
 
-    private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK, to_digit;
-    private static HashMap<String,Integer> map = new HashMap();
-    private static HashMap<String,Operator> mapI = new HashMap();
-    
-
-	
-
-	private Multi_decr multi_decr;
+    private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
+	private int attMacro;
+    private static HashMap<String,String> map = new HashMap();
+    private static HashMap<String,String> mapMacrosParam = new HashMap();
     /**
      * InstructionFactory constructor
      *
      * @throws FileNotFoundException if the input file does not exist
      */
     public InstructionFactory() throws FileNotFoundException {
+    	mapMacrosParam.put("MULTI_DECR", "-");
+    	mapMacrosParam.put("TO_DIGIT", "------------------------------------------------");
         INCR = new Increment();
         DECR = new Decrement();
         LEFT = new Left();
@@ -36,8 +34,6 @@ public class InstructionFactory {
         OUT = new Out();
         JUMP = new Jump();
         BACK = new Back();
-        to_digit=new To_digit();
-        multi_decr=new Multi_decr();
     }
 
     /**
@@ -95,31 +91,18 @@ public class InstructionFactory {
             case "]":
             case "#FF0000":
                 return BACK;
-            case "TO_DIGIT":
-            	return to_digit;
-            case "MULTI_DECR":
-            	return multi_decr;
             default:
-            	if(map.get(instruction)!=null){
-            		this.setAttMacro(map.get(instruction));
-            		return multi_decr;
-            	}
-            	if(mapI.get(instruction) instanceof To_digit)
-            		this.setAttMacro(48);
-            		return mapI.get(instruction);
+            	return null;
         }
 
     }
+    /**
+     * 
+     * @param macros
+     * @return
+     */
     public String getEquivalentInstruction(String macros){
-    	if(map.get(macros)!=null){
-    		this.setAttMacro(map.get(macros));
-    		return "MULTI_DECR";
-    	}
-    	if(mapI.get(macros) instanceof To_digit)
-    		this.setAttMacro(48);
-    	if(mapI.get(macros)!=null)
-    		return mapI.get(macros).toString();
-    	return macros;
+    	return map.get(macros);
     }
 
 	/**
@@ -191,18 +174,22 @@ public class InstructionFactory {
                 return instruction;
         }
     }
+    
+   	public static HashMap<String, String> getMapMacrosParam() {
+   		return mapMacrosParam;
+   	}
+
+   	public static void setMapMacrosParam(HashMap<String, String> mapMacrosParam) {
+   		InstructionFactory.mapMacrosParam = mapMacrosParam;
+   	}
     public void setAttMacro(int arg){
-    	multi_decr.setNbDecr(arg);
+    	this.attMacro=arg;
     }
     public int getAttMacro(){
-    	return multi_decr.getNbDecr();
+    	return attMacro;
     }
-	public static void put(String s,int nbDecr) {
-		map.put(s, nbDecr);
-	}
-
-	public static void putI(String macros,Operator instruction) {
-		mapI.put(macros, instruction);
+	public static void put(String s,String string) {
+		map.put(s, string);
 	}
 }
 

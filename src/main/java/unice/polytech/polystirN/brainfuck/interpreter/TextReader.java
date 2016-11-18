@@ -2,6 +2,7 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
@@ -16,6 +17,7 @@ class TextReader extends Reader {
 	private BufferedReader buffer; //buffer used to read pictures
 	private int c;
 	private InstructionFactory factory=new InstructionFactory();
+	private char keyword1;
 	
     /**
      * TextReader constructor
@@ -24,9 +26,11 @@ class TextReader extends Reader {
      */
     public TextReader(String filename,Interpreter inte) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
+        buffer = new BufferedReader(new FileReader(macrosRead()));
     }
     public TextReader(String filename) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
+        buffer = new BufferedReader(new FileReader(macrosRead()));
     }
 
     /**
@@ -65,59 +69,180 @@ class TextReader extends Reader {
     public String next() throws Exception {
         int c;
         String keyword ="";
-        String macros="MULTI_DECR";
         
 
         c = buffer.read();
 
-        if (( 'A' <= c && 'Z' >= c ) || ('a' <= c && 'z' >= c)) {
+        if (( 'A' <= c && 'Z' >= c )) {
             while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
                 keyword += ((char) c);
                 c = buffer.read();
-            }
-            if(keyword.length()>9){
-            	if(keyword.substring(0,macros.length()+1).equals(macros+" ")){
-            		factory.setAttMacro(Integer.parseInt(keyword.substring(macros.length(),keyword.length()).trim()));
-            		return macros;
-            	}
-            }
-            
+            }   
         }
         else {
-        	
-            keyword = this.macrosRead(c);
+        	keyword = Character.toString((char) c);
         }
         
         return keyword;
+        
     }
-    public String macrosRead(int c) throws Exception{
-    	String define="DEFINE";
-    	String tab[];
-    	if(c!='$')
-    		return Character.toString((char) c);
-    	else {
-    		String macros = buffer.readLine();
-    		if(!macros.substring(0,define.length()).equals(define))
-    			throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
-    		else{
-    			macros=macros.substring(define.length(),macros.length()).trim();
-    			tab=macros.split(" ");
-    			if(tab.length==3)
-    				if(tab[1].equals("MULTI_DECR")){
-    					factory.put(tab[0],Integer.parseInt(tab[2]));
-    				return "";
-    				}
-    		if(tab.length==2){
-    			if(tab[1].equals("MULTI_DECR"))
-    				throw new SyntaxErrorException("$DEFINE <your word> <MULTI_DECR param>");
-    			factory.putI(tab[0].trim(), factory.getInstruction(tab[1].trim()));
-    			return "";
-    		}
-    		else throw new SyntaxErrorException("$DEFINE <your word> <instruction>");
-    		}
-    	}
-		
+    /**
+     * replace the macros by there equivalent in the file witch be executed
+     * @param c
+     * @return name of file witch be executed
+     * @throws Exception
+     */
+    public String macrosRead() throws Exception{
+    	int c;
+    	c = buffer.read();
+    	c=readDefineMacros(c);
+    	return MacroTransform(c);
     }
+    /**
+     * @throws IOException 
+     * @throws SyntaxErrorException 
+     * 
+     */
+    private String MacroTransform(int c) throws IOException, SyntaxErrorException{
+    	String keyword="",fichier="./fichiertempant.bf", keyword1="";
+    	FileWriter fichierTempant = new FileWriter(fichier);
+    	while(c!=-1){
+			 keyword="";
+			 keyword1="";
+			
+		 if (( 'A' <= c && 'Z' >= c ) || ('a' <= c && 'z' >= c)) {
+			 while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
+				 keyword += ((char) c);
+				 c = buffer.read();
+			 }
+			 String tab[]=keyword.split(" ");
+			 if(tab.length==2){
+				 if(isInt(tab[1])){
+					 keyword1=tab[1];
+					 keyword=tab[0];
+				 }
+			 }
+		 }
+			 if(factory.getEquivalentInstruction(Character.toString((char)c))!=null){
+				 fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(Character.toString((char)c)).trim());
+			 }
+			 else  {if((short)c!=-1)
+				 fichierTempant.write(System.getProperty("line.separator")+Character.toString((char)c).trim());
+			 }
+		 if(!keyword1.trim().equals("")){
+		  if(isInt(keyword1.trim())){
+			  int att = Integer.parseInt(keyword1.trim());
+			 		for(int j=0; j < att; j++){
+			 			fichierTempant.write(System.getProperty("line.separator")+factory.getMapMacrosParam().get(keyword.trim()).trim());
+			 		}
+		  }}
+		 		else {
+		 			if(factory.getEquivalentInstruction(keyword.trim())!=null)
+		 			fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(keyword.trim()).trim());
+		 			else fichierTempant.write(System.getProperty("line.separator")+keyword);
+		 		}
+		 c = buffer.read();
+	}
+    	fichierTempant.close();
+   	 return fichier;
+    }
+    /**
+     * Stock the equivalent of the macros to be able to use them after
+     * @throws Exception 
+     * 
+     */
+    private int readDefineMacros(int c) throws Exception{
+    	String word="";
+    	char  charOfM='\0';
+    	String macros;
+    	String define = "DEFINE";
+    	int i;
+    	
+    	 while(c!=-1 && (c=='$' || c==' ' || c=='\n' || c=='\r')){
+    		 word="";
+    		 charOfM='\0';
+    		if((char)c=='$'){
+    			macros = buffer.readLine();
+    			if(macros.length()<=define.length())
+    				throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+    			if(!macros.substring(0,define.length()).equals(define))
+    				throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+    			else{
+    				if(macros.trim().split(" ").length < 3)
+    					throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+    				 macros=macros.substring(define.length(),macros.trim().length()).trim();
+    				 for(i=0; i<macros.trim().length() && charOfM!=' '; i++){
+    					 word+=macros.trim().charAt(i);
+    					 charOfM=macros.trim().charAt(i+1);
+    					 
+    				 }
+    				 if(macros.trim().substring(word.trim().length(),macros.trim().length()).contains("\\")){
+    					macros = macros.trim().substring(word.trim().length(),macros.trim().length()).trim().replace("\\", System.getProperty("line.separator"));	
+    				 }
+    				 else {
+    					 macros =macros.trim().substring(word.trim().length(),macros.trim().length()).trim();
+    				 }
+    				 if(word.trim().length()>2){
+    				 if(word.trim().substring(word.trim().length()-2,word.trim().length()).equals("()"))
+    					 if(factory.getMapMacrosParam().get(macros)!=null)
+    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),factory.getMapMacrosParam().get(macros));
+    					 else if(factory.getEquivalentInstruction(macros)!=null)
+    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),factory.getEquivalentInstruction(macros));
+    					 else factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),rewriteMul(macros));
+    				 }
+    				 if(factory.getEquivalentInstruction(macros)==null)
+    					 factory.put(word.trim(),rewriteMul(macros));
+    				 else{ factory.put(word.trim(), rewriteMul(factory.getEquivalentInstruction(macros)));
 
+    				 }
+   				}
+
+    		 }
+    		c=buffer.read();
+    		}
+    	 return c;
+    }
+    /**
+     * rewrite the equivalent of to_digit and multi_decr in the string
+     * @param word
+     * @return String
+     */
+    private String rewriteMul(String word){
+    	String tab[] = word.split(" "); 
+    	
+    		if(tab[0].trim().equals("MULTI_DECR")){
+    			if(tab.length==1) return "-";
+    			int i = Integer.parseInt(tab[1]);
+    			String S="";
+    			for(int j=0; j<i; j++){
+    				S+="-";
+    			}
+    			return S;
+    		}
+    		else if(word.trim().equals("TO_DIGIT")){
+    			String S="";
+    			for(int j=0; j<48; j++){
+    				S+="-";
+    			}
+    			return S;
+    		}
+    		
+    	return word;
+    }
+    /**
+     * verify if a string is an integer
+     * @param chaine
+     * @return boolean
+     */
+    private static boolean isInt(String chaine){
+    	boolean valeur = true;
+    	char[] tab = chaine.toCharArray();
+
+    	for(char carac : tab){
+    	if(!Character.isDigit(carac) && valeur){ valeur = false; }
+    	}
+
+    	return valeur;
+    	} 
 }
 

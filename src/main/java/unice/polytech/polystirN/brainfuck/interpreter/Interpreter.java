@@ -7,9 +7,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 
-import unice.polytech.polystirN.brainfuck.language.Multi_decr;
 import unice.polytech.polystirN.brainfuck.language.Operator;
-import unice.polytech.polystirN.brainfuck.language.To_digit;
 import unice.polytech.polystirN.brainfuck.language.*;
 
 /**
@@ -121,7 +119,6 @@ public class Interpreter {
                     }
                 }
             } else {
-            	keyword=factory.getEquivalentInstruction(keyword);
                 if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
                 } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {
@@ -138,11 +135,7 @@ public class Interpreter {
                     System.out.print(".");
                 } else if (keyword.trim().equals("IN")||keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
-                } else if (keyword.trim().equals("TO_DIGIT")) {
-                    ((To_digit) (this.getFactory().getInstruction("TO_DIGIT"))).rewrite();
-                } else if (keyword.trim().equals("MULTI_DECR")) {
-                        ( ((Multi_decr) this.getFactory().getInstruction("MULTI_DECR"))).rewrite();
-                }else {
+                } else {
                     System.out.print(keyword.trim());
                 }
             }
