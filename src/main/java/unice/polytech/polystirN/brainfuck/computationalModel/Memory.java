@@ -51,5 +51,17 @@ public class Memory {
     	lastInstancedCell=Math.max(lastInstancedCell, nP);
         p = nP;
     }
+    
+    public String toString(){
+    	String returnValue = "[";
+    	for(int i=0;i<=lastInstancedCell;i++){
+    		if(i==lastInstancedCell)
+    			returnValue+=(cells[i]& 0xFF);
+    		else
+    			returnValue+=(cells[i]& 0xFF) + ", ";
+    	}
+    	returnValue+="]\n";
+    	return returnValue;
+    }
 
 }

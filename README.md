@@ -37,8 +37,8 @@ Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). P
 
 ### Pierre
 
-- [ ] s13
-- [ ] s14
+- [x] s13
+- [x] s14
 - [ ] Rapport s13
 - [ ] Rapport s14
 

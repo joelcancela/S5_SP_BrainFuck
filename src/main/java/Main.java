@@ -45,7 +45,8 @@ public class Main {
                         iw.translate();
                     }  else if (options.has("trace")) {
                     	intrptr = new Interpreter((String) options.valueOf("p"));
-                    	intrptr.interpretAndTrace();
+                    	intrptr.setTrace(true);
+                    	intrptr.interpretFile();
                     } else { //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) {
                             intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
