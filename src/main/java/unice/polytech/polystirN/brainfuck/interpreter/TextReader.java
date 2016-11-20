@@ -123,10 +123,14 @@ class TextReader extends Reader {
 				 }
 			 }
 		 }
+		 if(c=='#'){
+			 keyword=Character.toString((char) c)+buffer.readLine();
+		 }
+		
 			 if(factory.getEquivalentInstruction(Character.toString((char)c))!=null){
 				 fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(Character.toString((char)c)).trim());
 			 }
-			 else  {if((short)c!=-1)
+			 else  {if((short)c!=-1 && keyword.equals(""))
 				 fichierTempant.write(System.getProperty("line.separator")+Character.toString((char)c).trim());
 			 }
 		 if(!keyword1.trim().equals("")){
