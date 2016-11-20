@@ -88,7 +88,7 @@ public class InterpreterTest {
             assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
         }
 
-        //Value of the pointer goes above 29999 (Max capacity-1)
+        //Value of the pointer goes above 29999 (Max memory size capacity-1)
         try {
             intrptr = new Interpreter(getClass().getResource("/L1/errors/RIGHTError.bf").getFile());
             intrptr.interpretFile();
