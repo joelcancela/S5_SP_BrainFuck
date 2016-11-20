@@ -254,6 +254,7 @@ public class InterpreterTest {
 
         //Image Interpreter
         intrptr = new Interpreter("./examples/images/54321to33441.bmp");
+        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(3, intrptr.getMemory().getCells()[0]);
         assertEquals(3, intrptr.getMemory().getCells()[1]);

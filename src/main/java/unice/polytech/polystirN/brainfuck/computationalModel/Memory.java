@@ -13,6 +13,7 @@ public class Memory {
     private byte[] cells; //Cells are all initialized to 0 (-128 in unsigned byte)
     private int p; //Pointer to the current memory cell used
     public final static int size = 30000;
+    private int lastInstancedCell;
 
     /**
      * Memory constructor
@@ -20,6 +21,7 @@ public class Memory {
     public Memory() {
         p = 0;
         cells = new byte[size];
+        lastInstancedCell = 0;
     }
 
     /**
@@ -46,7 +48,20 @@ public class Memory {
      * @param nP new value for the pointer p
      */
     public void setP(int nP) {
+    	lastInstancedCell=Math.max(lastInstancedCell, nP);
         p = nP;
+    }
+    
+    public String toString(){
+    	String returnValue = "[";
+    	for(int i=0;i<=lastInstancedCell;i++){
+    		if(i==lastInstancedCell)
+    			returnValue+=(cells[i]& 0xFF);
+    		else
+    			returnValue+=(cells[i]& 0xFF) + ", ";
+    	}
+    	returnValue+="]\n";
+    	return returnValue;
     }
 
 }

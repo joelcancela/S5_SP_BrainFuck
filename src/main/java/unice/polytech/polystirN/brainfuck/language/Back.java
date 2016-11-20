@@ -28,7 +28,7 @@ public class Back implements Operator {
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
         if (!interpreter.isInALoop())
             throw new BadLoopException("Loop without start : Missing JUMP operator");
-
+        
     }
     @Override
     public String toString(){

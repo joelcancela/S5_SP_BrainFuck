@@ -1,13 +1,15 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import java.io.File;
+import java.io.FileWriter;
+
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
-
-import unice.polytech.polystirN.brainfuck.language.Multi_decr;
+import unice.polytech.polystirN.brainfuck.language.Jump;
 import unice.polytech.polystirN.brainfuck.language.Operator;
-import unice.polytech.polystirN.brainfuck.language.To_digit;
+import unice.polytech.polystirN.brainfuck.language.*;
 import unice.polytech.polystirN.brainfuck.metrics.Metrics;
 
 /**
@@ -23,7 +25,9 @@ public class Interpreter {
     private InstructionFactory factory;
     private Reader reader;
     private boolean inALoop;
+    private String programName;
     private Metrics metrics;
+    private boolean trace;
 
     /**
      * Constructor for Interpreter
@@ -41,7 +45,11 @@ public class Interpreter {
         } else if (filename.matches("(.*).bmp")) {
             reader = new ImageReader(filename);
         }
+        
+        programName = filename.substring(0, filename.length()-3);
+        
         inALoop = false;
+        setTrace(false);
     }
 
     /**
@@ -64,17 +72,35 @@ public class Interpreter {
      */
     public boolean interpretFile() throws Exception {
         String keyword;
-
+        File traceFile = null;
+        FileWriter fileWriter = null;
+        if(trace==true){
+        	traceFile = new File (programName+".log");
+        	fileWriter = new FileWriter (traceFile);
+        }
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
                 Operator op = getFactory().getInstruction(keyword);
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
+                if(trace==true){
+                    fileWriter.write(metrics.getExecMove() + " : "+keyword+"\n");
+                    fileWriter.write("pointer : "+memory.getP());
+                }	
                 if (op == null) {
+                	if(trace==true)
+                    	fileWriter.close();
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
+                if((op instanceof Jump) && trace==true)
+                	fileWriter.write(((Jump) op).getTrace());
+                else if(trace==true){
+                	fileWriter.write("\npointer after : "+memory.getP()+"\n");
+                	fileWriter.write(memory.toString());
+                	fileWriter.write("----------------------------\n");
+                }	
             }else if (keyword.equals("#")){
             	keyword = reader.next();
             	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
@@ -82,7 +108,8 @@ public class Interpreter {
             	}
             }
         }
-        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
+        if(trace==true)
+        	fileWriter.close();
         return true;
     }
 
@@ -109,7 +136,6 @@ public class Interpreter {
                     }
                 }
             } else {
-            	keyword=factory.getEquivalentInstruction(keyword);
                 if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
                 } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {
@@ -126,11 +152,7 @@ public class Interpreter {
                     System.out.print(".");
                 } else if (keyword.trim().equals("IN")||keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
-                } else if (keyword.trim().equals("TO_DIGIT")) {
-                    ((To_digit) (this.getFactory().getInstruction("TO_DIGIT"))).rewrite();
-                } else if (keyword.trim().equals("MULTI_DECR")) {
-                        ( ((Multi_decr) this.getFactory().getInstruction("MULTI_DECR"))).rewrite();
-                }else {
+                } else {
                     System.out.print(keyword.trim());
                 }
             }
@@ -218,4 +240,16 @@ public class Interpreter {
     public Metrics getMetrics() {
         return metrics;
     }
+
+	public boolean isTrace() {
+		return trace;
+	}
+
+	public void setTrace(boolean trace) {
+		this.trace = trace;
+	}
+	
+	public String getProgramName(){
+		return programName;
+	}
 }

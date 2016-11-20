@@ -21,7 +21,9 @@ public class Main {
         OptionParser parser = new OptionParser("p:i:o:"); //: after a character means that an argument is mandatory for this flag.
         parser.accepts("check");
         parser.accepts("rewrite");
-        parser.accepts("translate");//here we add the longs options.
+        parser.accepts("translate");
+        parser.accepts("trace");
+        //here we add the longs options.
 
         OptionSet options = parser.parse(args); //Handle the args of the command line with the options.
 
@@ -29,19 +31,23 @@ public class Main {
             printEmptyMessage(); //Show a man-like message if no options have been given.
         }
         if (options.has("p")) { //Is there a file ?
+        	Interpreter intrptr;
             try {
                 if (checkFileType((String) options.valueOf("p"))) { //Is the type of the file valid ?
                     if (options.has("check")) { //Do we need to check it ?
-                        Interpreter intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr = new Interpreter((String) options.valueOf("p"));
                         intrptr.check();
                     } else if (options.has("rewrite")) { //Do we need to rewrite it ?
-                        Interpreter intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr = new Interpreter((String) options.valueOf("p"));
                         intrptr.rewriteFile();
                     } else if (options.has("translate")) {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
+                    }  else if (options.has("trace")) {
+                    	intrptr = new Interpreter((String) options.valueOf("p"));
+                    	intrptr.setTrace(true);
+                    	intrptr.interpretFile();
                     } else { //This else condition execute the file, with the proper input/output files
-                        Interpreter intrptr;
                         if (options.has("i") && options.has("o")) {
                             intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
                             intrptr.interpretFile();

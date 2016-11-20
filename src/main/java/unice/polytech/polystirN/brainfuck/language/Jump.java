@@ -5,6 +5,8 @@ import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsE
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class Jump implements Operator {
     private int nbOuvert;
     private List<String> file;
+    public String trace = "";
 
     /**
      * This method checks the content of the current memory cell.
@@ -31,47 +34,57 @@ public class Jump implements Operator {
     public void execute(Interpreter interpreter) throws Exception {
         int dp = interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF;
         int i = 0;
-        boolean premierParcours = true;
         String instruction;
+        int nbParcours = 0;
 
         nbOuvert = 1;
         file = new ArrayList<>();
+        trace = "";
 
         //Anomaly case :
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
 
-        interpreter.startALoop();
-
+       if(interpreter.isTrace()==true){
+    	   	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
+    	   	trace+=interpreter.getMemory().toString();
+    	   	trace+="----------------------------\n";
+        }
+        
+    	
         //Special case : (value of initial memory case is already equals to 0)
         if (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] == 0) {
             interpreter.getMetrics().incrementDataRead();
             while (nbOuvert != 0) {
                 instruction = getNextInstruction(interpreter);
                 switch (instruction) {
-                    case "JUMP":
-                    case "[":
-                        nbOuvert++;
-                        break;
-                    case "BACK":
-                    case "]":
-                        nbOuvert--;
-                        break;
+	                case "JUMP":
+	                case "[":
+	                case "#FF7F00" :
+	                    nbOuvert++;
+	                    break;
+	                case "BACK":
+	                case "]":
+	                case "#FF0000":
+	                    nbOuvert--;
+	                    break;
                 }
                 if (!instruction.equals("NOI")) {
                     interpreter.getMetrics().incrementProgSize();
                 }
             }
-            interpreter.endALoop();
             interpreter.getMetrics().incrementExecMove();
         } else {
-
             //Nominal case :
             interpreter.getMetrics().incrementDataRead();
-            while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
-                interpreter.getMetrics().incrementDataRead();
-                while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
-                    if (premierParcours) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
+            interpreter.startALoop();
+            while (interpreter.isInALoop() && interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que dp ne vaut pas 0 (sort immédiatement si ma case vaut 0)
+            	interpreter.getMetrics().incrementDataRead();
+            	if (nbParcours>1){
+	            	interpreter.getMetrics().incrementExecMove();
+            	}
+            	while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
+                    if (nbParcours==0) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
                         instruction = getNextInstruction(interpreter);
                         if (!instruction.equals("NOI")) {
                             file.add(instruction);
@@ -85,7 +98,7 @@ public class Jump implements Operator {
                     }
                 }
                 //Iteration suivante dans la boucle brainfuck :
-                premierParcours = false; //la première itération du     while permet de récupérer toutes les instructions sans poser de problèmes aux itérations suivantes
+            	nbParcours++;
                 nbOuvert = 1;
                 i = 0;
             }
@@ -110,13 +123,11 @@ public class Jump implements Operator {
             case "[":
             case "#FF7F00" :
                 nbOuvert++;
-                interpreter.getMetrics().incrementExecMove();
                 break;
             case "BACK":
             case "]":
             case "#FF0000":
                 nbOuvert--;
-                interpreter.getMetrics().incrementExecMove();
                 break;
         }
         //------------------------------------------------------
@@ -124,7 +135,15 @@ public class Jump implements Operator {
         //Si on est pas dans la première itération du while et qu'on exécute :
         if (execute) {
             if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
-                index = internalLoop(index, interpreter); //Crée une boucle interne
+            	interpreter.getMetrics().incrementExecMove();
+            	if(interpreter.isTrace()==true){
+        	    	trace+=interpreter.getMetrics().getExecMove() + " : "+instruction+"\n";
+        	    	trace+="pointer : "+interpreter.getMemory().getP();
+        	    	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
+                	trace+=interpreter.getMemory().toString();
+                	trace+="----------------------------\n";
+            	}
+            	index = internalLoop(index, interpreter); //Crée une boucle interne
             } else {
                 executeInstruction(instruction, interpreter); //Exécute l'opération
             }
@@ -147,7 +166,7 @@ public class Jump implements Operator {
 
         //DEBUT BOUBLE INTERNE
         interpreter.getMetrics().incrementDataRead();
-        while (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que cette boucle n'est pas terminée
+        while (interpreter.isInALoop() && interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que cette boucle n'est pas terminée
             index = originalIndex;
             interpreter.getMetrics().incrementDataRead();
             while ((!file.get(index).equals("BACK")) && (!file.get(index).equals("]") && (!file.get(index).equals("#FF0000") ))) {
@@ -176,12 +195,22 @@ public class Jump implements Operator {
      * @param interpreter memory (M and P) of the current program and all of the following operations.
      * @throws SyntaxErrorException if the keyword is invalid
      */
-    public boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
-        interpreter.getMetrics().incrementExecMove();
-        if (interpreter.getFactory().getInstruction(instruction) == null) {
+    private boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
+    	interpreter.getMetrics().incrementExecMove();
+    	
+    	if(interpreter.isTrace()==true){
+	    	trace+=interpreter.getMetrics().getExecMove() + " : "+instruction+"\n";
+	    	trace+="pointer : "+interpreter.getMemory().getP();
+    	}
+    	if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
         interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
+        if(interpreter.isTrace()==true){
+        	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
+        	trace+=interpreter.getMemory().toString();
+        	trace+="----------------------------\n";
+        }
         return true;
     }
 
@@ -218,6 +247,10 @@ public class Jump implements Operator {
     @Override
     public String toString(){
         return "[";
+    }
+    
+    public String getTrace(){
+    	return trace;
     }
 
 }

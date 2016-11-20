@@ -99,7 +99,7 @@ public class MetricsTest {
     public void JumpSimple2MetricsExecMove() throws Exception {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         inte.interpretFile();
-        assertEquals(38,inte.getMetrics().getExecMove());
+        assertEquals(36,inte.getMetrics().getExecMove());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class MetricsTest {
     public void JumpSimple2MetricsDataRead() throws Exception {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         inte.interpretFile();
-        assertEquals(10,inte.getMetrics().getDataRead());
+        assertEquals(7,inte.getMetrics().getDataRead());
     }
 
     @Test
@@ -134,6 +134,6 @@ public class MetricsTest {
     public void JumpInternalLoopMetricsExecMove() throws Exception {
         Interpreter inte = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop.bf").getFile());
         inte.interpretFile();
-        assertEquals(0,inte.getMetrics().getProgramSize());
+        assertEquals(60,inte.getMetrics().getExecMove());
     }
 }
