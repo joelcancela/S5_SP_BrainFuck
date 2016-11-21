@@ -20,35 +20,35 @@ public class MetricsTest {
 
     @Test
     public void INCRC0by7MetricsProgramSize() throws Exception {
-        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0BY7.bf").getFile());
+        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
         inte.interpretFile();
         assertEquals(7,inte.getMetrics().getProgramSize());
     }
 
     @Test
     public void INCRC0by7MetricsExecMove() throws Exception {
-        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0BY7.bf").getFile());
+        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
         inte.interpretFile();
         assertEquals(7,inte.getMetrics().getExecMove());
     }
 
     @Test
     public void INCRC0by7MetricsDataMove() throws Exception {
-        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0BY7.bf").getFile());
+        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
         inte.interpretFile();
         assertEquals(0,inte.getMetrics().getDataMove());
     }
 
     @Test
     public void INCRC0by7MetricsDataWrite() throws Exception {
-        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0BY7.bf").getFile());
+        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
         inte.interpretFile();
         assertEquals(7,inte.getMetrics().getDataWrite());
     }
 
     @Test
     public void INCRC0by7MetricsDataRead() throws Exception {
-        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0BY7.bf").getFile());
+        Interpreter inte = new Interpreter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
         inte.interpretFile();
         assertEquals(0,inte.getMetrics().getDataRead());
     }
