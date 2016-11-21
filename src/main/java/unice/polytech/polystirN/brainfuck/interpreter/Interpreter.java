@@ -170,7 +170,7 @@ public class Interpreter {
         
         while (reader.hasNext()) {
             keyword = reader.next();
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" "))) {
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("#") || keyword.equals("\t") || keyword.equals(" "))) {
                 Operator op = getFactory().getInstruction(keyword);
                 if (op == null)
                     throw new SyntaxErrorException("Incorrect word operator");
@@ -180,6 +180,11 @@ public class Interpreter {
                 	nbOuvert--;         
                 if(nbOuvert<0)
                 	throw new BadLoopException("Loop without start : Missing JUMP operator");
+            }else if (keyword.equals("#")){
+            	keyword = reader.next();
+            	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
+            		keyword = reader.next();
+            	}
             }
         }
         if(nbOuvert>0)

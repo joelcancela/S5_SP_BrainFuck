@@ -59,7 +59,7 @@ public class ImageWriter {
         int y = 0;
         while (buffer.hasNext()) {
             String s = buffer.next();
-            if (!s.equals("\n") && !s.equals(" ") && !s.equals("\r")) {
+            if (!s.equals("\n") && !s.equals(" ") && !s.equals("\r") && !s.equals("\t")) {
                 int col = factory.getColor(s);
                 fillPixelSquare(x, y, col);
                 if (x + pixelSize == pictureWidth) {
@@ -69,7 +69,6 @@ public class ImageWriter {
                     x += pixelSize;
                 }
             }
-
         }
 
         ImageIO.write(img, "BMP", new File(outputFilename));

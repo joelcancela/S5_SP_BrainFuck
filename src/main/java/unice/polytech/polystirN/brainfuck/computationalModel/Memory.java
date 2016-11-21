@@ -1,5 +1,8 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TODO maybe transform into an ArrayList - see diff with metrics
  * Class that represents the memory
@@ -14,6 +17,7 @@ public class Memory {
     private int p; //Pointer to the current memory cell used
     public final static int size = 30000;
     private int lastInstancedCell;
+    //private List<Byte> cells;
 
     /**
      * Memory constructor
@@ -21,6 +25,8 @@ public class Memory {
     public Memory() {
         p = 0;
         cells = new byte[size];
+        //cells = new ArrayList<Byte>();
+        //cells.add((byte)-127);
         lastInstancedCell = 0;
     }
 
@@ -32,6 +38,9 @@ public class Memory {
     public byte[] getCells() {
         return cells;
     }
+    /*public List<Byte> getCells(){
+    	return cells;
+    }*/
 
     /**
      * Gets the current memory cell index
@@ -49,6 +58,8 @@ public class Memory {
      */
     public void setP(int nP) {
     	lastInstancedCell=Math.max(lastInstancedCell, nP);
+    	/*if(lastInstancedCell<nP)
+    		cells.add((byte)-127);*/
         p = nP;
     }
     

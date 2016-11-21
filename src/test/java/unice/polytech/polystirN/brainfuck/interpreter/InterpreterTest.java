@@ -20,7 +20,7 @@ public class InterpreterTest {
     /**************
      ** LEVEL 1 **
      **************/
-/*
+
     @Test
     public void interpretBfLongUsualFiles() throws Exception {
 
@@ -99,11 +99,11 @@ public class InterpreterTest {
         }
 
     }
-*/
+
     /**************
      ** LEVEL 2 **
      **************/
-/*
+
     @Test
     public void interpretBfShortUsualFiles() throws Exception {
         //Writes "Bonjour" using loops
@@ -166,6 +166,7 @@ public class InterpreterTest {
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop3.bf").getFile());
+        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
@@ -386,7 +387,7 @@ public class InterpreterTest {
         }
 
 
-    }*/
+    }
 
     /**************
      ** LEVEL 3 **
