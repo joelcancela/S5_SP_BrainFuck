@@ -20,7 +20,7 @@ public class InterpreterTest {
     /**************
      ** LEVEL 1 **
      **************/
-
+/*
     @Test
     public void interpretBfLongUsualFiles() throws Exception {
 
@@ -99,11 +99,11 @@ public class InterpreterTest {
         }
 
     }
-
+*/
     /**************
      ** LEVEL 2 **
      **************/
-
+/*
     @Test
     public void interpretBfShortUsualFiles() throws Exception {
         //Writes "Bonjour" using loops
@@ -254,7 +254,6 @@ public class InterpreterTest {
 
         //Image Interpreter
         intrptr = new Interpreter("./examples/images/54321to33441.bmp");
-        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(3, intrptr.getMemory().getCells()[0]);
         assertEquals(3, intrptr.getMemory().getCells()[1]);
@@ -387,7 +386,7 @@ public class InterpreterTest {
         }
 
 
-    }
+    }*/
 
     /**************
      ** LEVEL 3 **
@@ -397,6 +396,7 @@ public class InterpreterTest {
     public void interpretBfFilesWithComments() throws Exception {
         //Comments
         intrptr = new Interpreter("./examples/L3/prog_com.bf");
+        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(1, intrptr.getMemory().getCells()[0] & mask);

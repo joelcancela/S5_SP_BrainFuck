@@ -100,7 +100,7 @@ public class Interpreter {
                 	fileWriter.write("\npointer after : "+memory.getP()+"\n");
                 	fileWriter.write(memory.toString());
                 	fileWriter.write("----------------------------\n");
-                }	
+                }
             }else if (keyword.equals("#")){
             	keyword = reader.next();
             	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
