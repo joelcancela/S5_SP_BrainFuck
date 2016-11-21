@@ -26,11 +26,11 @@ class TextReader extends Reader {
      */
     public TextReader(String filename,Interpreter inte) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
-        buffer = new BufferedReader(new FileReader(macrosRead()));
+        buffer = new BufferedReader(new FileReader(macrosRead(filename)));
     }
     public TextReader(String filename) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
-        buffer = new BufferedReader(new FileReader(macrosRead()));
+        buffer = new BufferedReader(new FileReader(macrosRead(filename)));
     }
 
     /**
@@ -92,11 +92,13 @@ class TextReader extends Reader {
      * @return name of file witch be executed
      * @throws Exception
      */
-    public String macrosRead() throws Exception{
-    	int c;
-    	c = buffer.read();
-    	c=readDefineMacros(c);
-    	return MacroTransform(c);
+    public String macrosRead(String filename) throws Exception{
+    	int[] c = new int[2];
+    	c[0] = buffer.read();
+    	c=readDefineMacros(c[0]);
+    	if(c[1]==1)
+    	return MacroTransform(c[0]);
+    	else return filename; 
     }
     /**
      * @throws IOException 
@@ -123,10 +125,14 @@ class TextReader extends Reader {
 				 }
 			 }
 		 }
+		 if(c=='#'){
+			 keyword=Character.toString((char) c)+buffer.readLine();
+		 }
+		
 			 if(factory.getEquivalentInstruction(Character.toString((char)c))!=null){
 				 fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(Character.toString((char)c)).trim());
 			 }
-			 else  {if((short)c!=-1)
+			 else  {if((short)c!=-1 && keyword.equals(""))
 				 fichierTempant.write(System.getProperty("line.separator")+Character.toString((char)c).trim());
 			 }
 		 if(!keyword1.trim().equals("")){
@@ -151,9 +157,10 @@ class TextReader extends Reader {
      * @throws Exception 
      * 
      */
-    private int readDefineMacros(int c) throws Exception{
+    private int[] readDefineMacros(int c) throws Exception{
     	String word="";
     	char  charOfM='\0';
+    	int[] bool ={c,0};
     	String macros;
     	String define = "DEFINE";
     	int i;
@@ -196,11 +203,13 @@ class TextReader extends Reader {
 
     				 }
    				}
-
+    			bool[0]=c;
+        		bool[1]=1;
     		 }
     		c=buffer.read();
+    	
     		}
-    	 return c;
+    	 return bool;
     }
     /**
      * rewrite the equivalent of to_digit and multi_decr in the string
