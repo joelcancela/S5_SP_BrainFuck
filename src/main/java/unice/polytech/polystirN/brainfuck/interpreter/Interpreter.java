@@ -116,7 +116,7 @@ public class Interpreter {
         }
         if(isTrace()==true)
         	trace.close();
-        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
+        System.out.println("\nC"+memory.getP()+": "+(memory.getCells()[memory.getP()]&0xFF) );
     }
 
     /**
