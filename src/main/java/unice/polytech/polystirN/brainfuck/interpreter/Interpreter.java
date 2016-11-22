@@ -95,8 +95,6 @@ public class Interpreter {
                 	trace.write("pointer : "+memory.getP());
                 }	
                 if (op == null) {
-                	if(isTrace()==true)
-                		trace.close();
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
