@@ -179,11 +179,12 @@ class TextReader extends Reader {
     			if(!macros.substring(0,define.length()).equals(define))
     				throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
     			else{
-    				if(macros.trim().split(" ").length < 3)
+    				if(macros.trim().split(" ").length < 2)
     					throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
     				 macros=macros.substring(define.length(),macros.trim().length()).trim();
     				 for(i=0; i<macros.trim().length() && charOfM!=' '; i++){
     					 word+=macros.trim().charAt(i);
+    					 if(i<macros.trim().length()-1)
     					 charOfM=macros.trim().charAt(i+1);
     					 
     				 }
