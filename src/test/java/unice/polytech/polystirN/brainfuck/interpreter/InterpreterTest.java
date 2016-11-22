@@ -166,7 +166,6 @@ public class InterpreterTest {
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop3.bf").getFile());
-        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
@@ -397,7 +396,6 @@ public class InterpreterTest {
     public void interpretBfFilesWithComments() throws Exception {
         //Comments
         intrptr = new Interpreter("./examples/L3/prog_com.bf");
-        intrptr.setTrace(true);
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(1, intrptr.getMemory().getCells()[0] & mask);

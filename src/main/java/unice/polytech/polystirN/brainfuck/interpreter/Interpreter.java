@@ -1,16 +1,13 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import java.io.File;
-import java.io.FileWriter;
-
 import unice.polytech.polystirN.brainfuck.computationalModel.Memory;
 import unice.polytech.polystirN.brainfuck.exceptions.BadLoopException;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Jump;
 import unice.polytech.polystirN.brainfuck.language.Operator;
-import unice.polytech.polystirN.brainfuck.language.*;
-import unice.polytech.polystirN.brainfuck.metrics.Metrics;
+import unice.polytech.polystriN.brainfuck.debug.Metrics;
+import unice.polytech.polystriN.brainfuck.debug.Trace;
 
 /**
  * Models the virtual machine interpreting the
@@ -27,7 +24,7 @@ public class Interpreter {
     private boolean inALoop;
     private String programName;
     private Metrics metrics;
-    private boolean trace;
+    private Trace trace;
 
     /**
      * Constructor for Interpreter
@@ -49,7 +46,6 @@ public class Interpreter {
         programName = filename.substring(0, filename.length()-3);
         
         inALoop = false;
-        setTrace(false);
     }
 
     /**
@@ -63,6 +59,11 @@ public class Interpreter {
         this(filename);
         factory =new InstructionFactory( inputFile,outputFile);
     }
+    
+    public Interpreter(String filename, Trace trace) throws Exception{
+    	this(filename);
+    	this.trace=trace;
+    }
 
     /**
      * Interprets a file
@@ -72,11 +73,9 @@ public class Interpreter {
      */
     public boolean interpretFile() throws Exception {
         String keyword;
-        File traceFile = null;
-        FileWriter fileWriter = null;
-        if(trace==true){
-        	traceFile = new File (programName+".log");
-        	fileWriter = new FileWriter (traceFile);
+
+        if(isTrace()==true){
+        	trace.start(programName);
         }
         while (reader.hasNext()) {
             keyword = reader.next();
@@ -84,22 +83,22 @@ public class Interpreter {
                 Operator op = getFactory().getInstruction(keyword);
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
-                if(trace==true){
-                    fileWriter.write(metrics.getExecMove() + " : "+keyword+"\n");
-                    fileWriter.write("pointer : "+memory.getP());
+                if(isTrace()==true){
+                	trace.write(metrics.getExecMove() + " : "+keyword+"\n");
+                	trace.write("pointer : "+memory.getP());
                 }	
                 if (op == null) {
-                	if(trace==true)
-                    	fileWriter.close();
+                	if(isTrace()==true)
+                		trace.close();
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
-                if((op instanceof Jump) && trace==true)
-                	fileWriter.write(((Jump) op).getTrace());
-                else if(trace==true){
-                	fileWriter.write("\npointer after : "+memory.getP()+"\n");
-                	fileWriter.write(memory.toString());
-                	fileWriter.write("----------------------------\n");
+                if((op instanceof Jump) && isTrace()==true)
+                	trace.write(((Jump) op).getTrace());
+                else if(isTrace()==true){
+                	trace.write("\npointer after : "+memory.getP()+"\n");
+                	trace.write(memory.toString());
+                	trace.write("----------------------------\n");
                 }
             }else if (keyword.equals("#")){
             	keyword = reader.next();
@@ -108,8 +107,8 @@ public class Interpreter {
             	}
             }
         }
-        if(trace==true)
-        	fileWriter.close();
+        if(isTrace()==true)
+        	trace.close();
         return true;
     }
 
@@ -247,11 +246,7 @@ public class Interpreter {
     }
 
 	public boolean isTrace() {
-		return trace;
-	}
-
-	public void setTrace(boolean trace) {
-		this.trace = trace;
+		return !(trace==null);
 	}
 	
 	public String getProgramName(){

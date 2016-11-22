@@ -1,4 +1,4 @@
-package unice.polytech.polystirN.brainfuck.metrics;
+package unice.polytech.polystriN.brainfuck.debug;
 
 /**
  * Measure the different performances associated to the
