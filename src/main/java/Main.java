@@ -32,7 +32,7 @@ public class Main {
             printEmptyMessage(); //Show a man-like message if no options have been given.
         }
         if (options.has("p")) { //Is there a file ?
-        	Interpreter intrptr;
+        	Interpreter intrptr=null;
             try {
                 if (checkFileType((String) options.valueOf("p"))) { //Is the type of the file valid ?
                     if (options.has("check")) { //Do we need to check it ?
@@ -68,7 +68,8 @@ public class Main {
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
                 }
             } catch (Exception e) {
-            	if(trace.isOpen()==true){
+            	if(intrptr.isTrace())
+            		if(trace.isOpen()){
             		e.printStackTrace(trace.getPrintWriter());
             		trace.closePrint();
             		trace.close();

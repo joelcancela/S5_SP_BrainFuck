@@ -60,6 +60,12 @@ public class Interpreter {
         factory =new InstructionFactory( inputFile,outputFile);
     }
     
+    /**
+     * Constructor for Interpreter with a trace
+     * @param filename is the name of the file to be interpreted
+     * @param trace object trace responsible for write the trace file (.log)
+     * @throws Exception
+     */
     public Interpreter(String filename, Trace trace) throws Exception{
     	this(filename);
     	this.trace=trace;
