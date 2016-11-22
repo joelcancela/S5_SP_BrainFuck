@@ -81,16 +81,6 @@ class ImageReader extends Reader {
     }
 
     /**
-     * Getter of the buffer
-     *
-     * @return buffer being a BufferedImage
-     */
-    @Override
-    public Object getBuffer() {
-        return buffer;
-    }
-
-    /**
      * Checks if a square has its pixels with the same colors
      *
      * @param currentX is the x coordinate of the top left pixel in the square

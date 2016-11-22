@@ -25,4 +25,4 @@ src/main/resources/
 # Brainfuck outputs
 outputTranslate.bmp
 *.log
-fichiertempant.bf
+fichierTampon.bf

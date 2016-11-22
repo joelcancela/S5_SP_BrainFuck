@@ -5,8 +5,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.PointerPositionOutOfBoundsE
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ import java.util.List;
 public class Jump implements Operator {
     private int nbOuvert;
     private List<String> file;
-    public String trace = "";
+    private String trace = "";
 
     /**
      * This method checks the content of the current memory cell.
@@ -45,7 +43,7 @@ public class Jump implements Operator {
         if (dp < 0)
             throw new PointerPositionOutOfBoundsException("current memory have illegal value (inferior to 0)");
 
-       if(interpreter.isTrace()==true){
+       if(interpreter.isTrace()){
     	   	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
     	   	trace+=interpreter.getMemory().toString();
     	   	trace+="----------------------------\n";
@@ -136,7 +134,7 @@ public class Jump implements Operator {
         if (execute) {
             if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
             	interpreter.getMetrics().incrementExecMove();
-            	if(interpreter.isTrace()==true){
+            	if(interpreter.isTrace()){
         	    	trace+=interpreter.getMetrics().getExecMove() + " : "+instruction+"\n";
         	    	trace+="pointer : "+interpreter.getMemory().getP();
         	    	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
@@ -198,7 +196,7 @@ public class Jump implements Operator {
     private boolean executeInstruction (String instruction, Interpreter interpreter) throws Exception {
     	interpreter.getMetrics().incrementExecMove();
     	
-    	if(interpreter.isTrace()==true){
+    	if(interpreter.isTrace()){
 	    	trace+=interpreter.getMetrics().getExecMove() + " : "+instruction+"\n";
 	    	trace+="pointer : "+interpreter.getMemory().getP();
     	}
@@ -206,7 +204,7 @@ public class Jump implements Operator {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
         interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
-        if(interpreter.isTrace()==true){
+        if(interpreter.isTrace()){
         	trace+="\npointer after : "+interpreter.getMemory().getP()+"\n";
         	trace+=interpreter.getMemory().toString();
         	trace+="----------------------------\n";
@@ -221,9 +219,9 @@ public class Jump implements Operator {
      * @throws BadLoopException is the loop has no closing
      */
     private String getNextInstruction(Interpreter interpreter) throws Exception {
-        String instruction="";
+        String instruction;
 
-        if(interpreter.getReader().hasNext()==false)
+        if(!interpreter.getReader().hasNext())
             throw new BadLoopException("Loop without end : Missing BACK operator");
 
         instruction = interpreter.getReader().next();
@@ -239,7 +237,6 @@ public class Jump implements Operator {
             while(interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))){
                 instruction = interpreter.getReader().next();
             }
-            instruction="NOI";
         }
 
         return "NOI";

@@ -16,7 +16,8 @@ public interface Operator {
      * @throws Exception if the operation goes against memory capacity or pointer range position
      */
     void execute(Interpreter interpreter) throws Exception;
+
     @Override
-    public String toString();
+    String toString();
 
 }

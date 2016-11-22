@@ -34,19 +34,18 @@ public class Interpreter {
      */
     public Interpreter(String filename) throws Exception {
         factory = new InstructionFactory();
-    	memory = new Memory();
+        memory = new Memory();
         metrics = new Metrics();
 
         if (filename.matches("(.*).bf")) {
-            programName = filename.substring(0, filename.length()-3);
-            reader = new TextReader(filename,this);
+            programName = filename.substring(0, filename.length() - 3);
+            reader = new TextReader(filename);
         } else if (filename.matches("(.*).bmp")) {
-            programName = filename.substring(0, filename.length()-4);
+            programName = filename.substring(0, filename.length() - 4);
             reader = new ImageReader(filename);
         }
-        
 
-        
+
         inALoop = false;
     }
 
@@ -59,18 +58,18 @@ public class Interpreter {
      */
     public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
         this(filename);
-        factory =new InstructionFactory( inputFile,outputFile);
+        factory = new InstructionFactory(inputFile, outputFile);
     }
-    
+
     /**
      * Constructor for Interpreter with a trace
+     *
      * @param filename is the name of the file to be interpreted
-     * @param trace object trace responsible for write the trace file (.log)
-     * @throws Exception
+     * @param trace    object trace responsible for write the trace file (.log)
      */
-    public Interpreter(String filename, Trace trace) throws Exception{
-    	this(filename);
-    	this.trace=trace;
+    public Interpreter(String filename, Trace trace) throws Exception {
+        this(filename);
+        this.trace = trace;
     }
 
     /**
@@ -81,8 +80,8 @@ public class Interpreter {
     public void interpretFile() throws Exception {
         String keyword;
 
-        if(isTrace()==true){
-        	trace.start(programName);
+        if (isTrace()) {
+            trace.start(programName);
         }
         while (reader.hasNext()) {
             keyword = reader.next();
@@ -90,31 +89,31 @@ public class Interpreter {
                 Operator op = getFactory().getInstruction(keyword);
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
-                if(isTrace()==true){
-                	trace.write(metrics.getExecMove() + " : "+keyword+"\n");
-                	trace.write("pointer : "+memory.getP());
-                }	
+                if (isTrace()) {
+                    trace.write(metrics.getExecMove() + " : " + keyword + "\n");
+                    trace.write("pointer : " + memory.getP());
+                }
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
-                if((op instanceof Jump) && isTrace()==true)
-                	trace.write(((Jump) op).getTrace());
-                else if(isTrace()==true){
-                	trace.write("\npointer after : "+memory.getP()+"\n");
-                	trace.write(memory.toString());
-                	trace.write("----------------------------\n");
+                if ((op instanceof Jump) && isTrace())
+                    trace.write(((Jump) op).getTrace());
+                else if (isTrace()) {
+                    trace.write("\npointer after : " + memory.getP() + "\n");
+                    trace.write(memory.toString());
+                    trace.write("----------------------------\n");
                 }
-            }else if (keyword.equals("#")){
-            	keyword = reader.next();
-            	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
-            		keyword = reader.next();
-            	}
+            } else if (keyword.equals("#")) {
+                keyword = reader.next();
+                while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
+                    keyword = reader.next();
+                }
             }
         }
-        if(isTrace()==true)
-        	trace.close();
-        System.out.println("\nC"+memory.getP()+": "+(memory.getCells()[memory.getP()]&0xFF) );
+        if (isTrace())
+            trace.close();
+        System.out.println("\nC" + memory.getP() + ": " + (memory.getCells()[memory.getP()] & 0xFF));
     }
 
     /**
@@ -140,21 +139,21 @@ public class Interpreter {
                     }
                 }
             } else {
-                if (keyword.trim().equals("INCR")||keyword.trim().equals("#FFFFFF")) {
+                if (keyword.trim().equals("INCR") || keyword.trim().equals("#FFFFFF")) {
                     System.out.print("+");
-                } else if (keyword.trim().equals("DECR")||keyword.trim().equals("#4B0082")) {
+                } else if (keyword.trim().equals("DECR") || keyword.trim().equals("#4B0082")) {
                     System.out.print("-");
-                } else if (keyword.trim().equals("RIGHT")||keyword.trim().equals("#0000FF")) {
+                } else if (keyword.trim().equals("RIGHT") || keyword.trim().equals("#0000FF")) {
                     System.out.print(">");
-                } else if (keyword.trim().equals("LEFT")||keyword.trim().equals("#9400D3")) {
+                } else if (keyword.trim().equals("LEFT") || keyword.trim().equals("#9400D3")) {
                     System.out.print("<");
-                } else if (keyword.trim().equals("JUMP")||keyword.trim().equals("#FF7F00")) {
+                } else if (keyword.trim().equals("JUMP") || keyword.trim().equals("#FF7F00")) {
                     System.out.print("[");
-                } else if (keyword.trim().equals("BACK")||keyword.trim().equals("#FF0000")) {
+                } else if (keyword.trim().equals("BACK") || keyword.trim().equals("#FF0000")) {
                     System.out.print("]");
-                } else if (keyword.trim().equals("OUT")||keyword.trim().equals("#00FF00")) {
+                } else if (keyword.trim().equals("OUT") || keyword.trim().equals("#00FF00")) {
                     System.out.print(".");
-                } else if (keyword.trim().equals("IN")||keyword.trim().equals("#FFFF00")) {
+                } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
                 } else {
                     System.out.print(keyword.trim());
@@ -171,28 +170,28 @@ public class Interpreter {
     public void check() throws Exception {
         String keyword;
         int nbOuvert = 0;
-        
+
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("#") || keyword.equals("\t") || keyword.equals(" "))) {
                 Operator op = getFactory().getInstruction(keyword);
                 if (op == null)
                     throw new SyntaxErrorException("Incorrect word operator");
-                if(keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00") )
-                	nbOuvert++;
-                if(keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
-                	nbOuvert--;         
-                if(nbOuvert<0)
-                	throw new BadLoopException("Loop without start : Missing JUMP operator");
-            }else if (keyword.equals("#")){
-            	keyword = reader.next();
-            	while(reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))){
-            		keyword = reader.next();
-            	}
+                if (keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00"))
+                    nbOuvert++;
+                if (keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
+                    nbOuvert--;
+                if (nbOuvert < 0)
+                    throw new BadLoopException("Loop without start : Missing JUMP operator");
+            } else if (keyword.equals("#")) {
+                keyword = reader.next();
+                while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
+                    keyword = reader.next();
+                }
             }
         }
-        if(nbOuvert>0)
-        	throw new BadLoopException("Loop without end : Missing BACK operator");
+        if (nbOuvert > 0)
+            throw new BadLoopException("Loop without end : Missing BACK operator");
         System.out.println("The program is well formed");
     }
 
@@ -222,39 +221,43 @@ public class Interpreter {
     public InstructionFactory getFactory() {
         return factory;
     }
-    
+
     /**
      * Return true if the execution thread is in a loop
-     * 
+     *
      * @return inALoop
      */
-    public boolean isInALoop(){
-    	return inALoop;
+    public boolean isInALoop() {
+        return inALoop;
     }
-    
+
     /**
      * Change the status of inALoop to true
      */
-    public void startALoop(){
-    	inALoop = true;
+    public void startALoop() {
+        inALoop = true;
     }
-    
+
     /**
      * Change the status of inALoop to false
      */
-    public void endALoop(){
-    	inALoop = false;
+    public void endALoop() {
+        inALoop = false;
     }
 
+    /**
+     * Getter for the metrics
+     * @return the metrics instance
+     */
     public Metrics getMetrics() {
         return metrics;
     }
 
-	public boolean isTrace() {
-		return !(trace==null);
-	}
-	
-	public String getProgramName(){
-		return programName;
-	}
+    /**
+     * Checks if the trace is initialized
+     * @return true if the trace is initialized else false
+     */
+    public boolean isTrace() {
+        return !(trace == null);
+    }
 }

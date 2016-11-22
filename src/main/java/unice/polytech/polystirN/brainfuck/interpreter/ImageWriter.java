@@ -17,12 +17,7 @@ public class ImageWriter {
     private TextReader buffer;//Buffer used to read the program
     private String filename;//Filename of the program
     private final int pixelSize = 3;//pixels squares' width and height
-    /**
-     * ImageWriter constructor
-     *
-     * @param filename is the filename of the program to translate
-     * @throws Exception if the filename is incorrect
-     */
+
     /**
      * ImageWriter constructor
      *
@@ -42,11 +37,11 @@ public class ImageWriter {
     private void translate(String outputFilename) throws Exception {
         InstructionFactory factory = new InstructionFactory();
         int instructionsNumber = 0;
-        String ins="";
+        String ins = "";
         while (buffer.hasNext()) {
-        	if(!ins.equals("\n") && !ins.equals(" ") && !ins.equals("\r"))
-            instructionsNumber++;
-        	ins=buffer.next();
+            if (!ins.equals("\n") && !ins.equals(" ") && !ins.equals("\r"))
+                instructionsNumber++;
+            ins = buffer.next();
         }
         buffer = new TextReader(filename);
         int pictureWidthSquares = 0;
@@ -72,7 +67,8 @@ public class ImageWriter {
         }
 
         ImageIO.write(img, "BMP", new File(outputFilename));
-}
+    }
+
     /**
      * Default call for translate
      *
@@ -81,6 +77,7 @@ public class ImageWriter {
     public void translate() throws Exception {
         translate("outputTranslate.bmp");
     }
+
     /**
      * Fills pixels squares with the same color
      *

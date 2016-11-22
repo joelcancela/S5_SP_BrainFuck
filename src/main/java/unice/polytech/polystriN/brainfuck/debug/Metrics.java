@@ -21,11 +21,7 @@ public class Metrics {
         startTime = System.currentTimeMillis();
     }
 
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getProgramSize() {
+    long getProgramSize() {
         return programSize;
     }
 
@@ -33,15 +29,15 @@ public class Metrics {
         return execMove;
     }
 
-    public long getDataMove() {
+    long getDataMove() {
         return dataMove;
     }
 
-    public long getDataWrite() {
+    long getDataWrite() {
         return dataWrite;
     }
 
-    public long getDataRead() {
+    long getDataRead() {
         return dataRead;
     }
 
@@ -64,7 +60,6 @@ public class Metrics {
     public void incrementDataRead() { dataRead++;}
 
     public String toString() {
-        String str;
 
         return( "PROG_SIZE = " + programSize +
                 "\nEXEC_TIME = " + (System.currentTimeMillis()- startTime) + " ms" +

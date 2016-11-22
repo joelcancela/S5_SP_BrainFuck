@@ -14,17 +14,17 @@ import java.util.HashMap;
 public class InstructionFactory {
 
     private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
-	private int attMacro;
-    private static HashMap<String,String> map = new HashMap();
-    private static HashMap<String,String> mapMacrosParam = new HashMap();
+    private static HashMap<String, String> map = new HashMap<>();
+    private static HashMap<String, String> mapMacrosParam = new HashMap<>();
+
     /**
      * InstructionFactory constructor
      *
      * @throws FileNotFoundException if the input file does not exist
      */
-    public InstructionFactory() throws FileNotFoundException {
-    	mapMacrosParam.put("MULTI_DECR", "-");
-    	mapMacrosParam.put("TO_DIGIT", "------------------------------------------------");
+    InstructionFactory() throws FileNotFoundException {
+        mapMacrosParam.put("MULTI_DECR", "-");
+        mapMacrosParam.put("TO_DIGIT", "------------------------------------------------");
         INCR = new Increment();
         DECR = new Decrement();
         LEFT = new Left();
@@ -42,7 +42,7 @@ public class InstructionFactory {
      * @param outputFile is the filename to replace the output (if null, console by default)
      * @throws FileNotFoundException if the input file does not exist
      */
-    public InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
+    InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
         this();
         IN = new In(inputFile);
         OUT = new Out(outputFile);
@@ -91,26 +91,27 @@ public class InstructionFactory {
             case "#FF0000":
                 return BACK;
             default:
-            	return null;
+                return null;
         }
 
     }
+
     /**
-     * 
-     * @param macros
-     * @return
+     * Translate a macro into its instructions
+     * @param macro is a string being the macro name
+     * @return a string being its instructions equivalent
      */
-    public String getEquivalentInstruction(String macros){
-    	return map.get(macros);
+    String getEquivalentInstruction(String macro) {
+        return map.get(macro);
     }
 
-	/**
+    /**
      * Translate instructions into colors
      *
      * @param instruction is the long or short syntax string to translate into a color
      * @return Integer being the RGB hexadecimal code of the color
      */
-    public int getColor(String instruction) {
+    int getColor(String instruction) {
         switch (instruction) {
             case "INCR":
             case "+":
@@ -140,55 +141,15 @@ public class InstructionFactory {
                 return -1;
         }
     }
-    
-   
 
-    public String getShortSyntax(String instruction){
-        switch (instruction) {
-            case "INCR":
-            case "#FFFFFF":
-                return "+";
-            case "DECR":
-            case "#4B0082":
-                return "-";
-            case "LEFT":
-            case "#9400D3":
-                return "<";
-            case "RIGHT":
-            case "#0000FF":
-                return ">";
-            case "IN":
-            case "#FFFF00":
-                return ",";
-            case "OUT":
-            case "#00FF00":
-                return ".";
-            case "JUMP":
-            case "#FF7F00":
-                return "[";
-            case "BACK":
-            case "#FF0000":
-                return "]";
-            default:
-                return instruction;
-        }
-    }
-    
-   	public static HashMap<String, String> getMapMacrosParam() {
-   		return mapMacrosParam;
-   	}
 
-   	public static void setMapMacrosParam(HashMap<String, String> mapMacrosParam) {
-   		InstructionFactory.mapMacrosParam = mapMacrosParam;
-   	}
-    public void setAttMacro(int arg){
-    	this.attMacro=arg;
+    HashMap<String, String> getMapMacrosParam() {
+        return mapMacrosParam;
     }
-    public int getAttMacro(){
-    	return attMacro;
+
+
+    void put(String s, String string) {
+        map.put(s, string);
     }
-	public static void put(String s,String string) {
-		map.put(s, string);
-	}
 }
 
