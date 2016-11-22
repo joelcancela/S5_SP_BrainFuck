@@ -38,12 +38,14 @@ public class Interpreter {
         metrics = new Metrics();
 
         if (filename.matches("(.*).bf")) {
+            programName = filename.substring(0, filename.length()-3);
             reader = new TextReader(filename,this);
         } else if (filename.matches("(.*).bmp")) {
+            programName = filename.substring(0, filename.length()-4);
             reader = new ImageReader(filename);
         }
         
-        programName = filename.substring(0, filename.length()-3);
+
         
         inALoop = false;
     }
