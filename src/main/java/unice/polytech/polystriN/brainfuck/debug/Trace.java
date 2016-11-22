@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Trace {
-	static public File traceFile;
-    static public FileWriter fileWriter;
-    static public PrintWriter printWriter;
-    static public boolean state;
+	private File traceFile;
+	private FileWriter fileWriter;
+	private PrintWriter printWriter;
+	private boolean state;
     
     /**
      * Initialize the attribute's object
