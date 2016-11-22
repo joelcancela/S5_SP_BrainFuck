@@ -1,5 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.fail;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class InterpreterTest {
     private Interpreter intrptr;
     private int mask = 0xff; //Use to translate bytes into integers
-    private String inputMock = getClass().getResource("/L2/mocks/input.txt").getFile();
+    private String inputMock = getClass().getResource("/mocks/input.txt").getFile();
 
 
     /**************
@@ -52,7 +53,7 @@ public class InterpreterTest {
         intrptr = new Interpreter(getClass().getResource("/L1/usual/LEFT&RIGHT.bf").getFile());
         intrptr.interpretFile();
         assertEquals(1, intrptr.getMemory().getP());//Pointer has moved to 1 at the end
-        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
+        assertEquals(0, intrptr.getMemory().getCells()[1] & mask);//Result of this program is C1:0
     }
 
     @Test
@@ -154,7 +155,6 @@ public class InterpreterTest {
         assertEquals(0, intrptr.getMemory().getP());//Pointer hasn't moved
         assertEquals(255, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:255
 
-
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpInternalLoop.bf").getFile());
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
@@ -178,12 +178,12 @@ public class InterpreterTest {
         intrptr = new Interpreter(getClass().getResource("/L2/usual/jumpSimple2.bf").getFile());
         intrptr.interpretFile();
         assertEquals(1, intrptr.getMemory().getP());
-        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C1:0
+        assertEquals(5, intrptr.getMemory().getCells()[1] & mask);//Result of this program is C1:5
 
         intrptr = new Interpreter(getClass().getResource("/L2/usual/left&right1.bf").getFile());
         intrptr.interpretFile();
         assertEquals(1, intrptr.getMemory().getP());
-        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C1:0
+        assertEquals(0, intrptr.getMemory().getCells()[1] & mask);//Result of this program is C1:0
 
 
     }
@@ -239,133 +239,13 @@ public class InterpreterTest {
 
     }
 
-
-    @Test
-    public void interpretBmpFiles() throws Exception {
-
-        //Image Interpreter
-        intrptr = new Interpreter("./examples/images/12345.bmp");
-        intrptr.interpretFile();
-        assertEquals(1, intrptr.getMemory().getCells()[0]);
-        assertEquals(2, intrptr.getMemory().getCells()[1]);
-        assertEquals(3, intrptr.getMemory().getCells()[2]);
-        assertEquals(4, intrptr.getMemory().getCells()[3]);
-        assertEquals(5, intrptr.getMemory().getCells()[4]);
-
-        //Image Interpreter
-        intrptr = new Interpreter("./examples/images/54321to33441.bmp");
-        intrptr.interpretFile();
-        assertEquals(3, intrptr.getMemory().getCells()[0]);
-        assertEquals(3, intrptr.getMemory().getCells()[1]);
-        assertEquals(4, intrptr.getMemory().getCells()[2]);
-        assertEquals(4, intrptr.getMemory().getCells()[3]);
-        assertEquals(1, intrptr.getMemory().getCells()[4]);
-
-        intrptr = new Interpreter("./examples/images/out35.bmp");
-        intrptr.interpretFile();
-        assertEquals(35, intrptr.getMemory().getCells()[0]);//35 is # in ascii
-
-
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare1.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #1 is not monochrome", e.getMessage());
-        }
-
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare4.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #4 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare5.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #5 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare6.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #6 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare7.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #7 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare11.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #11 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare12.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #12 is not monochrome", e.getMessage());
-        }
-        try {
-            intrptr = new Interpreter("./examples/images/BadSquare25.bmp");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("Square #25 is not monochrome", e.getMessage());
-        }
-
-        //Anomaly cases
-        //Test with out of bounds left :
-        try {
-            intrptr = new Interpreter("./examples/L1/LEFTError.bf");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
-            assertEquals("pointer can't be moved to the left (already at position 0)", e.getMessage());
-        }
-
-        //Test with out of bounds right :
-        try {
-            intrptr = new Interpreter("./examples/L1/RIGHTError.bf");
-            intrptr.interpretFile();
-        } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
-            assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
-        }
-    }
-
-    @Test
-    public void rewriteBfFile() throws Exception {
-        //TODO
-    }
-
-    @Test
-    public void rewriteBmpFile() throws Exception {
-        //TODO
-    }
-
-
-    @Test
-    public void checkWellFormed() throws Exception {
-        //TODO
-        //Check tests :
-        //Bien formé :
-        try {
-            intrptr = new Interpreter("./examples/L2/helloworld.bf");
-            intrptr.check();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void checkMalFormed() throws Exception {
         //Mal formé :
         try {
             intrptr = new Interpreter(getClass().getResource("/L2/errors/malformed/jumpNoBack.bf").getFile());
             intrptr.check();
+            fail();
         } catch (Exception e) {
             assertEquals("BadLoopException", e.getClass().getSimpleName());
             assertEquals("Loop without end : Missing BACK operator", e.getMessage());
@@ -373,6 +253,7 @@ public class InterpreterTest {
         try {
             intrptr = new Interpreter(getClass().getResource("/L2/errors/malformed/jumpBackAlone.bf").getFile());
             intrptr.check();
+            fail();
         } catch (Exception e) {
             assertEquals("BadLoopException", e.getClass().getSimpleName());
             assertEquals("Loop without start : Missing JUMP operator", e.getMessage());
@@ -380,6 +261,7 @@ public class InterpreterTest {
         try {
             intrptr = new Interpreter(getClass().getResource("/L2/errors/malformed/BADPROG.bf").getFile());
             intrptr.check();
+            fail();
         } catch (Exception e) {
             assertEquals("SyntaxErrorException", e.getClass().getSimpleName());
             assertEquals("Incorrect word operator", e.getMessage());
@@ -388,29 +270,181 @@ public class InterpreterTest {
 
     }
 
+
+    @Test
+    public void interpretBmpFiles() throws Exception {
+
+        //Image Interpreter
+        intrptr = new Interpreter(getClass().getResource("/images/12345.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(1, intrptr.getMemory().getCells()[0]);
+        assertEquals(2, intrptr.getMemory().getCells()[1]);
+        assertEquals(3, intrptr.getMemory().getCells()[2]);
+        assertEquals(4, intrptr.getMemory().getCells()[3]);
+        assertEquals(5, intrptr.getMemory().getCells()[4]);
+
+        //Image Interpreter
+        intrptr = new Interpreter(getClass().getResource("/images/54321to33441.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(3, intrptr.getMemory().getCells()[0]);
+        assertEquals(3, intrptr.getMemory().getCells()[1]);
+        assertEquals(4, intrptr.getMemory().getCells()[2]);
+        assertEquals(4, intrptr.getMemory().getCells()[3]);
+        assertEquals(1, intrptr.getMemory().getCells()[4]);
+
+
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare1.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #1 is not monochrome", e.getMessage());
+        }
+
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare4.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #4 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare5.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #5 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare6.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #6 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare7.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #7 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare11.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #11 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare12.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #12 is not monochrome", e.getMessage());
+        }
+        try {
+            intrptr = new Interpreter(getClass().getResource("/images/BadSquare25.bmp").getFile());
+            intrptr.interpretFile();
+            fail();
+        } catch (Exception e) {
+            assertEquals("Square #25 is not monochrome", e.getMessage());
+        }
+
+
+        intrptr = new Interpreter(getClass().getResource("/images/helloworld.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(4, intrptr.getMemory().getP());//Result of this program is C4:10
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//0 is a space in ascii
+        assertEquals(87, intrptr.getMemory().getCells()[1] & mask);//87 is W in ascii
+        assertEquals(100, intrptr.getMemory().getCells()[2] & mask);//100 is d in ascii
+        assertEquals(33, intrptr.getMemory().getCells()[3] & mask);//33 is ! in ascii
+        assertEquals(10, intrptr.getMemory().getCells()[4] & mask);//10 is a line feed in ascii
+
+        intrptr = new Interpreter(getClass().getResource("/images/InternalLoop.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0]);
+
+        intrptr = new Interpreter(getClass().getResource("/images/NormalLoop.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(1, intrptr.getMemory().getP());
+        assertEquals(5, intrptr.getMemory().getCells()[1]);
+
+        intrptr = new Interpreter(getClass().getResource("/images/out35.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(35, intrptr.getMemory().getCells()[0]);
+    }
+
     /**************
      ** LEVEL 3 **
      **************/
 
     @Test
     public void interpretBfFilesWithComments() throws Exception {
-        //Comments
-        intrptr = new Interpreter("./examples/L3/prog_com.bf");
-        intrptr.interpretFile();
-        assertEquals(0, intrptr.getMemory().getP());
-        assertEquals(1, intrptr.getMemory().getCells()[0] & mask);
 
-        //
-        intrptr = new Interpreter("./examples/L3/prog_com&indente.bf");
+        intrptr = new Interpreter(getClass().getResource("/L3/usual/prog_com&indente.bf").getFile());
         intrptr.interpretFile();
         assertEquals(4, intrptr.getMemory().getP());
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);
 
+        //Comments
+        intrptr = new Interpreter(getClass().getResource("/L3/usual/prog_com.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(1, intrptr.getMemory().getCells()[0] & mask);
+
         //Does nothing only have comments
-        intrptr = new Interpreter("./examples/L3/prog_fullcom.bf");
+        intrptr = new Interpreter(getClass().getResource("/L3/usual/prog_fullcom.bf").getFile());
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
         assertEquals(0, intrptr.getMemory().getCells()[0] & mask);
+
+        intrptr = new Interpreter(getClass().getResource("/L3/usual/prog_helloCOM.bf").getFile());
+        intrptr.interpretFile();
+        assertEquals(4, intrptr.getMemory().getP());//Result of this program is C4:10
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//0 is a space in ascii
+        assertEquals(87, intrptr.getMemory().getCells()[1] & mask);//87 is W in ascii
+        assertEquals(100, intrptr.getMemory().getCells()[2] & mask);//100 is d in ascii
+        assertEquals(33, intrptr.getMemory().getCells()[3] & mask);//33 is ! in ascii
+        assertEquals(10, intrptr.getMemory().getCells()[4] & mask);//10 is a line feed in ascii
+    }
+
+
+    //TODO
+    @Ignore
+    @Test
+    public void checkWellFormed() throws Exception {
+        //Bien formé :
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L2/usual/helloworld.bf").getFile());
+            intrptr.check();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Ignore
+    @Test
+    public void rewriteBfFile() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void rewriteBmpFile() throws Exception {
+    }
+
+    @Ignore
+    @Test
+    public void macrosErrors() throws Exception {
+
+    }
+
+    @Ignore
+    @Test
+    public void macrosTest() throws Exception {
+        
     }
 
 }
