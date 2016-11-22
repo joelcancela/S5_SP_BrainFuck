@@ -74,10 +74,9 @@ public class Interpreter {
     /**
      * Interprets a file
      *
-     * @return true if the interpretation has gone well
      * @throws SyntaxErrorException if an invalid symbol or keyword is encountered
      */
-    public boolean interpretFile() throws Exception {
+    public void interpretFile() throws Exception {
         String keyword;
 
         if(isTrace()==true){
@@ -115,7 +114,7 @@ public class Interpreter {
         }
         if(isTrace()==true)
         	trace.close();
-        return true;
+        System.out.println("\nC"+memory.getP()+": "+memory.getCells()[memory.getP()] );
     }
 
     /**
