@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Jump implements Operator {
     private int nbOuvert;
-    private List<String> file;
+    private List<String> queue;
     private String trace = "";
 
     /**
@@ -36,7 +36,7 @@ public class Jump implements Operator {
         int nbParcours = 0;
 
         nbOuvert = 1;
-        file = new ArrayList<>();
+        queue = new ArrayList<>();
         trace = "";
 
         //Anomaly case :
@@ -82,15 +82,15 @@ public class Jump implements Operator {
 	            	interpreter.getMetrics().incrementExecMove();
             	}
             	while (nbOuvert != 0) { //Tant qu'il reste des boucles à parcourir
-                    if (nbParcours==0) { //Renseigne la liste d'instructions (file) composant la boucle la plus englobante
+                    if (nbParcours==0) { //Renseigne la liste d'instructions (queue) composant la boucle la plus englobante
                         instruction = getNextInstruction(interpreter);
                         if (!instruction.equals("NOI")) {
-                            file.add(instruction);
+                            queue.add(instruction);
                             iteration(instruction, interpreter, false, 0);
                             interpreter.getMetrics().incrementProgSize();
                         }
                     } else { //Exécute les instructions de la boucle englobante
-                        instruction = file.get(i);
+                        instruction = queue.get(i);
                         i = iteration(instruction, interpreter, true, i);
                         i++;
                     }
@@ -111,7 +111,7 @@ public class Jump implements Operator {
      * @param instruction the operation to analyze.
      * @param interpreter memory (M and P) of the current program and all of the following operations.
      * @param execute     true for execute the operation, false otherwise.
-     * @param index       position in the operations list's (file).
+     * @param index       position in the operations list's (queue).
      * @return the current index in the operations list's.
      */
     private int iteration(String instruction, Interpreter interpreter, boolean execute, int index) throws Exception {
@@ -132,7 +132,7 @@ public class Jump implements Operator {
 
         //Si on est pas dans la première itération du while et qu'on exécute :
         if (execute) {
-            if (file.get(index).equals("JUMP") || file.get(index).equals("#FF7F00") || file.get(index).equals("[")) {
+            if (queue.get(index).equals("JUMP") || queue.get(index).equals("#FF7F00") || queue.get(index).equals("[")) {
             	interpreter.getMetrics().incrementExecMove();
             	if(interpreter.isTrace()){
         	    	trace+=interpreter.getMetrics().getExecMove() + " : "+instruction+"\n";
@@ -154,7 +154,7 @@ public class Jump implements Operator {
     /**
      * Make an other loop in a loop (support object).
      *
-     * @param index       position in the operations list's (file)
+     * @param index       position in the operations list's (queue)
      * @param interpreter memory (M and P) of the current program and all of the following operations.
      * @return the current index in the operations list's.
      */
@@ -167,19 +167,19 @@ public class Jump implements Operator {
         while (interpreter.isInALoop() && interpreter.getMemory().getCells()[interpreter.getMemory().getP()] != 0) { //Tant que cette boucle n'est pas terminée
             index = originalIndex;
             interpreter.getMetrics().incrementDataRead();
-            while ((!file.get(index).equals("BACK")) && (!file.get(index).equals("]") && (!file.get(index).equals("#FF0000") ))) {
+            while ((!queue.get(index).equals("BACK")) && (!queue.get(index).equals("]") && (!queue.get(index).equals("#FF0000") ))) {
                 index++;
-                if (file.get(index).equals("JUMP") || file.get(index).equals("[") || file.get(index).equals("#FF7F00")) { //Si on a une boucle dans cette boucle
+                if (queue.get(index).equals("JUMP") || queue.get(index).equals("[") || queue.get(index).equals("#FF7F00")) { //Si on a une boucle dans cette boucle
                     nbOuvert++;
                     internalIndex = internalLoop(index, interpreter); //Lance récursivement des boucles internes et récupère l'index dans la liste des instructions
                     index = internalIndex + 1;
                 }
-                executeInstruction(file.get(index), interpreter); //Les "JUMP" dans un JUMP ne sont donc jamais exécutés pour ne pas perdre les instructions stockées dans "file"
+                executeInstruction(queue.get(index), interpreter); //Les "JUMP" dans un JUMP ne sont donc jamais exécutés pour ne pas perdre les instructions stockées dans "queue"
             }
             //FIN BOUCLE INTERNE
 
         }
-        while ((!(file.get(index).equals("BACK"))) && (!(file.get(index).equals("]"))) && (!(file.get(index).equals("#FF0000")))) {//Permet de ne pas repasser par les instructions de la boucle si la case mémoire vaut 0
+        while ((!(queue.get(index).equals("BACK"))) && (!(queue.get(index).equals("]"))) && (!(queue.get(index).equals("#FF0000")))) {//Permet de ne pas repasser par les instructions de la boucle si la case mémoire vaut 0
             index++;
         }
         nbOuvert--;

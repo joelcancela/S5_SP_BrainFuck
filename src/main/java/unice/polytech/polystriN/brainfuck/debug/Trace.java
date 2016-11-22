@@ -9,7 +9,6 @@ public class Trace {
     private FileWriter fileWriter;
     private PrintWriter printWriter;
     private boolean state;
-
     /**
      * Initialize the attribute's object
      *
