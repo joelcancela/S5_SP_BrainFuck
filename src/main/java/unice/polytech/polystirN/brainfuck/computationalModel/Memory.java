@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO maybe transform into an ArrayList - see diff with metrics
  * Class that represents the memory
  * It also uses the pointer which is the index
  * of the current memory cell used
