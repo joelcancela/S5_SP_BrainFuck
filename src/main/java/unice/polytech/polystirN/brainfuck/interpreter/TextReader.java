@@ -83,11 +83,10 @@ class TextReader extends Reader {
     }
 
     /**
-     * @throws IOException
-     * @throws SyntaxErrorException
+     * This method works like a C Pre-processor, it writes the macros' real instructions into a file
      */
-    private String MacroTransform(int c) throws IOException, SyntaxErrorException {
-        String keyword = "", fichier = "./fichierTampon.bf", keyword1 = "";
+    private String MacroTransform(int c) throws IOException {
+        String keyword, fichier = "./fichierTampon.bf", keyword1;
         FileWriter fichierTampon = new FileWriter(fichier);
         while (c != -1) {
             keyword = "";
@@ -141,11 +140,12 @@ class TextReader extends Reader {
     /**
      * Stock the equivalent of the macros to be able to use them after
      *
-     * @throws Exception
+     * @param c is a character being read
+     * @throws SyntaxErrorException if the character is not part of the syntax
      */
     private int readDefineMacros(int c) throws Exception {
-        String word = "";
-        char charOfM = '\0';
+        String word;
+        char charOfM;
         String macros;
         String define = "DEFINE";
         int i;
@@ -172,12 +172,12 @@ class TextReader extends Reader {
                     if (macros.trim().substring(word.trim().length(), macros.trim().length()).contains("\\")) {
                         String tableau[] = macros.trim().substring(word.trim().length(), macros.trim().length()).trim().replace("\\", "\"").split("\"");
                         macros = "";
-                        for (int j = 0; j < tableau.length; j++) {
-                            if (factory.getEquivalentInstruction(tableau[j].trim()) != null)
-                                macros += System.lineSeparator() + rewriteMul(factory.getEquivalentInstruction(tableau[j].trim()));
-                            else if (factory.getMapMacrosParam().get(rewriteMul(tableau[j].trim())) != null)
-                                macros += System.lineSeparator() + rewriteMul(factory.getMapMacrosParam().get(rewriteMul(tableau[j].trim())));
-                            else macros += System.lineSeparator() + rewriteMul(tableau[j].trim());
+                        for (String str : tableau) {
+                            if (factory.getEquivalentInstruction(str.trim()) != null)
+                                macros += System.lineSeparator() + rewriteMul(factory.getEquivalentInstruction(str.trim()));
+                            else if (factory.getMapMacrosParam().get(rewriteMul(str.trim())) != null)
+                                macros += System.lineSeparator() + rewriteMul(factory.getMapMacrosParam().get(rewriteMul(str.trim())));
+                            else macros += System.lineSeparator() + rewriteMul(str.trim());
 
 
                         }
@@ -209,10 +209,10 @@ class TextReader extends Reader {
     }
 
     /**
-     * rewrite the equivalent of to_digit and multi_decr in the string
+     * Rewrites the equivalent of to_digit and multi_decr in the string
      *
-     * @param word
-     * @return String
+     * @param word is the macro string
+     * @return String being the instructions equivalent
      */
     private String rewriteMul(String word) {
         String tab[] = word.split(" ");
@@ -237,10 +237,10 @@ class TextReader extends Reader {
     }
 
     /**
-     * verify if a string is an integer
+     * Verifies if a string is an integer
      *
-     * @param chaine
-     * @return boolean
+     * @param chaine is a string to check
+     * @return boolean if the string is an integer else false
      */
     private static boolean isInt(String chaine) {
         boolean valeur = true;

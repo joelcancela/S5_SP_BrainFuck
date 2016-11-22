@@ -56,8 +56,9 @@ public class In implements Operator {
         }
         interpreter.getMetrics().incrementDataWrite();
     }
+
     @Override
-    public String toString(){
-    	return ",";
+    public String toString() {
+        return ",";
     }
 }

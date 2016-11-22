@@ -57,15 +57,17 @@ public class Metrics {
         programSize++;
     }
 
-    public void incrementDataRead() { dataRead++;}
+    public void incrementDataRead() {
+        dataRead++;
+    }
 
     public String toString() {
 
-        return( "PROG_SIZE = " + programSize +
-                "\nEXEC_TIME = " + (System.currentTimeMillis()- startTime) + " ms" +
+        return ("PROG_SIZE = " + programSize +
+                "\nEXEC_TIME = " + (System.currentTimeMillis() - startTime) + " ms" +
                 "\nEXEC_MOVE = " + execMove +
                 "\nDATA_MOVE = " + dataMove +
                 "\nDATA_WRITE = " + dataWrite +
-                "\nDATA_READ = " + dataRead );
+                "\nDATA_READ = " + dataRead);
     }
 }

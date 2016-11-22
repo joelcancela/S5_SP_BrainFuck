@@ -98,6 +98,7 @@ public class InstructionFactory {
 
     /**
      * Translate a macro into its instructions
+     *
      * @param macro is a string being the macro name
      * @return a string being its instructions equivalent
      */

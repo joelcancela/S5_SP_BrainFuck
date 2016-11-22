@@ -247,6 +247,7 @@ public class Interpreter {
 
     /**
      * Getter for the metrics
+     *
      * @return the metrics instance
      */
     public Metrics getMetrics() {
@@ -255,6 +256,7 @@ public class Interpreter {
 
     /**
      * Checks if the trace is initialized
+     *
      * @return true if the trace is initialized else false
      */
     public boolean isTrace() {

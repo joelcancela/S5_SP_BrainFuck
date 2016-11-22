@@ -47,8 +47,9 @@ public class Out implements Operator {
         }
         interpreter.getMetrics().incrementDataRead();
     }
+
     @Override
-    public String toString(){
-    	return ".";
+    public String toString() {
+        return ".";
     }
 }

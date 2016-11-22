@@ -35,9 +35,10 @@ public class Increment implements Operator {
         interpreter.getMemory().getCells()[p]++;
         interpreter.getMetrics().incrementDataWrite();
     }
+
     @Override
-    public String toString(){
-    	return "+";
+    public String toString() {
+        return "+";
     }
 }
 
