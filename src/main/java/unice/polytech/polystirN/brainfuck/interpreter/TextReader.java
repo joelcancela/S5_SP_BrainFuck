@@ -26,11 +26,11 @@ class TextReader extends Reader {
      */
     public TextReader(String filename,Interpreter inte) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
-        buffer = new BufferedReader(new FileReader(macrosRead(filename)));
+        buffer = new BufferedReader(new FileReader(macrosRead()));
     }
     public TextReader(String filename) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
-        buffer = new BufferedReader(new FileReader(macrosRead(filename)));
+        buffer = new BufferedReader(new FileReader(macrosRead()));
     }
 
     /**
@@ -92,13 +92,11 @@ class TextReader extends Reader {
      * @return name of file witch be executed
      * @throws Exception
      */
-    public String macrosRead(String filename) throws Exception{
-    	int[] c = new int[2];
-    	c[0] = buffer.read();
-    	c=readDefineMacros((char)c[0]);
-    	if(c[1]==1)
-    	return MacroTransform(c[0]);
-    	else return filename; 
+    public String macrosRead() throws Exception{
+        	int c;
+   	    	c = buffer.read();
+ 	    	c=readDefineMacros(c);
+    	   	return MacroTransform(c);
     }
     /**
      * @throws IOException 
@@ -149,7 +147,7 @@ class TextReader extends Reader {
 		 		else {
 		 			if(factory.getEquivalentInstruction(keyword.trim())!=null)
 		 			fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(keyword.trim()).trim());
-		 			else fichierTempant.write(System.getProperty("line.separator")+keyword);
+		 			else fichierTempant.write(System.getProperty("line.separator")+rewriteMul(keyword.trim()));
 		 		}
 		 c = buffer.read();
 	}
@@ -161,10 +159,9 @@ class TextReader extends Reader {
      * @throws Exception 
      * 
      */
-    private int[] readDefineMacros(int c) throws Exception{
+    private int readDefineMacros(int c) throws Exception{
     	String word="";
     	char  charOfM='\0';
-    	int[] bool ={c,0};
     	String macros;
     	String define = "DEFINE";
     	int i;
@@ -193,10 +190,10 @@ class TextReader extends Reader {
     					 macros="";
     					 for(int j=0;j<tableau.length;j++){
     						 if(factory.getEquivalentInstruction(tableau[j].trim())!=null)
-    							macros+=System.lineSeparator()+factory.getEquivalentInstruction(tableau[j].trim());
+    							macros+=System.lineSeparator()+rewriteMul(factory.getEquivalentInstruction(tableau[j].trim()));
     							else if(factory.getMapMacrosParam().get( rewriteMul(tableau[j].trim()))!=null)
-    								macros+=System.lineSeparator()+factory.getMapMacrosParam().get( rewriteMul(tableau[j].trim()));
-    								else macros+=System.lineSeparator()+tableau[j];
+    								macros+=System.lineSeparator()+rewriteMul(factory.getMapMacrosParam().get( rewriteMul(tableau[j].trim())));
+    								else macros+=System.lineSeparator()+rewriteMul(tableau[j].trim());
     								
     							
     						 
@@ -209,9 +206,9 @@ class TextReader extends Reader {
     				 if(word.trim().length()>2){
     				 if(word.trim().substring(word.trim().length()-2,word.trim().length()).equals("()"))
     					 if(factory.getMapMacrosParam().get(macros)!=null)
-    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),factory.getMapMacrosParam().get(macros));
+    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),rewriteMul(factory.getMapMacrosParam().get(macros)));
     					 else if(factory.getEquivalentInstruction(macros)!=null)
-    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),factory.getEquivalentInstruction(macros));
+    						 factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),rewriteMul(factory.getEquivalentInstruction(macros)));
     					 else factory.getMapMacrosParam().put(word.trim().substring(0,word.trim().length()-2).trim(),rewriteMul(macros));
     				 }
     				 if(factory.getEquivalentInstruction(macros)==null)
@@ -220,13 +217,11 @@ class TextReader extends Reader {
 
     				 }
    				}
-    			bool[0]=c;
-        		bool[1]=1;
     		 }
     		c=buffer.read();
-    		bool[0]=c;
+    		
     		}
-    	 return bool;
+    	 return c;
     }
     /**
      * rewrite the equivalent of to_digit and multi_decr in the string
