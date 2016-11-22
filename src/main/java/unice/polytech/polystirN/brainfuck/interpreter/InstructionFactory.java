@@ -3,16 +3,28 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 import unice.polytech.polystirN.brainfuck.language.*;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
+/**
+ * Class used to make translations between constants and instructions
+ *
+ * @author Joël CANCELA VAZ and Pierre RAINERO
+ * @author Tanguy INVERNIZZI and Aghiles DZIRI
+ */
 public class InstructionFactory {
+
     private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
+    private static HashMap<String, String> map = new HashMap<>();
+    private static HashMap<String, String> mapMacrosParam = new HashMap<>();
 
     /**
-     * Constructor for InstructionFactory
+     * InstructionFactory constructor
      *
-     * @throws FileNotFoundException if the inputfile not exist
+     * @throws FileNotFoundException if the input file does not exist
      */
-    public InstructionFactory() throws FileNotFoundException {
+    InstructionFactory() throws FileNotFoundException {
+        mapMacrosParam.put("MULTI_DECR", "-");
+        mapMacrosParam.put("TO_DIGIT", "------------------------------------------------");
         INCR = new Increment();
         DECR = new Decrement();
         LEFT = new Left();
@@ -24,13 +36,13 @@ public class InstructionFactory {
     }
 
     /**
-     * Constructor for InstructionFactory
+     * InstructionFactory constructor with in and out
      *
-     * @param inputFile  is the name of the file to replace the input (if null, keyboard by default)
-     * @param outputFile is the name of the file to replace the output (if null, console by default)
-     * @throws FileNotFoundException if the inputfile not exist
+     * @param inputFile  is the filename to replace the input (if null, keyboard by default)
+     * @param outputFile is the filename to replace the output (if null, console by default)
+     * @throws FileNotFoundException if the input file does not exist
      */
-    public InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
+    InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
         this();
         IN = new In(inputFile);
         OUT = new Out(outputFile);
@@ -38,14 +50,13 @@ public class InstructionFactory {
     }
 
     /**
-     * methode getInstruction return operation for the specified instruction
+     * Translate instructions into operators
      *
      * @param instruction a string to be translated into an operator
-     * @return Operator
+     * @return Operator being the translation of the instruction
      */
 
     public Operator getInstruction(String instruction) {
-
         switch (instruction) {
             case "INCR":
             case "+":
@@ -85,8 +96,23 @@ public class InstructionFactory {
 
     }
 
+    /**
+     * Translate a macro into its instructions
+     *
+     * @param macro is a string being the macro name
+     * @return a string being its instructions equivalent
+     */
+    String getEquivalentInstruction(String macro) {
+        return map.get(macro);
+    }
 
-    public int getColor(String instruction) {
+    /**
+     * Translate instructions into colors
+     *
+     * @param instruction is the long or short syntax string to translate into a color
+     * @return Integer being the RGB hexadecimal code of the color
+     */
+    int getColor(String instruction) {
         switch (instruction) {
             case "INCR":
             case "+":
@@ -115,6 +141,16 @@ public class InstructionFactory {
             default:
                 return -1;
         }
+    }
+
+
+    HashMap<String, String> getMapMacrosParam() {
+        return mapMacrosParam;
+    }
+
+
+    void put(String s, String string) {
+        map.put(s, string);
     }
 }
 

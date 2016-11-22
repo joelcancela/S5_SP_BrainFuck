@@ -31,7 +31,7 @@ public class JumpBackTest {
         //Nominal case (syntaxe longue)-------------------------
 	        //Test boucle simple operations---------------------
 	    	try {
-	            a = new Interpreter("./examples/L2/JUMP0.bf");
+	    		a = new Interpreter("./examples/L2/jumpSimple.bf");
 	            a.interpretFile();
 	            assertEquals(1, a.getMemory().getCells()[0]);
 	            assertEquals(0, a.getMemory().getCells()[1]);

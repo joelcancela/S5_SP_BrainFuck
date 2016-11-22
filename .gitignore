@@ -16,10 +16,13 @@ hs_err_pid*
 .idea
 .iml
 .project
+.classpath
 bin
 target/
 .settings/
 src/main/resources/
 
 # Brainfuck outputs
-*.bmp
+outputTranslate.bmp
+*.log
+fichierTampon.bf

@@ -8,12 +8,10 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class SyntaxErrorException extends Exception {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6642632363050103199L;
 
-	public SyntaxErrorException(String message) {
+    private static final long serialVersionUID = 6642632363050103199L;
+
+    public SyntaxErrorException(String message) {
         super(message);
     }
 }

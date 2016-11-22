@@ -1,7 +1,6 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
 /**
- * TODO Maybe transform into an ArrayList
  * Class that represents the memory
  * It also uses the pointer which is the index
  * of the current memory cell used
@@ -10,16 +9,18 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
-    private byte[] cells; //Cells are all initialized to 0 (-128 in unsigned byte)
+    private byte[] cells; //Cells of the memory
     private int p; //Pointer to the current memory cell used
-    public final static int size = 30000;
+    public final static int size = 30000; //Size of the memory
+    private int lastInstancedCell; //Index of the last instanced cell
 
     /**
-     * Constructor of Memory
+     * Memory constructor
      */
     public Memory() {
         p = 0;
         cells = new byte[size];
+        lastInstancedCell = 0;
     }
 
     /**
@@ -46,7 +47,25 @@ public class Memory {
      * @param nP new value for the pointer p
      */
     public void setP(int nP) {
+        lastInstancedCell = Math.max(lastInstancedCell, nP);
         p = nP;
+    }
+
+    /**
+     * Prints a snapshot of the memory
+     *
+     * @return a string being the display of the cells of the memory and their content
+     */
+    public String toString() {
+        String returnValue = "[";
+        for (int i = 0; i <= lastInstancedCell; i++) {
+            if (i == lastInstancedCell)
+                returnValue += (cells[i] & 0xFF);
+            else
+                returnValue += (cells[i] & 0xFF) + ", ";
+        }
+        returnValue += "]\n";
+        return returnValue;
     }
 
 }

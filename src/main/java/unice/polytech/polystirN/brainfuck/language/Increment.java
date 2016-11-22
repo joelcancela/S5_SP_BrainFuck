@@ -25,7 +25,7 @@ public class Increment implements Operator {
         int p = interpreter.getMemory().getP();
 
         //Test pointer position
-        if ((p < 0) || (p > Memory.size-1)) {
+        if ((p < 0) || (p > Memory.size - 1)) {
             throw new PointerPositionOutOfBoundsException("pointer must be between 0 and 29999 included");
         }
         //Test overflow
@@ -33,6 +33,12 @@ public class Increment implements Operator {
             throw new MemoryOverflowException("value can't be higher than 255");
         }
         interpreter.getMemory().getCells()[p]++;
+        interpreter.getMetrics().incrementDataWrite();
+    }
+
+    @Override
+    public String toString() {
+        return "+";
     }
 }
 

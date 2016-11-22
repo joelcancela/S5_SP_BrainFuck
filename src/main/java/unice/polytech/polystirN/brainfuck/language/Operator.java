@@ -10,12 +10,14 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  */
 public interface Operator {
     /**
-     * This method execute all the operations associated with the corresponding operator.
+     * This method executes all the operations associated with the corresponding operator.
      *
      * @param interpreter is the current instance of the interpreter
-     * @return true if the operation ended well, else false
      * @throws Exception if the operation goes against memory capacity or pointer range position
      */
     void execute(Interpreter interpreter) throws Exception;
+
+    @Override
+    String toString();
 
 }

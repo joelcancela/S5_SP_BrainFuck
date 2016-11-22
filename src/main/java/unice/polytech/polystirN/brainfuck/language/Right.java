@@ -30,6 +30,12 @@ public class Right implements Operator {
 
         //Nominal case :
         interpreter.getMemory().setP(p + 1);
+        interpreter.getMetrics().incrementDataMove();
+    }
+
+    @Override
+    public String toString() {
+        return ">";
     }
 
 }

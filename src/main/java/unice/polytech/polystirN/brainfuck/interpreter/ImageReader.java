@@ -18,10 +18,10 @@ class ImageReader extends Reader {
     private int height; //height of the picture
     private int currentX; //current x coordinate of the buffer
     private int currentY; //current y coordinate of the buffer
-    private final int pixelSize = 3; //pixel width and height
+    private final int pixelSize = 3; //pixels squares' width and height
 
     /**
-     * Constructor for ImageReader
+     * ImageReader constructor
      *
      * @param filename is the image filename to open
      * @throws Exception if the filename is incorrect or null
@@ -78,16 +78,6 @@ class ImageReader extends Reader {
         }
         return printPixel(buffer.getRGB(savedX, savedY)).trim();
 
-    }
-
-    /**
-     * Getter of the buffer
-     *
-     * @return buffer being a BufferedImage
-     */
-    @Override
-    public Object getBuffer() {
-        return buffer;
     }
 
     /**

@@ -3,6 +3,7 @@ import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystriN.brainfuck.debug.Trace;
 
 /**
  * The main class of the project handles the different flags and options of our program.
@@ -15,12 +16,15 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        Trace trace = null;
 
         //First, we got to configure the parser.
         OptionParser parser = new OptionParser("p:i:o:"); //: after a character means that an argument is mandatory for this flag.
         parser.accepts("check");
         parser.accepts("rewrite");
-        parser.accepts("translate");//here we add the longs options.
+        parser.accepts("translate");
+        parser.accepts("trace");
+        //here we add the longs options.
 
         OptionSet options = parser.parse(args); //Handle the args of the command line with the options.
 
@@ -28,36 +32,48 @@ public class Main {
             printEmptyMessage(); //Show a man-like message if no options have been given.
         }
         if (options.has("p")) { //Is there a file ?
+            Interpreter intrptr = null;
             try {
                 if (checkFileType((String) options.valueOf("p"))) { //Is the type of the file valid ?
                     if (options.has("check")) { //Do we need to check it ?
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                        inte.check();
+                        intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr.check();
                     } else if (options.has("rewrite")) { //Do we need to rewrite it ?
-                        Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                        inte.rewriteFile();
+                        intrptr = new Interpreter((String) options.valueOf("p"));
+                        intrptr.rewriteFile();
                     } else if (options.has("translate")) {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
+                    } else if (options.has("trace")) {
+                        trace = new Trace();
+                        intrptr = new Interpreter((String) options.valueOf("p"), trace);
+                        intrptr.interpretFile();
                     } else { //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
+                            intrptr.interpretFile();
                         } else if (options.has("i")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), null);
+                            intrptr.interpretFile();
                         } else if (options.has("o")) {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"), null, (String) options.valueOf("o"));
+                            intrptr.interpretFile();
                         } else {
-                            Interpreter inte = new Interpreter((String) options.valueOf("p"));
-                            inte.interpretFile();
+                            intrptr = new Interpreter((String) options.valueOf("p"));
+                            intrptr.interpretFile();
                         }
+                        System.out.println(intrptr.getMetrics().toString());
                     }
                 } else { //Error being thrown if the file type is invalid
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
                 }
             } catch (Exception e) {
+                if (intrptr != null && intrptr.isTrace())
+                    if (trace != null && trace.isOpen()) {
+                        e.printStackTrace(trace.getPrintWriter());
+                        trace.closePrint();
+                        trace.close();
+                    }
                 e.printStackTrace();
                 switch (e.getClass().getSimpleName()) {
                     case "MemoryOverflowException":
@@ -76,8 +92,8 @@ public class Main {
                         System.exit(3);
                         break;
                     case "BadLoopException":
-                    	System.exit(4);
-                    	break;
+                        System.exit(4);
+                        break;
                     default:
                         break;
 
