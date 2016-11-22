@@ -95,7 +95,7 @@ class TextReader extends Reader {
     public String macrosRead(String filename) throws Exception{
     	int[] c = new int[2];
     	c[0] = buffer.read();
-    	c=readDefineMacros(c[0]);
+    	c=readDefineMacros((char)c[0]);
     	if(c[1]==1)
     	return MacroTransform(c[0]);
     	else return filename; 
@@ -111,7 +111,6 @@ class TextReader extends Reader {
     	while(c!=-1){
 			 keyword="";
 			 keyword1="";
-			
 		 if (( 'A' <= c && 'Z' >= c ) || ('a' <= c && 'z' >= c)) {
 			 while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
 				 keyword += ((char) c);
@@ -128,6 +127,9 @@ class TextReader extends Reader {
 		 if(c=='#'){
 			 keyword=Character.toString((char) c)+buffer.readLine();
 		 }
+		 if(c=='$'){
+			 keyword=Character.toString((char) c)+buffer.readLine();
+		 }
 		
 			 if(factory.getEquivalentInstruction(Character.toString((char)c))!=null){
 				 fichierTempant.write(System.getProperty("line.separator")+factory.getEquivalentInstruction(Character.toString((char)c)).trim());
@@ -138,7 +140,9 @@ class TextReader extends Reader {
 		 if(!keyword1.trim().equals("")){
 		  if(isInt(keyword1.trim())){
 			  int att = Integer.parseInt(keyword1.trim());
-			 		for(int j=0; j < att; j++){
+			  if(factory.getMapMacrosParam().get(keyword.trim())==null)
+				  fichierTempant.write(System.getProperty("line.separator")+keyword.trim()+" "+keyword1);
+			  else	for(int j=0; j < att; j++){
 			 			fichierTempant.write(System.getProperty("line.separator")+factory.getMapMacrosParam().get(keyword.trim()).trim());
 			 		}
 		  }}
@@ -184,7 +188,19 @@ class TextReader extends Reader {
     					 
     				 }
     				 if(macros.trim().substring(word.trim().length(),macros.trim().length()).contains("\\")){
-    					macros = macros.trim().substring(word.trim().length(),macros.trim().length()).trim().replace("\\", System.getProperty("line.separator"));	
+    					 String tableau[] = macros.trim().substring(word.trim().length(),macros.trim().length()).trim().replace("\\", "\"").split("\"");
+    					 macros="";
+    					 for(int j=0;j<tableau.length;j++){
+    						 if(factory.getEquivalentInstruction(tableau[j].trim())!=null)
+    							macros+=System.lineSeparator()+factory.getEquivalentInstruction(tableau[j].trim());
+    							else if(factory.getMapMacrosParam().get( rewriteMul(tableau[j].trim()))!=null)
+    								macros+=System.lineSeparator()+factory.getMapMacrosParam().get( rewriteMul(tableau[j].trim()));
+    								else macros+=System.lineSeparator()+tableau[j];
+    								
+    							
+    						 
+    					 }
+    					
     				 }
     				 else {
     					 macros =macros.trim().substring(word.trim().length(),macros.trim().length()).trim();
@@ -207,7 +223,7 @@ class TextReader extends Reader {
         		bool[1]=1;
     		 }
     		c=buffer.read();
-    	
+    		bool[0]=c;
     		}
     	 return bool;
     }
@@ -220,7 +236,7 @@ class TextReader extends Reader {
     	String tab[] = word.split(" "); 
     	
     		if(tab[0].trim().equals("MULTI_DECR")){
-    			if(tab.length==1) return "-";
+    			if(tab.length==1) return word;
     			int i = Integer.parseInt(tab[1]);
     			String S="";
     			for(int j=0; j<i; j++){

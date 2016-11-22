@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
- * TODO Constants
  * Class used to make translations between constants and instructions
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
