@@ -3,6 +3,7 @@ import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+import unice.polytech.polystriN.brainfuck.debug.Trace;
 
 /**
  * The main class of the project handles the different flags and options of our program.
@@ -14,9 +15,9 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  */
 public class Main {
 
-
     public static void main(String[] args) throws Exception {
-
+    	Trace trace = null;
+    	
         //First, we got to configure the parser.
         OptionParser parser = new OptionParser("p:i:o:"); //: after a character means that an argument is mandatory for this flag.
         parser.accepts("check");
@@ -44,8 +45,8 @@ public class Main {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
                     }  else if (options.has("trace")) {
-                    	intrptr = new Interpreter((String) options.valueOf("p"));
-                    	intrptr.setTrace(true);
+                    	trace =  new Trace();
+                    	intrptr = new Interpreter((String) options.valueOf("p"),trace);
                     	intrptr.interpretFile();
                     } else { //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) {
@@ -67,6 +68,11 @@ public class Main {
                     throw new IncorrectFileTypeException(options.valueOf("p") + " must have .bf or .bmp extension");
                 }
             } catch (Exception e) {
+            	if(trace.isOpen()==true){
+            		e.printStackTrace(trace.getPrintWriter());
+            		trace.closePrint();
+            		trace.close();
+            	}
                 e.printStackTrace();
                 switch (e.getClass().getSimpleName()) {
                     case "MemoryOverflowException":
