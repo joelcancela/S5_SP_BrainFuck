@@ -5,6 +5,7 @@ echo
 read
 echo ./bfck -p src/test/resources/L2/usual/jumpInternalLoop2.bf --translate
 ./bfck -p src/test/resources/L2/usual/jumpInternalLoop2.bf --translate
+start outputTranslate.bmp
 
 read
 clear
