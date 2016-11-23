@@ -110,9 +110,9 @@ public class Main {
     private static void printEmptyMessage() {
         System.out.println("usage: bfck [-p <filename>] [-i <filename>] [-o <filename>]\n"
                 + "            [--rewrite] [--translate] [--check]\n"
-                + "BRAINFUCK [Mül93] is a programming language created in 1993 by Urban Müller,"
+                + "BRAINFUCK [M\u00fcl93] is a programming language created in 1993 by Urban M\u00fcller,"
                 + " and notable for its extreme minimalism.\nThis is the BrainFuck interpreter made by the group PolyStirN,"
-                + " composed of Joël CANCELA VAZ, Pierre RAINERO, Aghiles DZIRI and Tanguy INVERNIZZI.");
+                + " composed of Jo\u00ebl CANCELA VAZ, Pierre RAINERO, Aghiles DZIRI and Tanguy INVERNIZZI.");
     }
 
     /**
