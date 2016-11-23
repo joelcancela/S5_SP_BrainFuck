@@ -77,3 +77,4 @@ echo
 read
 echo ./bfck -p examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
 ./bfck -p examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
+read
