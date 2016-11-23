@@ -48,11 +48,20 @@ read
 echo ./bfck -p examples/L3/prog_helloCOM.bf
 ./bfck -p examples/L3/prog_helloCOM.bf
 
-#read
-#clear
-#echo cat examples/L3/macroTEN_INCR_J.bf
-#cat examples/L3/macroTEN_INCR_J.bf
-#echo
-#read
-#echo ./bfck -p examples/L3/macroTEN_INCR_J.bf
-#./bfck -p examples/L3/macroTEN_INCR_J.bf
+read
+clear
+echo cat examples/L3/demoMacros.bf
+cat examples/L3/demoMacros.bf
+echo
+read
+echo ./bfck -p examples/L3/demoMacros.bf
+./bfck -p examples/L3/demoMacros.bf
+
+read
+clear
+echo cat examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
+cat examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
+echo
+read
+echo ./bfck -p examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
+./bfck -p examples/L3/demoMacrosTO_DIGITetMULTI_DECR.bf
