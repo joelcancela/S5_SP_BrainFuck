@@ -26,3 +26,4 @@ src/main/resources/
 outputTranslate.bmp
 *.log
 fichierTampon.bf
+/src/main/java/META-INF/
