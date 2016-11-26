@@ -13,26 +13,46 @@ import java.util.HashMap;
  */
 public class InstructionFactory {
 
-    private Operator INCR, DECR, LEFT, RIGHT, IN, OUT, JUMP, BACK;
-    private static HashMap<String, String> map = new HashMap<>();
-    private static HashMap<String, String> mapMacrosParam = new HashMap<>();
+ 
+    private  HashMap<String, Operator> mapInstruction;
 
-    /**
+    public HashMap<String, Operator> getMapInstruction() {
+		return mapInstruction;
+	}
+
+	/**
      * InstructionFactory constructor
-     *
-     * @throws FileNotFoundException if the input file does not exist
+	 * @throws Exception 
      */
-    InstructionFactory() throws FileNotFoundException {
-        mapMacrosParam.put("MULTI_DECR", "-");
-        mapMacrosParam.put("TO_DIGIT", "------------------------------------------------");
-        INCR = new Increment();
-        DECR = new Decrement();
-        LEFT = new Left();
-        RIGHT = new Right();
-        IN = new In();
-        OUT = new Out();
-        JUMP = new Jump();
-        BACK = new Back();
+    public InstructionFactory() throws Exception {
+    	String to ="------------------------------------------------";
+    	mapInstruction = new HashMap();
+    	mapInstruction.put("INCR",new Increment());
+    	mapInstruction.put("DECR",new Decrement());
+    	mapInstruction.put("LEFT",new Left());
+    	mapInstruction.put("RIGHT", new Right());
+    	mapInstruction.put("IN",new In());
+    	mapInstruction.put("OUT",new Out());
+    	mapInstruction.put("JUMP",new Jump());
+    	mapInstruction.put("BACK",new Back());
+    	mapInstruction.put("+",new Increment());
+    	mapInstruction.put("-",new Decrement());
+    	mapInstruction.put("<",new Left());
+    	mapInstruction.put(">", new Right());
+    	mapInstruction.put(",",new In());
+    	mapInstruction.put(".",new Out());
+    	mapInstruction.put("[",new Jump());
+    	mapInstruction.put("]",new Back());
+    	mapInstruction.put("#FFFFFF",new Increment());
+    	mapInstruction.put("#4B0082",new Decrement());
+    	mapInstruction.put("#9400D3",new Left());
+    	mapInstruction.put("#0000FF", new Right());
+    	mapInstruction.put("#FFFF00",new In());
+    	mapInstruction.put("#00FF00",new Out());
+    	mapInstruction.put("#FF7F00",new Jump());
+    	mapInstruction.put("#FF0000",new Back());
+    	mapInstruction.put("TO_DIGIT",new Macros(to,this));
+    	mapInstruction.put("MULTI_DECR",new MacrosWithParam("-",this));
     }
 
     /**
@@ -40,12 +60,16 @@ public class InstructionFactory {
      *
      * @param inputFile  is the filename to replace the input (if null, keyboard by default)
      * @param outputFile is the filename to replace the output (if null, console by default)
-     * @throws FileNotFoundException if the input file does not exist
+     * @throws Exception 
      */
-    InstructionFactory(String inputFile, String outputFile) throws FileNotFoundException {
+    public InstructionFactory(String inputFile, String outputFile) throws Exception {
         this();
-        IN = new In(inputFile);
-        OUT = new Out(outputFile);
+        mapInstruction.put(",",new  In(inputFile));
+    	mapInstruction.put(".",new Out(outputFile));
+    	mapInstruction.put("IN",new  In(inputFile));
+    	mapInstruction.put("OUT",new Out(outputFile));
+    	mapInstruction.put("#FFFF00",new In(inputFile));
+    	mapInstruction.put("#00FF00",new Out(outputFile));
 
     }
 
@@ -57,53 +81,7 @@ public class InstructionFactory {
      */
 
     public Operator getInstruction(String instruction) {
-        switch (instruction) {
-            case "INCR":
-            case "+":
-            case "#FFFFFF":
-                return INCR;
-            case "DECR":
-            case "-":
-            case "#4B0082":
-                return DECR;
-            case "LEFT":
-            case "<":
-            case "#9400D3":
-                return LEFT;
-            case "RIGHT":
-            case ">":
-            case "#0000FF":
-                return RIGHT;
-            case "IN":
-            case ",":
-            case "#FFFF00":
-                return IN;
-            case "OUT":
-            case ".":
-            case "#00FF00":
-                return OUT;
-            case "JUMP":
-            case "[":
-            case "#FF7F00":
-                return JUMP;
-            case "BACK":
-            case "]":
-            case "#FF0000":
-                return BACK;
-            default:
-                return null;
-        }
-
-    }
-
-    /**
-     * Translate a macro into its instructions
-     *
-     * @param macro is a string being the macro name
-     * @return a string being its instructions equivalent
-     */
-    String getEquivalentInstruction(String macro) {
-        return map.get(macro);
+      return this.mapInstruction.get(instruction);
     }
 
     /**
@@ -141,16 +119,6 @@ public class InstructionFactory {
             default:
                 return -1;
         }
-    }
-
-
-    HashMap<String, String> getMapMacrosParam() {
-        return mapMacrosParam;
-    }
-
-
-    void put(String s, String string) {
-        map.put(s, string);
     }
 }
 

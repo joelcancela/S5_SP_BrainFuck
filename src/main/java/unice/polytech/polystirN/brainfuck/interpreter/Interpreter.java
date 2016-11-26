@@ -39,7 +39,7 @@ public class Interpreter {
 
         if (filename.matches("(.*).bf")) {
             programName = filename.substring(0, filename.length() - 3);
-            reader = new TextReader(filename);
+            reader = new TextReader(filename,this);
         } else if (filename.matches("(.*).bmp")) {
             programName = filename.substring(0, filename.length() - 4);
             reader = new ImageReader(filename);
@@ -93,6 +93,7 @@ public class Interpreter {
                     trace.write(metrics.getExecMove() + " : " + keyword + "\n");
                     trace.write("pointer : " + memory.getP());
                 }
+                System.out.println(keyword);
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
