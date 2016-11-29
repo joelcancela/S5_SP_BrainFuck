@@ -93,7 +93,6 @@ public class Interpreter {
                     trace.write(metrics.getExecMove() + " : " + keyword + "\n");
                     trace.write("pointer : " + memory.getP());
                 }
-                System.out.println(keyword);
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
@@ -135,7 +134,6 @@ public class Interpreter {
                     if (getFactory().getInstruction(keyword.trim().substring(i, i + 1)) != null) {
                         System.out.print(keyword.trim().substring(i, i + 1));
                     } else {
-                        System.out.println();
                         throw new SyntaxErrorException("Invalid keyword operator");
                     }
                 }
@@ -156,8 +154,8 @@ public class Interpreter {
                     System.out.print(".");
                 } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
-                } else {
-                    System.out.print(keyword.trim());
+                } else if(factory.getInstruction(keyword.trim())!=null){
+                    System.out.print(factory.getInstruction(keyword.trim()).toString());
                 }
             }
         }

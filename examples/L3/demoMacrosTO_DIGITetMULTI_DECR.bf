@@ -3,4 +3,3 @@
 TO_DIGIT
 MULTI_DECR 15
 .
-#Affiche a

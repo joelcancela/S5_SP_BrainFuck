@@ -33,8 +33,9 @@ class TextReader extends Reader {
         macrosRead();
        
     }
-    public TextReader(String filename) throws Exception {
+    public TextReader(String filename,InstructionFactory factory) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
+        this.factory= factory;
         c = buffer.read();
         macrosRead();
     }
@@ -65,9 +66,12 @@ class TextReader extends Reader {
     public String next() throws Exception {
         String keyword = "";
 
-        
+     
        
-
+        if(c=='#'){
+        	buffer.readLine();
+        	c = ' ';
+        }
         if (('A' <= c && 'Z' >= c) || ('a' <= c && 'z' >= c)) {
             while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
                 keyword += ((char) c);
@@ -135,7 +139,6 @@ class TextReader extends Reader {
                     else {
                     	if(factory.getInstruction(word.trim())==null)
                     		factory.getMapInstruction().put(word.trim(), new Macros(macros.trim(),factory));
-                    	 
                     	else throw new SyntaxErrorException("<your word> must be !="+ word);
                     }
                     }
