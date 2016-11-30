@@ -86,7 +86,7 @@ public class Macros implements Operator {
 		if(instructions.size()==0)
 			return " ";
 		for(int i=0;i<instructions.size();i++){
-			S+=instructions.get(i).toString()+System.lineSeparator();
+			S+=instructions.get(i).toString();
 		}
 		return S;
 	}

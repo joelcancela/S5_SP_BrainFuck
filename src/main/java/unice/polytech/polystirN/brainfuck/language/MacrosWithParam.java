@@ -53,7 +53,7 @@ public class MacrosWithParam extends Macros{
 		
 		for(int i=0;i<param;i++){
 			for(int j=0;j<getInstructions().size();j++){
-				S+=getInstructions().get(j).toString()+System.lineSeparator();
+				S+=getInstructions().get(j);
 			}
 		}
 		

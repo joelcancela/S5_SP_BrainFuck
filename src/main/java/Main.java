@@ -41,17 +41,22 @@ public class Main {
                     if (options.has("check")) { //Do we need to check it ?
                         intrptr = new Interpreter((String) options.valueOf("p"));
                         intrptr.check();
-                    } else if (options.has("rewrite")) { //Do we need to rewrite it ?
+                    }
+                    if (options.has("rewrite")) { //Do we need to rewrite it ?
                         intrptr = new Interpreter((String) options.valueOf("p"));
                         intrptr.rewriteFile();
-                    } else if (options.has("translate")) {
+                    }
+                    if (options.has("translate")) {
                         ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
                         iw.translate();
-                    } else if (options.has("trace")) {
+                    }
+                    if (options.has("trace")) {
+                        System.out.println();
                         trace = new Trace();
                         intrptr = new Interpreter((String) options.valueOf("p"), trace);
                         intrptr.interpretFile();
-                    } else { //This else condition execute the file, with the proper input/output files
+                    }
+                    if (!options.has("check") && !options.has("rewrite") && !options.has("translate") && !options.has("trace")){ //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) {
                             intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
                             intrptr.interpretFile();

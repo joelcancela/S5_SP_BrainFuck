@@ -57,7 +57,7 @@ public class ImageWriter {
         }
         factory= new InstructionFactory();
         buffer = new TextReader(filename,factory);
-        int pictureWidthSquares = 0;
+        int pictureWidthSquares = 1;
         while ((pictureWidthSquares * pictureWidthSquares) < (instructionsNumber)) {
             pictureWidthSquares++;
         }
