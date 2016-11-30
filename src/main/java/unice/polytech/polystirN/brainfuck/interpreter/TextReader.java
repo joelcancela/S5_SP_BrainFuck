@@ -47,14 +47,7 @@ class TextReader extends Reader {
      */
     @Override
     public boolean hasNext() throws Exception {
-        boolean returnValue = false;
-
-        buffer.mark(1);
-        if (buffer.read() != -1)
-            returnValue = true;
-        buffer.reset();
-
-        return returnValue;
+        return c!=-1;
     }
 
     /**
