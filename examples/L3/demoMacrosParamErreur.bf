@@ -1,0 +1,3 @@
+$DEFINE TenIncr() +++++++++/INCR
+
+TenIncr

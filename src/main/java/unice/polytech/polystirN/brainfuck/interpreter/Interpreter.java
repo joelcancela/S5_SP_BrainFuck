@@ -134,7 +134,7 @@ public class Interpreter {
                     if (getFactory().getInstruction(keyword.trim().substring(i, i + 1)) != null) {
                         System.out.print(keyword.trim().substring(i, i + 1));
                     } else {
-                        throw new SyntaxErrorException("Invalid keyword operator");
+                        throw new SyntaxErrorException("Incorrect word operator");
                     }
                 }
             } else {

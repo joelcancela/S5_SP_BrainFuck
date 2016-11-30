@@ -77,9 +77,11 @@ class TextReader extends Reader {
         if(macro.length==2)
         if(isInt(macro[1].trim())){
         	if(factory.getMapInstruction().get(macro[0].trim())!=null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacrosWithParam.class)){
-        		keyword = macro[0].trim();
-        		((MacrosWithParam) factory.getMapInstruction().get(macro[0].trim())).setParam(Integer.parseInt(macro[1].trim()));
-        
+        		if(factory.getInstruction(macro[0].trim()).getClass().equals(MacrosWithParam.class))
+        		if(Integer.parseInt(macro[1].trim())>=0){
+        			keyword = macro[0].trim();
+        			((MacrosWithParam) factory.getMapInstruction().get(macro[0].trim())).setParam(Integer.parseInt(macro[1].trim()));
+        		}
         	}
         }
         c = buffer.read();

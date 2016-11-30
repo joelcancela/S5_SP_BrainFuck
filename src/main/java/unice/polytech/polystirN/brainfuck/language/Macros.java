@@ -79,8 +79,8 @@ public class Macros implements Operator {
 	/**
 	 * get all instruction of a macros
 	 * @return String
+	 * @throws SyntaxErrorException 
 	 */
-	@Override
 	public String toString(){
 		String S= "";
 		if(instructions.size()==0)
