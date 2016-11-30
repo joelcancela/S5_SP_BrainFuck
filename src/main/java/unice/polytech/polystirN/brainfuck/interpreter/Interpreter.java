@@ -25,7 +25,7 @@ public class Interpreter {
     private String programName;
     private Metrics metrics;
     private Trace trace;
-
+    
     /**
      * Constructor for Interpreter
      *
