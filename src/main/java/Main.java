@@ -51,6 +51,7 @@ public class Main {
                         iw.translate();
                     }
                     if (options.has("trace")) {
+                        System.out.println();
                         trace = new Trace();
                         intrptr = new Interpreter((String) options.valueOf("p"), trace);
                         intrptr.interpretFile();
