@@ -1,6 +1,16 @@
-$DEFINE TenIncr +++++++++\INCR
+$DEFINE TenIncr +++++++++/INCR
 $DEFINE Incr() TenIncr
-Incr 10
----
+TenIncr
+TenIncr
+TenIncr
+TenIncr
+TenIncr
+TenIncr
+TenIncr
+TenIncr
+
+TenIncr
+TenIncr
+Incr 3
 .
-#Affiche a
+#Affiche ?

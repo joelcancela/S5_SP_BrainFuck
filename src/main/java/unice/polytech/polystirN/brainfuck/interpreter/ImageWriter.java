@@ -1,6 +1,10 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
 import javax.imageio.ImageIO;
+
+import unice.polytech.polystirN.brainfuck.language.Macros;
+import unice.polytech.polystirN.brainfuck.language.MacrosWithParam;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -17,7 +21,7 @@ public class ImageWriter {
     private TextReader buffer;//Buffer used to read the program
     private String filename;//Filename of the program
     private final int pixelSize = 3;//pixels squares' width and height
-
+    private InstructionFactory factory;
     /**
      * ImageWriter constructor
      *
@@ -26,7 +30,8 @@ public class ImageWriter {
      */
     public ImageWriter(String filename) throws Exception {
         this.filename = filename;
-        buffer = new TextReader(filename);
+        factory= new InstructionFactory();
+        buffer = new TextReader(filename,factory);
     }
 
     /**
@@ -35,16 +40,24 @@ public class ImageWriter {
      * @throws Exception if the program is bad formed or if the image writing went wrong
      */
     private void translate(String outputFilename) throws Exception {
-        InstructionFactory factory = new InstructionFactory();
         int instructionsNumber = 0;
-        String ins = "";
+        String ins = " ";
         while (buffer.hasNext()) {
-            if (!ins.equals("\n") && !ins.equals(" ") && !ins.equals("\r"))
-                instructionsNumber++;
-            ins = buffer.next();
+        	 ins = buffer.next();
+            if (!ins.equals("\n") && !ins.equals(" ") && !ins.equals("\r")){
+                if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(Macros.class)){
+                	instructionsNumber+=((Macros) factory.getInstruction(ins)).getNumberOfinstruction();
+                }
+                else if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(MacrosWithParam.class)){
+                	instructionsNumber+=((MacrosWithParam) factory.getInstruction(ins)).getNumberOfinstruction();
+                }
+                else
+            	instructionsNumber++;            }
+           
         }
-        buffer = new TextReader(filename);
-        int pictureWidthSquares = 0;
+        factory= new InstructionFactory();
+        buffer = new TextReader(filename,factory);
+        int pictureWidthSquares = 1;
         while ((pictureWidthSquares * pictureWidthSquares) < (instructionsNumber)) {
             pictureWidthSquares++;
         }
@@ -55,15 +68,45 @@ public class ImageWriter {
         while (buffer.hasNext()) {
             String s = buffer.next();
             if (!s.equals("\n") && !s.equals(" ") && !s.equals("\r") && !s.equals("\t")) {
-                int col = factory.getColor(s);
-                fillPixelSquare(x, y, col);
-                if (x + pixelSize == pictureWidth) {
-                    x = 0;
-                    y += pixelSize;
-                } else {
-                    x += pixelSize;
-                }
-            }
+           	 int col;
+            	 if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(Macros.class)){
+            		Macros macros = (Macros) factory.getInstruction(s.trim());
+            		for(int i=0;i<macros.getInstructions().size();i++){
+            			col = factory.getColor(macros.getInstructions().get(i).toString());
+            			fillPixelSquare(x, y, col);
+            			if (x + pixelSize == pictureWidth) {
+            				x = 0;
+            				y += pixelSize;
+            			} else 	{
+            				x += pixelSize;
+            			}
+            		 }
+                 }
+                 else if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(MacrosWithParam.class)){
+                	 MacrosWithParam macros = (MacrosWithParam) factory.getInstruction(s.trim());
+                	for(int j=0;j<((MacrosWithParam) macros).getParam();j++)
+                	 for(int i=0;i<macros.getInstructions().size();i++){
+             			col = factory.getColor(macros.getInstructions().get(i).toString());
+             			fillPixelSquare(x, y, col);
+             			if (x + pixelSize == pictureWidth) {
+             				x = 0;
+             				y += pixelSize;
+             			} else 	{
+             				x += pixelSize;
+             			}
+             		 }
+                 }
+                 else{
+                	col = factory.getColor(s);
+                	fillPixelSquare(x, y, col);
+                	if (x + pixelSize == pictureWidth) {
+                    	x = 0;
+                    	y += pixelSize;
+                	} else 	{
+                    	x += pixelSize;
+                	}
+                 }
+           }
         }
 
         ImageIO.write(img, "BMP", new File(outputFilename));
