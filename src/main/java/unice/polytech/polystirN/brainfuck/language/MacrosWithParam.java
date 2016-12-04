@@ -5,7 +5,7 @@ import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class MacrosWithParam extends Macros{
-	private Integer param;
+	private Integer param=null;
 	/**
 	 * constructor
 	 * @param ins

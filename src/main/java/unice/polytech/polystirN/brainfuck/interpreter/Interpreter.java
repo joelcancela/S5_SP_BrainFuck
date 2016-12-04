@@ -59,6 +59,13 @@ public class Interpreter {
     public Interpreter(String filename, String inputFile, String outputFile) throws Exception {
         this(filename);
         factory = new InstructionFactory(inputFile, outputFile);
+        if (filename.matches("(.*).bf")) {
+            programName = filename.substring(0, filename.length() - 3);
+            reader = new TextReader(filename,this);
+        } else if (filename.matches("(.*).bmp")) {
+            programName = filename.substring(0, filename.length() - 4);
+            reader = new ImageReader(filename);
+        }
     }
 
     /**
@@ -86,7 +93,7 @@ public class Interpreter {
         while (reader.hasNext()) {
             keyword = reader.next();
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
-                Operator op = getFactory().getInstruction(keyword);
+                Operator op = getFactory().getInstruction(keyword.trim());
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
                 if (isTrace()) {

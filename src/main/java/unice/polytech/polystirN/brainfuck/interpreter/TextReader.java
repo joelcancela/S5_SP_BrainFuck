@@ -123,6 +123,7 @@ class TextReader extends Reader {
                     }
                    
                     macros = macros.trim().substring(word.trim().length(), macros.trim().length()).trim();
+                    
                     if (word.trim().length() > 2) {
                         if (word.trim().substring(word.trim().length() - 2, word.trim().length()).equals("()")){
                         	word = word.trim().substring(0, word.trim().length()-2);
