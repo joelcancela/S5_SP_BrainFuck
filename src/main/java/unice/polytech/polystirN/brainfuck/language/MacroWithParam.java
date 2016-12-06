@@ -4,7 +4,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-public class MacrosWithParam extends Macros{
+public class MacroWithParam extends Macro{
 	private Integer param=null;
 	/**
 	 * constructor
@@ -12,7 +12,7 @@ public class MacrosWithParam extends Macros{
 	 * @param factory
 	 * @throws Exception
 	 */
-	public MacrosWithParam(String ins,InstructionFactory factory) throws Exception {
+	public MacroWithParam(String ins,InstructionFactory factory) throws Exception {
 		super(ins,factory);
 		
 	}

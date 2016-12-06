@@ -11,7 +11,7 @@ import org.junit.Test;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-public class MacrosTest {
+public class MacroTest {
 	private static Interpreter intrptr;
 	private int mask = 0xff; 
 	@BeforeClass

@@ -6,7 +6,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-public class Macros implements Operator {
+public class Macro implements Operator {
 	private ArrayList<Operator> instructions ;//for save the instruction of macros
 	private InstructionFactory factory ;
 	/**
@@ -15,7 +15,7 @@ public class Macros implements Operator {
 	 * @param factory
 	 * @throws Exception
 	 */
-	public Macros(String ins,InstructionFactory factory) throws Exception{
+	public Macro(String ins,InstructionFactory factory) throws Exception{
 		instructions = new ArrayList();
 		this.factory = factory;
 		madeInstruction(ins);
@@ -43,9 +43,9 @@ public class Macros implements Operator {
 			
 			if(instruction[i].split(" ").length == 2)
 				if(isInt(instruction[i].split(" ")[1])){
-						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacrosWithParam){
-							((MacrosWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
-							instruction[i] = ((MacrosWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
+						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
+							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
+							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
 						}
 						else throw new SyntaxErrorException("Incorrect word operator");		
 				}

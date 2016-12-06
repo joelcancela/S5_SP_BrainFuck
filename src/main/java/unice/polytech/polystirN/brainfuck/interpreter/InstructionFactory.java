@@ -50,8 +50,8 @@ public class InstructionFactory {
     	mapInstruction.put("#00FF00",new Out());
     	mapInstruction.put("#FF7F00",new Jump());
     	mapInstruction.put("#FF0000",new Back());
-    	mapInstruction.put("MULTI_DECR",new MacrosWithParam("-",this));
-    	mapInstruction.put("TO_DIGIT",new Macros("MULTI_DECR 48",this));
+    	mapInstruction.put("MULTI_DECR",new MacroWithParam("-",this));
+    	mapInstruction.put("TO_DIGIT",new Macro("MULTI_DECR 48",this));
     	
     }
 
