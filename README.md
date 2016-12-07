@@ -1,8 +1,12 @@
 # BrainFuckSI3
 
-This is the repository for the brainfuck project.
+This is the repository for the SI3 brainfuck project.
 
 Our group is called PolyStirN.
+
+## Building the project
+
+BrainFuckSI3 requires Maven and the JDK to be built.
 
 ### Maven commands
 
