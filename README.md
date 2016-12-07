@@ -13,6 +13,14 @@ BrainFuckSI3 requires Maven and the JDK to be built.
 - mvn package : compiles the projet into a .jar (target folder)
 - mvn test : launches all the tests
 
+## Launch the BrainFuck Interpreter
+
+Open a terminal, change your working directory to the project root and type the following :
+
+```
+./bfck
+```
+
 ---
 
 ## Demos
