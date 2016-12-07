@@ -10,7 +10,6 @@ BrainFuckSI3 requires Maven and the JDK to be built.
 
 ### Maven commands
 
-- mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
 - mvn package : compiles the projet into a .jar (target folder)
 - mvn test : launches all the tests
 
