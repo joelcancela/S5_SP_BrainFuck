@@ -1,17 +1,18 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-public class MacrosWithParam extends Macros{
-	private int param;
+public class MacroWithParam extends Macro{
+	private Integer param=null;
 	/**
 	 * constructor
 	 * @param ins
 	 * @param factory
 	 * @throws Exception
 	 */
-	public MacrosWithParam(String ins,InstructionFactory factory) throws Exception {
+	public MacroWithParam(String ins,InstructionFactory factory) throws Exception {
 		super(ins,factory);
 		
 	}
@@ -20,6 +21,8 @@ public class MacrosWithParam extends Macros{
 	 */
 	@Override
 	public void execute(Interpreter interpreter) throws Exception {
+		if(param == null)
+			throw new SyntaxErrorException("Incorrect word operator");
 		for(int i=0;i<param;i++){
 			for(int j=0;j<super.getInstructions().size();j++){
 				super.getInstructions().get(j).execute(interpreter);
@@ -38,12 +41,16 @@ public class MacrosWithParam extends Macros{
 	/**
 	 * get a String of all instruction of a macro
 	 * @return Sring
+	 * @throws SyntaxErrorException 
 	 */
-	@Override
 	public String toString(){
 		String S= "";
+		if(param == null)
+			throw new RuntimeException();
+		
 		if(getInstructions().size()==0)
 			return " ";
+		
 		for(int i=0;i<param;i++){
 			for(int j=0;j<getInstructions().size();j++){
 				S+=getInstructions().get(j);

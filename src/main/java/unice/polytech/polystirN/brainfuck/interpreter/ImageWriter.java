@@ -2,8 +2,8 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import javax.imageio.ImageIO;
 
-import unice.polytech.polystirN.brainfuck.language.Macros;
-import unice.polytech.polystirN.brainfuck.language.MacrosWithParam;
+import unice.polytech.polystirN.brainfuck.language.Macro;
+import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -45,11 +45,11 @@ public class ImageWriter {
         while (buffer.hasNext()) {
         	 ins = buffer.next();
             if (!ins.equals("\n") && !ins.equals(" ") && !ins.equals("\r")){
-                if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(Macros.class)){
-                	instructionsNumber+=((Macros) factory.getInstruction(ins)).getNumberOfinstruction();
+                if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(Macro.class)){
+                	instructionsNumber+=((Macro) factory.getInstruction(ins)).getNumberOfinstruction();
                 }
-                else if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(MacrosWithParam.class)){
-                	instructionsNumber+=((MacrosWithParam) factory.getInstruction(ins)).getNumberOfinstruction();
+                else if(factory.getInstruction(ins.trim())!=null && factory.getInstruction(ins.trim()).getClass().equals(MacroWithParam.class)){
+                	instructionsNumber+=((MacroWithParam) factory.getInstruction(ins)).getNumberOfinstruction();
                 }
                 else
             	instructionsNumber++;            }
@@ -69,8 +69,8 @@ public class ImageWriter {
             String s = buffer.next();
             if (!s.equals("\n") && !s.equals(" ") && !s.equals("\r") && !s.equals("\t")) {
            	 int col;
-            	 if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(Macros.class)){
-            		Macros macros = (Macros) factory.getInstruction(s.trim());
+            	 if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(Macro.class)){
+            		Macro macros = (Macro) factory.getInstruction(s.trim());
             		for(int i=0;i<macros.getInstructions().size();i++){
             			col = factory.getColor(macros.getInstructions().get(i).toString());
             			fillPixelSquare(x, y, col);
@@ -82,9 +82,9 @@ public class ImageWriter {
             			}
             		 }
                  }
-                 else if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(MacrosWithParam.class)){
-                	 MacrosWithParam macros = (MacrosWithParam) factory.getInstruction(s.trim());
-                	for(int j=0;j<((MacrosWithParam) macros).getParam();j++)
+                 else if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(MacroWithParam.class)){
+                	 MacroWithParam macros = (MacroWithParam) factory.getInstruction(s.trim());
+                	for(int j=0;j<((MacroWithParam) macros).getParam();j++)
                 	 for(int i=0;i<macros.getInstructions().size();i++){
              			col = factory.getColor(macros.getInstructions().get(i).toString());
              			fillPixelSquare(x, y, col);

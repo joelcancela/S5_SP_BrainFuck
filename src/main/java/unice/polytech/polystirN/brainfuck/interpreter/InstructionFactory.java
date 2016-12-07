@@ -25,7 +25,6 @@ public class InstructionFactory {
 	 * @throws Exception 
      */
     public InstructionFactory() throws Exception {
-    	String to ="------------------------------------------------";
     	mapInstruction = new HashMap();
     	mapInstruction.put("INCR",new Increment());
     	mapInstruction.put("DECR",new Decrement());
@@ -51,8 +50,9 @@ public class InstructionFactory {
     	mapInstruction.put("#00FF00",new Out());
     	mapInstruction.put("#FF7F00",new Jump());
     	mapInstruction.put("#FF0000",new Back());
-    	mapInstruction.put("TO_DIGIT",new Macros(to,this));
-    	mapInstruction.put("MULTI_DECR",new MacrosWithParam("-",this));
+    	mapInstruction.put("MULTI_DECR",new MacroWithParam("-",this));
+    	mapInstruction.put("TO_DIGIT",new Macro("MULTI_DECR 48",this));
+    	
     }
 
     /**

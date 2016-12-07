@@ -1,0 +1,2 @@
+$DEFINE DEMO() +++++
+DEMO -1

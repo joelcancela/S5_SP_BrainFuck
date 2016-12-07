@@ -6,8 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
-import unice.polytech.polystirN.brainfuck.language.Macros;
-import unice.polytech.polystirN.brainfuck.language.MacrosWithParam;
+import unice.polytech.polystirN.brainfuck.language.Macro;
+import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 
 
 /**
@@ -76,10 +76,12 @@ class TextReader extends Reader {
         String[] macro = keyword.split(" ");
         if(macro.length==2)
         if(isInt(macro[1].trim())){
-        	if(factory.getMapInstruction().get(macro[0].trim())!=null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacrosWithParam.class)){
-        		keyword = macro[0].trim();
-        		((MacrosWithParam) factory.getMapInstruction().get(macro[0].trim())).setParam(Integer.parseInt(macro[1].trim()));
-        
+        	if(factory.getMapInstruction().get(macro[0].trim())!=null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacroWithParam.class)){
+        		if(factory.getInstruction(macro[0].trim()).getClass().equals(MacroWithParam.class))
+        		if(Integer.parseInt(macro[1].trim())>=0){
+        			keyword = macro[0].trim();
+        			((MacroWithParam) factory.getMapInstruction().get(macro[0].trim())).setParam(Integer.parseInt(macro[1].trim()));
+        		}
         	}
         }
         c = buffer.read();
@@ -121,21 +123,22 @@ class TextReader extends Reader {
                     }
                    
                     macros = macros.trim().substring(word.trim().length(), macros.trim().length()).trim();
+                    
                     if (word.trim().length() > 2) {
                         if (word.trim().substring(word.trim().length() - 2, word.trim().length()).equals("()")){
                         	word = word.trim().substring(0, word.trim().length()-2);
                         	if(factory.getInstruction(word.trim())==null)
-                        	factory.getMapInstruction().put(word, new MacrosWithParam(macros.trim(),factory));
+                        	factory.getMapInstruction().put(word, new MacroWithParam(macros.trim(),factory));
                         	else throw new SyntaxErrorException("<your word> must be !="+ word);
                         }
                     
                     else {
                     	if(factory.getInstruction(word.trim())==null)
-                    		factory.getMapInstruction().put(word.trim(), new Macros(macros.trim(),factory));
+                    		factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
                     	else throw new SyntaxErrorException("<your word> must be !="+ word);
                     }
                     }
-                    else factory.getMapInstruction().put(word.trim(), new Macros(macros.trim(),factory));
+                    else factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
                     
                 }
             }

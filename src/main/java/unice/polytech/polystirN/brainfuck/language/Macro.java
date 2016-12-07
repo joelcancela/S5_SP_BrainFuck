@@ -6,7 +6,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-public class Macros implements Operator {
+public class Macro implements Operator {
 	private ArrayList<Operator> instructions ;//for save the instruction of macros
 	private InstructionFactory factory ;
 	/**
@@ -15,7 +15,7 @@ public class Macros implements Operator {
 	 * @param factory
 	 * @throws Exception
 	 */
-	public Macros(String ins,InstructionFactory factory) throws Exception{
+	public Macro(String ins,InstructionFactory factory) throws Exception{
 		instructions = new ArrayList();
 		this.factory = factory;
 		madeInstruction(ins);
@@ -40,29 +40,38 @@ public class Macros implements Operator {
 		int i=0;
 		while(i<instruction.length){
 			int j=0;
+			
+			if(instruction[i].split(" ").length == 2)
+				if(isInt(instruction[i].split(" ")[1])){
+						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
+							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
+							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
+						}
+						else throw new SyntaxErrorException("Incorrect word operator");		
+				}
 			char car = instruction[i].charAt(0);
-		    if (( 'A' <= car && 'Z' >= car)||( 'a' <= car && 'z' >= car)) {
-		        Operator op = factory.getInstruction(instruction[i].trim());
-		        if(op == null)	 
-		    		throw new SyntaxErrorException("Incorrect word operator");
+			if (( 'A' <= car && 'Z' >= car)||( 'a' <= car && 'z' >= car)) {
+		        		Operator op = factory.getInstruction(instruction[i].trim());
+		        		if(op == null)	 
+		        			throw new SyntaxErrorException("Incorrect word operator");
 		       
-		    	instructions.add(op);
-		    }
-		    else {
-		    	while(j<instruction[i].length()){
-		    		Operator op = null;
-		    		String shortInstruction = instruction[i].substring(j,j+1);
-		    		if(shortInstruction!=" "){
-		    				op = factory.getInstruction(shortInstruction);
+		        		instructions.add(op);
+				}
+				else {
+					while(j<instruction[i].length()){
+						Operator op = null;
+						String shortInstruction = instruction[i].substring(j,j+1);
+						if(shortInstruction!=" "){
+							op = factory.getInstruction(shortInstruction);
 				    		if(op == null)	 
 				    			throw new SyntaxErrorException("Incorrect word operator");
 				    	instructions.add(op);
-		    		}
-		    	j++;
-		    }
+						}
+						j++;
+					}
 		
 			
-		}
+				}
 			i++;
 	}
 		return instructions;
@@ -79,8 +88,8 @@ public class Macros implements Operator {
 	/**
 	 * get all instruction of a macros
 	 * @return String
+	 * @throws SyntaxErrorException 
 	 */
-	@Override
 	public String toString(){
 		String S= "";
 		if(instructions.size()==0)
@@ -97,6 +106,23 @@ public class Macros implements Operator {
 	public int getNumberOfinstruction(){
 		return instructions.size();
 	}
+	  /**
+     * Verifies if a string is an integer
+     *
+     * @param chaine is a string to check
+     * @return boolean if the string is an integer else false
+     */
+    private static boolean isInt(String chaine) {
+        boolean valeur = true;
+        char[] tab = chaine.toCharArray();
 
+        for (char carac : tab) {
+            if (!Character.isDigit(carac) && valeur) {
+                valeur = false;
+            }
+        }
+
+        return valeur;
+    }
 	
 }
