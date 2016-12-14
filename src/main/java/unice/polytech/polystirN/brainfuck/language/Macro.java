@@ -102,7 +102,11 @@ public class Macro implements Operator {
 
 	@Override
 	public String generateC() {
-		return this.toString();
+		String cCode = "";
+		for(int j=0; j<instructions.size(); j++){
+			cCode = cCode + instructions.get(j).generateC();
+		}
+		return cCode;
 	}
 
 	/**

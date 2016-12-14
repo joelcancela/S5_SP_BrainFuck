@@ -30,7 +30,6 @@ public class CGenerator {
      */
     public void generateFile() throws Exception {
         FileWriter outputFile = new FileWriter(programName + ".c", false);
-        int     indentLevel = 1;
         String  keyword;
 
         outputFile.write("#include <stdio.h>\n\n" +
@@ -57,7 +56,6 @@ public class CGenerator {
         outputFile.write("\treturn (0);\n}");
         outputFile.close();
     }
-
 
     public InstructionFactory getFactory() {
         return factory;
