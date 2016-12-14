@@ -3,7 +3,7 @@
 Polytech'Nice SI3 group PolyStirN's BrainFuck project.
 
 ## Features
-[//]: # (TODO)
+*TODO*
 
 ## Requirements
 
@@ -44,6 +44,7 @@ Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). P
 - [ ] Tweaks
 
 ---
+## Done
 
 ### Week 46-49
 
@@ -51,8 +52,6 @@ Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). P
 - [x] End level 3 (S12->S17)
 - [x] Rapport level 3
 - [x] Keep calm and step back (L3)
-
----
 
 ### Week 41-45
 
@@ -62,15 +61,11 @@ Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). P
 - [x] Keep calm and step back (L2)
 - [x] Adapt the main to be able to handle every flags
 
----
-
 ### Week 39-40
 
 - [x] Start Level 2, do s5 and s6
 - [x] Do the "Take a step back" review + justify all your choices
 - [x] Do some scheduling
-
----
 
 ### Week 37-38
 
