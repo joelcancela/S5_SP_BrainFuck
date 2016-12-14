@@ -29,8 +29,10 @@ public class CGenerator {
      * Generate a C file
      */
     public void generateFile() throws Exception {
-        FileWriter outputFile = new FileWriter(programName + ".c", false);
-        String  keyword;
+        FileWriter  outputFile = new FileWriter(programName + ".c", false);
+        int         indentLevel = 1;
+        String      indentation = "";
+        String      keyword;
 
         outputFile.write("#include <stdio.h>\n\n" +
                 "int\t\tmain(void)\n{\n" +
@@ -44,7 +46,11 @@ public class CGenerator {
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
-                outputFile.write(op.generateC());
+                else if (op.toString().equals("]"))
+                    indentLevel--;
+                outputFile.write(op.generateC(indentLevel));
+                if (op.toString().equals("["))
+                    indentLevel++;
             } else if (keyword.equals("#")) {
                 keyword = reader.next();
                 while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
@@ -56,6 +62,7 @@ public class CGenerator {
         outputFile.write("\treturn (0);\n}");
         outputFile.close();
     }
+
 
     public InstructionFactory getFactory() {
         return factory;

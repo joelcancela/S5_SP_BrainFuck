@@ -45,7 +45,7 @@ public class Macro implements Operator {
 				if(isInt(instruction[i].split(" ")[1])){
 						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
 							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
-							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
+							instruction[i] = factory.getInstruction(instruction[i].split(" ")[0]).toString();
 						}
 						else throw new SyntaxErrorException("Incorrect word operator");		
 				}
@@ -101,10 +101,10 @@ public class Macro implements Operator {
 	}
 
 	@Override
-	public String generateC() {
+	public String generateC(int indentLevel) {
 		String cCode = "";
 		for(int j=0; j<instructions.size(); j++){
-			cCode = cCode + instructions.get(j).generateC();
+			cCode = cCode + instructions.get(j).generateC(indentLevel);
 		}
 		return cCode;
 	}

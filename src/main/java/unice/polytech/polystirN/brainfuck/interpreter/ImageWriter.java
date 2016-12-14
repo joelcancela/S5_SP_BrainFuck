@@ -84,7 +84,7 @@ public class ImageWriter {
                  }
                  else if(factory.getInstruction(s.trim())!=null && factory.getInstruction(s.trim()).getClass().equals(MacroWithParam.class)){
                 	 MacroWithParam macros = (MacroWithParam) factory.getInstruction(s.trim());
-                	for(int j=0;j<((MacroWithParam) macros).getParam();j++)
+                	for(int j = 0; j< macros.getParam(); j++)
                 	 for(int i=0;i<macros.getInstructions().size();i++){
              			col = factory.getColor(macros.getInstructions().get(i).toString());
              			fillPixelSquare(x, y, col);
