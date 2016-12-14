@@ -61,4 +61,8 @@ public class In implements Operator {
     public String toString() {
         return ",";
     }
+
+    public String generateC() {
+        return "c[p] = getchar();\n";
+    }
 }

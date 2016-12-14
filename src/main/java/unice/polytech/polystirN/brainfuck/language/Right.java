@@ -38,4 +38,8 @@ public class Right implements Operator {
         return ">";
     }
 
+    public String generateC() {
+        return "p = p + 1;\n";
+    }
+
 }

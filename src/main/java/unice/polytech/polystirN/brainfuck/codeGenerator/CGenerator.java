@@ -27,50 +27,26 @@ public class CGenerator {
     }
     /**
      * Generate a C file
-     *
-     * @throws SyntaxErrorException if an invalid symbol or keyword is encountered
      */
     public void generateFile() throws Exception {
-        FileWriter outputFile = new FileWriter("bfToC.c", false);
-        int     p = 0;
+        FileWriter outputFile = new FileWriter(programName + ".c", false);
         int     indentLevel = 1;
         String  keyword;
 
         outputFile.write("#include <stdio.h>\n\n" +
-                "int\t\tmain(void) {\n" +
+                "int\t\tmain(void)\n{\n" +
                 "\tint\t\tc[30000] = {};\n" +
                 "\tint\t\tp = 0;\n\n");
 
         while (reader.hasNext()) {
             keyword = reader.next();
-            for (int i = 0; i < indentLevel; i++)
-                outputFile.write("\t");
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("#") || keyword.equals("\t") || keyword.equals(" "))) {
-                Operator op = getFactory().getInstruction(keyword);
-                if (op == null)
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
+                Operator op = getFactory().getInstruction(keyword.trim());
+                if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
-                if (keyword.equals("INCR") || keyword.equals("+") || keyword.equals("#QQCHOSE"))
-                    outputFile.write("c[p] = c[p] + 1;\n");
-                if (keyword.equals("DECR") || keyword.equals("-") || keyword.equals("#QQCHOSE"))
-                    outputFile.write("c[p] = c[p] - 1;\n");
-                if (keyword.equals("RIGHT") || keyword.equals(">") || keyword.equals("#QQCHOSE")) {
-                    outputFile.write("p = p + 1;\n");
-                    p++;
                 }
-                if (keyword.equals("LEFT") || keyword.equals("<") || keyword.equals("#QQCHOSE")) {
-                    outputFile.write("p = p - 1;\n");
-                    p--;
-                }
-                if (keyword.equals("IN") || keyword.equals(",") || keyword.equals("#QQCHOSE"))
-                    outputFile.write("c["+ p + "] = getchar();\n");
-                if (keyword.equals("OUT") || keyword.equals(".") || keyword.equals("#QQCHOSE"))
-                    outputFile.write("printf(\"%c\", c[" + p + "]);\n");
-                if (keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00"))
-                    outputFile.write("while (c[" + p + "]) {\n");
-                if (keyword.equals("BACK") || keyword.equals("]") || keyword.equals("#FF0000"))
-                    outputFile.write("}\n");
-            }
-            else if (keyword.equals("#")) {
+                outputFile.write(op.generateC());
+            } else if (keyword.equals("#")) {
                 keyword = reader.next();
                 while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
                     keyword = reader.next();

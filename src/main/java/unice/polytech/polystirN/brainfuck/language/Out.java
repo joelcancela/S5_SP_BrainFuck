@@ -52,4 +52,8 @@ public class Out implements Operator {
     public String toString() {
         return ".";
     }
+
+    public String generateC() {
+        return "printf(\"%c\", c[p]);\n";
+    }
 }

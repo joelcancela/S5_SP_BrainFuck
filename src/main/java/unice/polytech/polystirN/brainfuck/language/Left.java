@@ -38,4 +38,8 @@ public class Left implements Operator {
     public String toString() {
         return "<";
     }
+
+    public String generateC() {
+        return "p = p - 1;\n";
+    }
 }

@@ -1,10 +1,10 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import java.util.ArrayList;
-
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
+import java.util.ArrayList;
 
 public class Macro implements Operator {
 	private ArrayList<Operator> instructions ;//for save the instruction of macros
@@ -99,6 +99,12 @@ public class Macro implements Operator {
 		}
 		return S;
 	}
+
+	@Override
+	public String generateC() {
+		return this.toString();
+	}
+
 	/**
 	 * number of instruction in a macro
 	 * @return
@@ -124,5 +130,6 @@ public class Macro implements Operator {
 
         return valeur;
     }
-	
+
+
 }

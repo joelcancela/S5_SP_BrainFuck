@@ -251,4 +251,8 @@ public class Jump implements Operator {
         return trace;
     }
 
+    public String generateC() {
+        return "while (c[p])\n\t{\n";
+    }
+
 }

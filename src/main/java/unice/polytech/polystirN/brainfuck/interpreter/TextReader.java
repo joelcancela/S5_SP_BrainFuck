@@ -65,8 +65,6 @@ public class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         String keyword = "";
-
-     
        
         if(c=='#'){
         	buffer.readLine();

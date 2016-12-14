@@ -34,6 +34,9 @@ public class Back implements Operator {
     public String toString(){
     	return "]";
     }
-    
+
+    public String generateC() {
+        return "\t}\n";
+    }
 
 }

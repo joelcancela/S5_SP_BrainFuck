@@ -40,4 +40,8 @@ public class Decrement implements Operator {
         return "-";
     }
 
+    public String generateC() {
+        return "c[p] = c[p] - 1;\n";
+    }
+
 }
