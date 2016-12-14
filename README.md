@@ -1,8 +1,13 @@
 # BrainFuckSI3
 
-This is the repository for the BrainFuck project.
-Our group is called PolyStirN.
-Maven is required to launch the project.
+Polytech'Nice SI3 group PolyStirN's BrainFuck project.
+
+## Features
+[//]: # (TODO)
+
+## Requirements
+
+Maven and the JDK 8 are required to be build the project.
 
 ## How to launch
 ### UNIX Systems
