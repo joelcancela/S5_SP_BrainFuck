@@ -7,11 +7,14 @@ Polytech'Nice SI3 group PolyStirN's BrainFuck project.
 
 ## Requirements
 
-Maven and the JDK 8 are required to be build the project.
+Maven and the JDK 8 are required to build the project.
 
 ## How to launch
 ### UNIX Systems
 `./bfck`
+
+### WINDOWS
+*TODO*
 
 ### Maven commands
 
@@ -23,7 +26,8 @@ Maven and the JDK 8 are required to be build the project.
 ## Upcoming Demos
 
 Démo #3:
-Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). Potentiellement en visio-conférence pour une session.
+Semaine #2, lundi 9 janvier après-midi (sauf changement de dernière minute).<br>
+Potentiellement en visio-conférence pour une session.
 
 ## TODO
 
