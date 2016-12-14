@@ -41,8 +41,11 @@ public class Increment implements Operator {
         return "+";
     }
 
-    public String generateC() {
-        return "c[p] = c[p] + 1;\n";
+    public String generateC(int indentLevel, int consecutive) {
+        String indentation = "";
+        for (int i = 0; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "c[p] = c[p] + " + consecutive + ";" + "\n";
     }
 }
 

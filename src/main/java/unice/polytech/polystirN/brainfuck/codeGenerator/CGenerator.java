@@ -31,8 +31,10 @@ public class CGenerator {
     public void generateFile() throws Exception {
         FileWriter  outputFile = new FileWriter(programName + ".c", false);
         int         indentLevel = 1;
+        int         consecutive = 1;
         String      indentation = "";
         String      keyword;
+        Operator    lastOp = null;
 
         outputFile.write("#include <stdio.h>\n\n" +
                 "int\t\tmain(void)\n{\n" +
@@ -46,22 +48,33 @@ public class CGenerator {
                 if (op == null) {
                     throw new SyntaxErrorException("Incorrect word operator");
                 }
-                else if (op.toString().equals("]"))
-                    indentLevel--;
-                outputFile.write(op.generateC(indentLevel));
-                if (op.toString().equals("["))
-                    indentLevel++;
-            } else if (keyword.equals("#")) {
-                keyword = reader.next();
-                while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
-                    keyword = reader.next();
+
+                if (lastOp != null) {
+                    System.out.println(op.toString() + "   " + indentLevel);
+                    if (lastOp.toString().equals("]"))
+                        indentLevel--;
+                    if (!(op.toString().equals(lastOp.toString()))) {
+                        outputFile.write(lastOp.generateC(indentLevel, consecutive));
+                        consecutive = 1;
+                    } else
+                        consecutive++;
+                    if (lastOp.toString().equals("["))
+                        indentLevel++;
                 }
+                lastOp = op;
+
+        } else if (keyword.equals("#")) {
+            keyword = reader.next();
+            while (reader.hasNext() && (!(keyword.equals("\n")) || (keyword.equals("\r")))) {
+                keyword = reader.next();
             }
         }
+    }
+        outputFile.write(lastOp.generateC(indentLevel, consecutive));
 
         outputFile.write("\treturn (0);\n}");
         outputFile.close();
-    }
+}
 
 
     public InstructionFactory getFactory() {

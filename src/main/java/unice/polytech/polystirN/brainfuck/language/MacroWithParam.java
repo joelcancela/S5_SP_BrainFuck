@@ -76,14 +76,16 @@ public class MacroWithParam extends Macro{
 		return super.getNumberOfinstruction() * param;
 	}
 
-    public String generateC() {
+    public String generateC(int indentLevel, int consecutive) {
         String cCode = "";
         if (param == null)
             return "ERROR";
-        for (int i = 0; i < param; i++) {
-            ArrayList<Operator> instructions = getInstructions();
-            for (int j=0; j<instructions.size(); j++){
-                cCode = cCode + instructions.get(j).generateC();
+        for (int k = 0; k < consecutive; k++) {
+            for (int i = 0; i < param; i++) {
+                ArrayList<Operator> instructions = getInstructions();
+                for (int j = 0; j < instructions.size(); j++) {
+                    cCode = cCode + instructions.get(j).generateC(indentLevel, consecutive);
+                }
             }
         }
         return cCode;

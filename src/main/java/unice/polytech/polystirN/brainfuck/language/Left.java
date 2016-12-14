@@ -39,7 +39,10 @@ public class Left implements Operator {
         return "<";
     }
 
-    public String generateC() {
-        return "p = p - 1;\n";
+    public String generateC(int indentLevel, int consecutive) {
+        String indentation = "";
+        for (int i = 0; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "p = p - " + consecutive + ";" + "\n";
     }
 }

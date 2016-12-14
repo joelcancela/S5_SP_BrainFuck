@@ -101,11 +101,13 @@ public class Macro implements Operator {
 	}
 
 	@Override
-	public String generateC(int indentLevel) {
+	public String generateC(int indentLevel, int consecutive) {
 		String cCode = "";
-		for(int j=0; j<instructions.size(); j++){
-			cCode = cCode + instructions.get(j).generateC(indentLevel);
-		}
+        for (int i = 0; i < consecutive; i++) {
+		    for(int j=0; j<instructions.size(); j++) {
+		    	cCode = cCode + instructions.get(j).generateC(indentLevel, consecutive);
+		    }
+        }
 		return cCode;
 	}
 

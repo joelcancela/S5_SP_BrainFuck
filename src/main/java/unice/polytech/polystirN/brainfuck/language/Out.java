@@ -53,7 +53,14 @@ public class Out implements Operator {
         return ".";
     }
 
-    public String generateC() {
-        return "printf(\"%c\", c[p]);\n";
+    public String generateC(int indentLevel, int consecutive) {
+        String cCode = "";
+        for (int i = 0; i < indentLevel; i++)
+            cCode = cCode + "\t";
+        if (consecutive == 1)
+            return (cCode + "putchar(c[p]);\n");
+        else
+            return  cCode + "for (int i = 0; i < " + consecutive + "; i++) { putchar(c[p]); }\n" ;
+
     }
 }
