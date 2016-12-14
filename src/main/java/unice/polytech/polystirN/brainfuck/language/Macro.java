@@ -1,10 +1,10 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import java.util.ArrayList;
-
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
+import java.util.ArrayList;
 
 public class Macro implements Operator {
 	private ArrayList<Operator> instructions ;//for save the instruction of macros
@@ -45,7 +45,7 @@ public class Macro implements Operator {
 				if(isInt(instruction[i].split(" ")[1])){
 						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
 							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
-							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
+							instruction[i] = factory.getInstruction(instruction[i].split(" ")[0]).toString();
 						}
 						else throw new SyntaxErrorException("Incorrect word operator");		
 				}
@@ -99,6 +99,18 @@ public class Macro implements Operator {
 		}
 		return S;
 	}
+
+	@Override
+	public String generateC(int indentLevel, int consecutive) {
+		String cCode = "";
+        for (int i = 0; i < consecutive; i++) {
+		    for(int j=0; j<instructions.size(); j++) {
+		    	cCode = cCode + instructions.get(j).generateC(indentLevel, consecutive);
+		    }
+        }
+		return cCode;
+	}
+
 	/**
 	 * number of instruction in a macro
 	 * @return
@@ -124,5 +136,6 @@ public class Macro implements Operator {
 
         return valeur;
     }
-	
+
+
 }

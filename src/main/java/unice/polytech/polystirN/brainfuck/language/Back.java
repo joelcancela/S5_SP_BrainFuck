@@ -34,6 +34,14 @@ public class Back implements Operator {
     public String toString(){
     	return "]";
     }
-    
+
+    public String generateC(int indentLevel, int consecutive) {
+        if (consecutive <= 0)
+            return "";
+        String indentation = "";
+        for (int i = 0; i < indentLevel + 1; i++)
+            indentation = indentation + "\t";
+        return indentation + "}\n" + generateC(indentLevel - 1, consecutive - 1);
+    }
 
 }

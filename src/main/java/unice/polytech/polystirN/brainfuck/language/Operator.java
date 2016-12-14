@@ -20,4 +20,5 @@ public interface Operator {
     @Override
     String toString();
 
+    String generateC(int indentLevel, int consecutive);
 }

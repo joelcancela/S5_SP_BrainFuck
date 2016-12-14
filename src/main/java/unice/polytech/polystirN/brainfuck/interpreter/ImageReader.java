@@ -12,7 +12,7 @@ import java.io.File;
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-class ImageReader extends Reader {
+public class ImageReader extends Reader {
     private BufferedImage buffer; //buffer used to read pictures
     private int width; //width of the picture
     private int height; //height of the picture
@@ -26,7 +26,7 @@ class ImageReader extends Reader {
      * @param filename is the image filename to open
      * @throws Exception if the filename is incorrect or null
      */
-    ImageReader(String filename) throws Exception {
+    public ImageReader(String filename) throws Exception {
         buffer = ImageIO.read(new File(filename));
         width = buffer.getWidth();
         height = buffer.getHeight();

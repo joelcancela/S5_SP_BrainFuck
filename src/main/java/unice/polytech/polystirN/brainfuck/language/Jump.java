@@ -242,13 +242,22 @@ public class Jump implements Operator {
         return "NOI";
     }
 
+    public String getTrace() {
+        return trace;
+    }
+
     @Override
     public String toString() {
         return "[";
     }
 
-    public String getTrace() {
-        return trace;
+    public String generateC(int indentLevel, int consecutive) {
+        if (consecutive <= 0)
+            return "\n";
+        String indentation = "";
+        for (int i = 1; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "while (c[p]){\n" + generateC(indentLevel + 1, consecutive - 1);
     }
 
 }
