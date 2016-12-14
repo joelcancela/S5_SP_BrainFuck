@@ -1,64 +1,61 @@
 # BrainFuckSI3
 
-This is the repository for the brainfuck project.
-
+This is the repository for the BrainFuck project.
 Our group is called PolyStirN.
+Maven is required to launch the project.
+
+## How to launch
+### UNIX Systems
+`./bfck`
 
 ### Maven commands
 
 - mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
-- mvn package : compiles the projet into a .jar (target folder)
 - mvn test : launches all the tests
 
 ---
 
-##Upcoming Demos
-
-Démo #2:
-Semaine #47, mercredi 23 novembre ou vendredi 25 novembre après midi (sur le créneau de controle continu)
+## Upcoming Demos
 
 Démo #3:
 Semaine #2, lundi 9 janvier après midi (sauf changement de dernière minute). Potentiellement en visio-conférence pour une session.
 
-##TODO
+## TODO
 
+### Pierre & Aghiles
 
-### Aghiles
-
-- [ ] s15
-- [ ] s16
-- [ ] Rapport s15
-- [ ] Rapport s16
-
-### Joel
-
-- [ ] s17
-- [ ] Rapport s17
-
-### Pierre
-
-- [x] s13
-- [x] s14
-- [ ] Rapport s13
-- [ ] Rapport s14
+- [ ] S19
+- [ ] Rapport S19
+- [ ] S20
+- [ ] Rapport S20
 
 ### Tanguy
 
-- [ ] s12
-- [ ] Rapport s12
+- [ ] S21
+- [ ] Rapport S21
+
+### Joël
+
+- [ ] Tweaks
+
+---
+
+### Week 46-49
+
+- [x] Oral presentation 3
+- [x] End level 3 (S12->S17)
+- [x] Rapport level 3
+- [x] Keep calm and step back (L3)
 
 ---
 
 ### Week 41-45
 
-- [x] Oral presentation
+- [x] Oral presentation 2
 - [x] End level 2
 - [x] Rapport level 2
 - [x] Keep calm and step back (L2)
 - [x] Adapt the main to be able to handle every flags
-
-[Lien du Rapport Level 2](https://docs.google.com/document/d/1PzqbZesflG3ossOJt7w1S7Z1KMKGO60itktAWukM744/edit?usp=sharing)<br/>
-[Lien des slides soutenance #1](https://www.icloud.com/keynote/0dPYGMDIF4jh_7oab-MVELDrA#PresentationBrainfuckSI3)
 
 ---
 
