@@ -6,7 +6,7 @@ import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystriN.brainfuck.debug.Trace;
+import unice.polytech.polystirN.brainfuck.debug.Trace;
 
 /**
  * The main class of the project handles the different flags and options of our program.

@@ -6,8 +6,8 @@ import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Jump;
 import unice.polytech.polystirN.brainfuck.language.Operator;
-import unice.polytech.polystriN.brainfuck.debug.Metrics;
-import unice.polytech.polystriN.brainfuck.debug.Trace;
+import unice.polytech.polystirN.brainfuck.debug.Metrics;
+import unice.polytech.polystirN.brainfuck.debug.Trace;
 
 /**
  * Models the virtual machine interpreting the
