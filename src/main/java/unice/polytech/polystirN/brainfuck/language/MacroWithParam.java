@@ -24,9 +24,7 @@ public class MacroWithParam extends Macro{
 		if(param == null)
 			throw new SyntaxErrorException("Incorrect word operator");
 		for(int i=0;i<param;i++){
-			for(int j=0;j<super.getInstructions().size();j++){
-				super.getInstructions().get(j).execute(interpreter);
-			}
+			super.execute(interpreter);
 		}
 		
 	}

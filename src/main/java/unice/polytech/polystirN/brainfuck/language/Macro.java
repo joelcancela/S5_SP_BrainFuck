@@ -1,14 +1,18 @@
 package unice.polytech.polystirN.brainfuck.language;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class Macro implements Operator {
-	private ArrayList<Operator> instructions ;//for save the instruction of macros
+	private List<Operator> instructions;//for save the instruction of macros
+	private List<Operator> temp;
 	private InstructionFactory factory ;
+	private String inst[] ;
+	private static int size;
 	/**
 	 * constructor
 	 * @param ins
@@ -25,8 +29,16 @@ public class Macro implements Operator {
 	 */
 	@Override
 	public void execute(Interpreter interpreter) throws Exception {
+		size = 0;
 		for(int j=0;j<instructions.size();j++){
-			instructions.get(j).execute(interpreter);
+			if(instructions.get(j) instanceof Jump){
+				temp=LoopSeparate(j+1);
+				j+=temp.size()-size+1;
+				new Jump(temp).execute(interpreter);
+			}
+			else{
+				instructions.get(j).execute(interpreter);
+				}
 		}
 	}
 	/**
@@ -34,8 +46,9 @@ public class Macro implements Operator {
 	 * @return list of the instruction of a macros
 	 * @throws Exception
 	 */
-	public ArrayList<Operator> madeInstruction(String macrosEquivalent) throws Exception{
+	public List<Operator> madeInstruction(String macrosEquivalent) throws Exception{
 		String instruction[] = macrosEquivalent.split("/");
+		inst = instruction;
 		if(macrosEquivalent.equals(""))return instructions;
 		int i=0;
 		while(i<instruction.length){
@@ -62,8 +75,9 @@ public class Macro implements Operator {
 						Operator op = null;
 						String shortInstruction = instruction[i].substring(j,j+1);
 						if(shortInstruction!=" "){
-							op = factory.getInstruction(shortInstruction);
-				    		if(op == null)	 
+							if(isShort(shortInstruction))
+								op = factory.getInstruction(shortInstruction);
+							else
 				    			throw new SyntaxErrorException("Incorrect word operator");
 				    	instructions.add(op);
 						}
@@ -82,7 +96,7 @@ public class Macro implements Operator {
 	 * get arrayList of the instructions of a macros
 	 * @return
 	 */
-	public ArrayList<Operator> getInstructions() {
+	public List<Operator> getInstructions() {
 		return instructions;
 	}
 	/**
@@ -106,7 +120,29 @@ public class Macro implements Operator {
 	public int getNumberOfinstruction(){
 		return instructions.size();
 	}
-	  /**
+	/**
+	 * @param i index of next instruction after jump
+	 * @return
+	 */
+	public List<Operator> LoopSeparate(int i){
+		List<Operator> list = new ArrayList();
+		int nb=1;
+		for(;i<instructions.size() && nb!=0;i++){
+			if(instructions.get(i) instanceof Jump){
+				nb++;
+			}
+			else
+				if(instructions.get(i) instanceof Back){
+				nb--;
+				}
+			if(instructions.get(i) instanceof Macro){
+				list.addAll(((Macro) instructions.get(i)).transform());
+			}else
+			list.add(instructions.get(i));
+		}
+		return list;
+	}
+	/**
      * Verifies if a string is an integer
      *
      * @param chaine is a string to check
@@ -124,5 +160,21 @@ public class Macro implements Operator {
 
         return valeur;
     }
-	
+    private static boolean isShort(String chaine) {
+        if(chaine.equals("+")||chaine.equals("-")||chaine.equals("<")||chaine.equals(">")
+        		||chaine.equals("[")||chaine.equals("]")||chaine.equals(",")||chaine.equals("."))
+        	return true;
+        return false;
+    }
+    public List<Operator> transform() {
+    	String string;
+    	List<Operator> array = new ArrayList();
+    	string = toString().replaceAll(" ", "");
+       for(int i =0;i<string.length();i++){
+    	   array.add(factory.getInstruction(string.substring(i, i+1)));
+    	   size=size+1;
+       }
+
+       return array;
+    }
 }

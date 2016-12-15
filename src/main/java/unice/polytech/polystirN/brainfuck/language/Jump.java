@@ -19,7 +19,16 @@ public class Jump implements Operator {
     private int nbOuvert;
     private List<String> queue;
     private String trace = "";
+    private boolean macros = false;
+    private int i=-1;
+    private List<Operator> listInst;
 
+    public Jump(){
+    }
+    public Jump(List<Operator> temp){
+    	macros = true;
+    	listInst = temp;
+    }
     /**
      * This method checks the content of the current memory cell.
      * This operator does nothing if the value is different of 0.
@@ -203,6 +212,7 @@ public class Jump implements Operator {
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
+        
         interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
         if (interpreter.isTrace()) {
             trace += "\npointer after : " + interpreter.getMemory().getP() + "\n";
@@ -219,28 +229,35 @@ public class Jump implements Operator {
      * @throws BadLoopException     is the loop has no closing
      */
     private String getNextInstruction(Interpreter interpreter) throws Exception {
-        String instruction;
-
-        if (!interpreter.getReader().hasNext())
-            throw new BadLoopException("Loop without end : Missing BACK operator");
-
-        instruction = interpreter.getReader().next();
-
-        if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" ") || instruction.equals("#"))) {
-            Operator op = interpreter.getFactory().getInstruction(instruction);
-            if (op == null) {
-                throw new SyntaxErrorException("Incorrect word operator");
-            }
-            return instruction;
-        } else if (instruction.equals("#")) {
-            instruction = interpreter.getReader().next();
-            while (interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))) {
-                instruction = interpreter.getReader().next();
-            }
+        if(macros){
+        	i++;
+        	if(i<listInst.size())
+        	return listInst.get(i).toString();
         }
-
+        else{
+	    	String instruction;
+	
+	        if (!interpreter.getReader().hasNext())
+	            throw new BadLoopException("Loop without end : Missing BACK operator");
+	
+	        instruction = interpreter.getReader().next();
+	
+	        if (!(instruction.equals("\n") || instruction.equals("\r") || instruction.equals("\t") || instruction.equals(" ") || instruction.equals("#"))) {
+	            Operator op = interpreter.getFactory().getInstruction(instruction);
+	            if (op == null) {
+	                throw new SyntaxErrorException("Incorrect word operator");
+	            }
+	            return instruction;
+	        } else if (instruction.equals("#")) {
+	            instruction = interpreter.getReader().next();
+	            while (interpreter.getReader().hasNext() && (!(instruction.equals("\n")) || (instruction.equals("\r")))) {
+	                instruction = interpreter.getReader().next();
+	            }
+	        }
+        }
         return "NOI";
     }
+   
 
     @Override
     public String toString() {
