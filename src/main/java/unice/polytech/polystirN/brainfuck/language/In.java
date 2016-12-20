@@ -61,4 +61,13 @@ public class In implements Operator {
     public String toString() {
         return ",";
     }
+
+    public String generateC(int indentLevel, int consecutive) {
+        String cCode = "";
+        for (int i = 0; i < indentLevel; i++)
+            cCode = cCode + "\t";
+        for (int j = 0; j < consecutive; j++)
+            cCode = cCode + "c[p] = getchar();\n";
+        return cCode;
+    }
 }

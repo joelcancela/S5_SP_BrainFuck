@@ -38,4 +38,11 @@ public class Right implements Operator {
         return ">";
     }
 
+    public String generateC(int indentLevel, int consecutive) {
+        String indentation = "";
+        for (int i = 0; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "p = p + " + consecutive + ";" + "\n";
+    }
+
 }

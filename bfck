@@ -1,23 +1,24 @@
 #!/bin/bash
 #--------------------------------------------------------------------#
-#                   bfck.jar to bfck linux executable                #
+#              BrainFuck Interpreter Executable                      #
 #--------------------------------------------------------------------#
 #              By Aghiles DZIRI, Tanguy INVERNIZZI,                  #
 #              Pierre RAINERO and Joel CANCELA VAZ                   #
 #                                                                    #
 # This file is used to simulate the bfck linux executable from the   #
-# bfck jar file. To use it, just generate your bfck.jar in the       #
-# folder /out, and launch this script with the command ./bfck        #
+# bfck jar file. To use it, just launch this script                  #
+# with the command ./bfck                                            #
 #--------------------------------------------------------------------#
 
-# Name of the jar compiled
-jarFileToLaunch="BrainFuckSI3.jar"
-
 # Name of the path to the jar to launch
-jarFile="./target/$jarFileToLaunch"
+DIRECTORY="./target/"
 
 #--------------------------------------------------------------------
 
 # Launch the application
-java -jar $jarFile $@
+if [ ! -d "$DIRECTORY" ]; then
+    mvn install
+fi
+
+mvn -q exec:java -Dexec.mainClass="Main" -Dexec.args="$*"
 exit $?

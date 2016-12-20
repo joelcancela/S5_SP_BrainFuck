@@ -1,11 +1,14 @@
 package unice.polytech.polystirN.brainfuck.language;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
+import java.util.ArrayList;
 
 public class Macro implements Operator {
 	private List<Operator> instructions;//for save the instruction of macros
@@ -56,6 +59,7 @@ public class Macro implements Operator {
 						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
 							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0].trim())).setParam(Integer.parseInt(instruction[i].split(" ")[1].trim()));
 							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0].trim())).toString().replace(" ", "");
+
 						}
 						else throw new SyntaxErrorException("Incorrect word operator");		
 				}
@@ -109,6 +113,18 @@ public class Macro implements Operator {
 		}
 		return S;
 	}
+
+	@Override
+	public String generateC(int indentLevel, int consecutive) {
+		String cCode = "";
+        for (int i = 0; i < consecutive; i++) {
+		    for(int j=0; j<instructions.size(); j++) {
+		    	cCode = cCode + instructions.get(j).generateC(indentLevel, consecutive);
+		    }
+        }
+		return cCode;
+	}
+
 	/**
 	 * number of instruction in a macro
 	 * @return
@@ -161,6 +177,7 @@ public class Macro implements Operator {
 
         return valeur;
     }
+
     private static boolean isShort(String chaine) {
         if(chaine.equals("+")||chaine.equals("-")||chaine.equals("<")||chaine.equals(">")
         		||chaine.equals("[")||chaine.equals("]")||chaine.equals(",")||chaine.equals("."))
@@ -177,4 +194,7 @@ public class Macro implements Operator {
 
        return array;
     }
+
+
+
 }

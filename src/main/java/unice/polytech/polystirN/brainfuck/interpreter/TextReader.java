@@ -1,15 +1,14 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 import unice.polytech.polystirN.brainfuck.language.Operator;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 
 /**
@@ -18,10 +17,11 @@ import unice.polytech.polystirN.brainfuck.language.Procedure;
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-class TextReader extends Reader {
+public class TextReader extends Reader {
     private BufferedReader buffer;
     private int c;
     private InstructionFactory factory;
+    private CGenerator cGenerator;
 
     /**
      * TextReader constructor
@@ -38,6 +38,13 @@ class TextReader extends Reader {
     public TextReader(String filename,InstructionFactory factory) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
         this.factory= factory;
+        c = buffer.read();
+        macrosRead();
+    }
+
+    public TextReader(String filename, CGenerator cGenerator) throws Exception {
+        buffer = new BufferedReader(new FileReader(filename));
+        this.factory = cGenerator.getFactory();
         c = buffer.read();
         macrosRead();
     }
@@ -62,6 +69,7 @@ class TextReader extends Reader {
         String keyword = "";
         String VOID = "void";
      
+
        
         if(c=='#'){
         	buffer.readLine();
@@ -168,7 +176,6 @@ class TextReader extends Reader {
      * 
      * Stock the equivalent of the macros to be able to use them after
      * @throws SyntaxErrorException if the character is not part of the syntax
-     * @return name of file which will be executed
      */
     private void macrosRead() throws Exception {
         String word;
