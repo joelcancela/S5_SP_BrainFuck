@@ -22,7 +22,7 @@ public class Left implements Operator {
      */
     public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
         int p = interpreter.getMemory().getP();
-
+		
         //Anomaly cases :
         if (p == 0)
             throw new PointerPositionOutOfBoundsException("pointer can't be moved to the left (already at position 0)");

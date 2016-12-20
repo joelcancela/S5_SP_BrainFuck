@@ -14,7 +14,6 @@ public class MacroWithParam extends Macro{
 	 */
 	public MacroWithParam(String ins,InstructionFactory factory) throws Exception {
 		super(ins,factory);
-		
 	}
 	/**
 	 * methode execute

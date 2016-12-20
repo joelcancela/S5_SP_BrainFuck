@@ -38,6 +38,7 @@ public class Out implements Operator {
      */
     @Override
     public void execute(Interpreter interpreter) throws Exception {
+
         if (filename == null) {
             System.out.print((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
         } else {

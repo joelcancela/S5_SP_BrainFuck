@@ -12,7 +12,7 @@ public class Macro implements Operator {
 	private List<Operator> temp;
 	private InstructionFactory factory ;
 	private String inst[] ;
-	private static int size;
+	private int j;
 	/**
 	 * constructor
 	 * @param ins
@@ -29,11 +29,9 @@ public class Macro implements Operator {
 	 */
 	@Override
 	public void execute(Interpreter interpreter) throws Exception {
-		size = 0;
-		for(int j=0;j<instructions.size();j++){
+		for(j=0;j<instructions.size();j++){
 			if(instructions.get(j) instanceof Jump){
-				temp=LoopSeparate(j+1);
-				j+=temp.size()-size+1;
+				temp=LoopSeparate();
 				new Jump(temp).execute(interpreter);
 			}
 			else{
@@ -53,12 +51,11 @@ public class Macro implements Operator {
 		int i=0;
 		while(i<instruction.length){
 			int j=0;
-			
-			if(instruction[i].split(" ").length == 2)
+			if(instruction[i].trim().split(" ").length == 2)
 				if(isInt(instruction[i].split(" ")[1])){
 						if(factory.getInstruction(instruction[i].split(" ")[0]) instanceof MacroWithParam){
-							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).setParam(Integer.parseInt(instruction[i].split(" ")[1]));
-							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0])).toString();
+							((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0].trim())).setParam(Integer.parseInt(instruction[i].split(" ")[1].trim()));
+							instruction[i] = ((MacroWithParam) factory.getInstruction(instruction[i].split(" ")[0].trim())).toString().replace(" ", "");
 						}
 						else throw new SyntaxErrorException("Incorrect word operator");		
 				}
@@ -67,7 +64,6 @@ public class Macro implements Operator {
 		        		Operator op = factory.getInstruction(instruction[i].trim());
 		        		if(op == null)	 
 		        			throw new SyntaxErrorException("Incorrect word operator");
-		       
 		        		instructions.add(op);
 				}
 				else {
@@ -124,22 +120,27 @@ public class Macro implements Operator {
 	 * @param i index of next instruction after jump
 	 * @return
 	 */
-	public List<Operator> LoopSeparate(int i){
+	public List<Operator> LoopSeparate(){
 		List<Operator> list = new ArrayList();
 		int nb=1;
-		for(;i<instructions.size() && nb!=0;i++){
-			if(instructions.get(i) instanceof Jump){
+		for(j=j+1;j<instructions.size() && nb!=0;j++){
+			if(instructions.get(j) instanceof Jump){
 				nb++;
 			}
 			else
-				if(instructions.get(i) instanceof Back){
+				if(instructions.get(j) instanceof Back){
 				nb--;
 				}
-			if(instructions.get(i) instanceof Macro){
-				list.addAll(((Macro) instructions.get(i)).transform());
+				
+				if(instructions.get(j) instanceof MacroWithParam){
+					list.addAll(((MacroWithParam) instructions.get(j)).transform());
+				}else
+			if(instructions.get(j) instanceof Macro){
+				list.addAll(((Macro) instructions.get(j)).transform());
 			}else
-			list.add(instructions.get(i));
+			list.add(instructions.get(j));
 		}
+		j--;
 		return list;
 	}
 	/**
@@ -172,7 +173,6 @@ public class Macro implements Operator {
     	string = toString().replaceAll(" ", "");
        for(int i =0;i<string.length();i++){
     	   array.add(factory.getInstruction(string.substring(i, i+1)));
-    	   size=size+1;
        }
 
        return array;

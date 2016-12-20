@@ -8,6 +8,8 @@ import java.io.IOException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
+import unice.polytech.polystirN.brainfuck.language.Operator;
+import unice.polytech.polystirN.brainfuck.language.Procedure;
 
 
 /**
@@ -58,7 +60,7 @@ class TextReader extends Reader {
     @Override
     public String next() throws Exception {
         String keyword = "";
-
+        String VOID = "void";
      
        
         if(c=='#'){
@@ -80,15 +82,88 @@ class TextReader extends Reader {
         		if(factory.getInstruction(macro[0].trim()).getClass().equals(MacroWithParam.class))
         		if(Integer.parseInt(macro[1].trim())>=0){
         			keyword = macro[0].trim();
-        			((MacroWithParam) factory.getMapInstruction().get(macro[0].trim())).setParam(Integer.parseInt(macro[1].trim()));
+        			((MacroWithParam) factory.getMapInstruction().get(keyword)).setParam(Integer.parseInt(macro[1].trim()));
         		}
+        	}
+        }
+        if(keyword.contains(VOID) && keyword.trim().length()>VOID.length()){
+        	procedureRead(keyword);
+        	keyword = "";
+        }
+        if(keyword.split("\\(").length ==2 && keyword.split("\\)").length ==2 && keyword.trim().split(";").length==1){
+        	if(factory.getInstruction(keyword.split("\\(")[0].trim())!=null && factory.getInstruction(keyword.split("\\(")[0].trim()) instanceof Procedure){
+        		String[] paramettre = keyword.split("\\(")[1].split("\\)")[0].split(",");
+            	keyword = keyword.split("\\(")[0].trim();
+        		((Procedure)factory.getInstruction(keyword.split("\\(")[0].trim())).setParam(paramettre);
         	}
         }
         c = buffer.read();
         return keyword;
 
     }
-
+    /**
+     * 
+     * @param procedure
+     * @throws Exception
+     */
+    private void procedureRead(String procedure) throws Exception{
+    	String Void = "void";
+    	String nomPro,corp ="",param[];
+    	procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
+    	nomPro = procedure.split("\\(")[0].trim();
+    	if(nomPro.split(" ").length > 1){
+    		throw new SyntaxErrorException("the name of the function should not contain spaces");
+    	}
+    	if(procedure.split("\\(").length > 2 || procedure.split("\\)").length >2 ){
+    		throw new SyntaxErrorException("the function should not contain too many ( or )");
+    	}
+    	if(!procedure.split("\\(")[1].contains(")")){
+    		throw new SyntaxErrorException("the function should contain  ( param )");
+    	}
+    	param = procedure.split("\\(")[1].split("\\)")[0].split(",");
+    	for(int i=0;i<param.length;i++){
+    		param[i] = param[i].trim();
+    	}
+    	procedure = procedure.split("\\)")[1];
+    	if(procedure.contains("{")){
+    		if(procedure.contains("}")){
+    			corp = procedure.split("\\{")[0];
+    		}
+    		else {
+    			if(procedure.split("\\{").length == 2)
+    				corp = procedure.split("\\{")[1];
+    			while(c!=-1 && c!='}'){
+    				c = buffer.read();
+    				if(c=='}'){
+    					c=' ';
+    					break;
+    				}else{
+    					corp+=Character.toString((char) c);
+    				}
+    				
+    			}
+    		}
+    	}
+    	else{
+    		c = buffer.read();
+    		if(c=='{'){
+    			while(c!=-1 && c!='}'){
+				
+    				if(c=='}'){
+    					c=' ';
+    					break;
+    				}else{
+    					corp+=(char)c;
+    				}
+    				c = buffer.read();
+    			}
+    			
+    		}
+    		else throw new SyntaxErrorException("the function should contain { and }");
+    	}
+    	factory.getMapInstruction().put(nomPro.trim(), new Procedure(corp,param, factory));
+    	
+    }
     /**
      * 
      * Stock the equivalent of the macros to be able to use them after
@@ -114,7 +189,7 @@ class TextReader extends Reader {
                 else {
                     if (macros.trim().split(" ").length < 2)
                         throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
-                    macros = macros.substring(define.length(), macros.trim().length()).trim();
+                    macros = macros.trim().substring(define.length(), macros.trim().length()).trim();
                     for (i = 0; i < macros.trim().length() && charOfM != ' '; i++) {
                         word += macros.trim().charAt(i);
                         if (i < macros.trim().length() - 1)
@@ -128,18 +203,21 @@ class TextReader extends Reader {
                         if (word.trim().substring(word.trim().length() - 2, word.trim().length()).equals("()")){
                         	word = word.trim().substring(0, word.trim().length()-2);
                         	if(factory.getInstruction(word.trim())==null)
-                        	factory.getMapInstruction().put(word, new MacroWithParam(macros.trim(),factory));
+                        	factory.getMapInstruction().put(word.trim(), new MacroWithParam(macros.trim(),factory));
                         	else throw new SyntaxErrorException("<your word> must be !="+ word);
+                        	
                         }
                     
                     else {
+                    
                     	if(factory.getInstruction(word.trim())==null)
                     		factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
                     	else throw new SyntaxErrorException("<your word> must be !="+ word);
+                    	
                     }
                     }
                     else factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
-                    
+                   
                 }
             }
             c = buffer.read();
