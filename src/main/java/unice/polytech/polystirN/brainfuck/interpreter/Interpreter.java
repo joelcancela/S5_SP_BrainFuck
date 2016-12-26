@@ -6,8 +6,8 @@ import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Jump;
 import unice.polytech.polystirN.brainfuck.language.Operator;
-import unice.polytech.polystriN.brainfuck.debug.Metrics;
-import unice.polytech.polystriN.brainfuck.debug.Trace;
+import unice.polytech.polystirN.brainfuck.debug.Metrics;
+import unice.polytech.polystirN.brainfuck.debug.Trace;
 
 /**
  * Models the virtual machine interpreting the
@@ -49,6 +49,11 @@ public class Interpreter {
         inALoop = false;
     }
 
+    public Interpreter(Interpreter interpreter){
+    	this.factory = interpreter.getFactory();
+    	this.memory = new Memory(interpreter.getMemory());
+    	this.metrics = interpreter.metrics;
+    }
     /**
      * Sets the correct operatorsKeywords to interpret as operators
      *
@@ -101,7 +106,7 @@ public class Interpreter {
                     trace.write("pointer : " + memory.getP());
                 }
                 if (op == null) {
-                    throw new SyntaxErrorException("Incorrect word operator");
+                	throw new SyntaxErrorException("Incorrect word operator");
                 }
                 op.execute(this);
                 if ((op instanceof Jump) && isTrace())

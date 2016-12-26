@@ -38,6 +38,7 @@ public class Out implements Operator {
      */
     @Override
     public void execute(Interpreter interpreter) throws Exception {
+
         if (filename == null) {
             System.out.print((char) (interpreter.getMemory().getCells()[interpreter.getMemory().getP()] & 0xFF));
         } else {
@@ -51,5 +52,16 @@ public class Out implements Operator {
     @Override
     public String toString() {
         return ".";
+    }
+
+    public String generateC(int indentLevel, int consecutive) {
+        String cCode = "";
+        for (int i = 0; i < indentLevel; i++)
+            cCode = cCode + "\t";
+        if (consecutive == 1)
+            return (cCode + "putchar(c[p]);\n");
+        else
+            return  cCode + "for (int i = 0; i < " + consecutive + "; i++) { putchar(c[p]); }\n" ;
+
     }
 }

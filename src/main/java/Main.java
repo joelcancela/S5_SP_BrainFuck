@@ -3,10 +3,11 @@
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystriN.brainfuck.debug.Trace;
+import unice.polytech.polystirN.brainfuck.debug.Trace;
 
 /**
  * The main class of the project handles the different flags and options of our program.
@@ -27,6 +28,7 @@ public class Main {
         parser.accepts("rewrite");
         parser.accepts("translate");
         parser.accepts("trace");
+        parser.accepts("cgen");
         //here we add the longs options.
 
         OptionSet options = parser.parse(args); //Handle the args of the command line with the options.
@@ -41,6 +43,10 @@ public class Main {
                     if (options.has("check")) { //Do we need to check it ?
                         intrptr = new Interpreter((String) options.valueOf("p"));
                         intrptr.check();
+                    }
+                    if (options.has("cgen")) {
+                        CGenerator cgen = new CGenerator((String) options.valueOf("p"));
+                        cgen.generateFile();
                     }
                     if (options.has("rewrite")) { //Do we need to rewrite it ?
                         intrptr = new Interpreter((String) options.valueOf("p"));

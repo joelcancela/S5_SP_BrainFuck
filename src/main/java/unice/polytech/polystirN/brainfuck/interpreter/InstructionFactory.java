@@ -52,6 +52,8 @@ public class InstructionFactory {
     	mapInstruction.put("#FF0000",new Back());
     	mapInstruction.put("MULTI_DECR",new MacroWithParam("-",this));
     	mapInstruction.put("TO_DIGIT",new Macro("MULTI_DECR 48",this));
+    	mapInstruction.put("MULTI_LEFT",new MacroWithParam("<",this));
+    	mapInstruction.put("MULTI_RIGHT",new MacroWithParam(">",this));
     	
     }
 
@@ -90,7 +92,7 @@ public class InstructionFactory {
      * @param instruction is the long or short syntax string to translate into a color
      * @return Integer being the RGB hexadecimal code of the color
      */
-    int getColor(String instruction) {
+    public int getColor(String instruction) {
         switch (instruction) {
             case "INCR":
             case "+":

@@ -23,7 +23,6 @@ public class Increment implements Operator {
      */
     public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryOverflowException {
         int p = interpreter.getMemory().getP();
-
         //Test pointer position
         if ((p < 0) || (p > Memory.size - 1)) {
             throw new PointerPositionOutOfBoundsException("pointer must be between 0 and 29999 included");
@@ -39,6 +38,13 @@ public class Increment implements Operator {
     @Override
     public String toString() {
         return "+";
+    }
+
+    public String generateC(int indentLevel, int consecutive) {
+        String indentation = "";
+        for (int i = 0; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "c[p] = c[p] + " + consecutive + ";" + "\n";
     }
 }
 

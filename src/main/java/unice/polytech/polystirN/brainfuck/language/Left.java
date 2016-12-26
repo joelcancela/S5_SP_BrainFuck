@@ -22,7 +22,7 @@ public class Left implements Operator {
      */
     public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
         int p = interpreter.getMemory().getP();
-
+		
         //Anomaly cases :
         if (p == 0)
             throw new PointerPositionOutOfBoundsException("pointer can't be moved to the left (already at position 0)");
@@ -37,5 +37,12 @@ public class Left implements Operator {
     @Override
     public String toString() {
         return "<";
+    }
+
+    public String generateC(int indentLevel, int consecutive) {
+        String indentation = "";
+        for (int i = 0; i < indentLevel; i++)
+            indentation = indentation + "\t";
+        return indentation + "p = p - " + consecutive + ";" + "\n";
     }
 }
