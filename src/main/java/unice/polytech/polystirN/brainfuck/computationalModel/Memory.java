@@ -1,10 +1,5 @@
 package unice.polytech.polystirN.brainfuck.computationalModel;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Class that represents the memory
  * It also uses the pointer which is the index

@@ -81,6 +81,13 @@ public class Jump implements Operator {
                 }
             }
             interpreter.getMetrics().incrementExecMove();
+            if (interpreter.isTrace()) { //Dans ce cas particulier on ne passe par executeInstruction, il faut donc ne pas oublier d'afficher l'instruction back
+                trace += interpreter.getMetrics().getExecMove() + " : ]\n";
+                trace += "pointer : " + interpreter.getMemory().getP();
+                trace += "\npointer after : " + interpreter.getMemory().getP() + "\n";
+                trace += interpreter.getMemory().toString();
+                trace += "----------------------------\n";
+            }
         } else {
             //Nominal case :
             interpreter.getMetrics().incrementDataRead();
@@ -203,17 +210,19 @@ public class Jump implements Operator {
      * @throws SyntaxErrorException if the keyword is invalid
      */
     private boolean executeInstruction(String instruction, Interpreter interpreter) throws Exception {
-        interpreter.getMetrics().incrementExecMove();
-
-        if (interpreter.isTrace()) {
-            trace += interpreter.getMetrics().getExecMove() + " : " + instruction + "\n";
-            trace += "pointer : " + interpreter.getMemory().getP();
-        }
         if (interpreter.getFactory().getInstruction(instruction) == null) {
             throw new SyntaxErrorException("Invalid keyword operator");
         }
         
-        interpreter.getFactory().getInstruction(instruction.trim()).execute(interpreter);
+        interpreter.getMetrics().incrementExecMove();
+        Operator op =  interpreter.getFactory().getInstruction(instruction.trim());
+        
+        if (interpreter.isTrace()) {
+            trace += interpreter.getMetrics().getExecMove() + " : " + op.toString() + "\n";
+            trace += "pointer : " + interpreter.getMemory().getP();
+        }
+
+        op.execute(interpreter);
         if (interpreter.isTrace()) {
             trace += "\npointer after : " + interpreter.getMemory().getP() + "\n";
             trace += interpreter.getMemory().toString();

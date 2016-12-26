@@ -1,6 +1,5 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +9,9 @@ import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class Procedure implements Operator{
-	private List<String> array = new ArrayList();
+	private List<String> array = new ArrayList<String>();
 	private String corp;
-	private List<String> param = new ArrayList();
+	private List<String> param = new ArrayList<String>();
 	private int nbParam;
 	private  InstructionFactory factory;
 	private int i=0; //pour parcourire le corp de la procedure
@@ -32,7 +31,7 @@ public class Procedure implements Operator{
 	 */
 	@Override
 	public void execute(Interpreter interpreter) throws Exception {
-		Interpreter inter = new Interpreter(interpreter);//clone the instance of interpreter
+		Interpreter inter = new Interpreter(interpreter);//clone l'objet interpréteur passé en paramètre
 		execute1(inter);
 	}
 	/**
@@ -43,8 +42,9 @@ public class Procedure implements Operator{
 	private void execute1(Interpreter interpreter) throws Exception{
 		if(corp.trim().length()==0)//si la procedure est vide on execute rien meme si elle a des paramettres
 			return ;
-		MacroWithParam left= (MacroWithParam) factory.getMapInstruction().get("MULTI_LEFT");
+		MacroWithParam left = (MacroWithParam) factory.getMapInstruction().get("MULTI_LEFT");
 		MacroWithParam right = (MacroWithParam) factory.getMapInstruction().get("MULTI_RIGHT");
+		
 		for(i=0;i<corp.length();i++){
 			int p = interpreter.getMemory().getP();
 			String keyword = readInstruction();
@@ -231,9 +231,26 @@ public class Procedure implements Operator{
 			i--;
 			return list;
 		}
+	  
 	@Override
 	public String generateC(int indentLevel, int consecutive) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * get a String of all instruction of a macro
+	 * @return Sring
+	 * @throws SyntaxErrorException 
+	 */
+	@Override
+	public String toString(){
+		String toStringValue = "";
+		
+		for(int i=0;i<corp.length();i++){
+			toStringValue += corp.charAt(i);
+		}
+		
+		return toStringValue;
 	}
 }

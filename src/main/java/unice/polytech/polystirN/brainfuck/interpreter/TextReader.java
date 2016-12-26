@@ -4,7 +4,6 @@ import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
-import unice.polytech.polystirN.brainfuck.language.Operator;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
 
 import java.io.BufferedReader;

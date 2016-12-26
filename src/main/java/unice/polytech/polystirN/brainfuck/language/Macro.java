@@ -8,8 +8,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-import java.util.ArrayList;
-
 public class Macro implements Operator {
 	private List<Operator> instructions;//for save the instruction of macros
 	private List<Operator> temp;
@@ -23,7 +21,7 @@ public class Macro implements Operator {
 	 * @throws Exception
 	 */
 	public Macro(String ins,InstructionFactory factory) throws Exception{
-		instructions = new ArrayList();
+		instructions = new ArrayList<Operator>();
 		this.factory = factory;
 		madeInstruction(ins);
 	}
@@ -137,7 +135,7 @@ public class Macro implements Operator {
 	 * @return
 	 */
 	public List<Operator> LoopSeparate(){
-		List<Operator> list = new ArrayList();
+		List<Operator> list = new ArrayList<Operator>();
 		int nb=1;
 		for(j=j+1;j<instructions.size() && nb!=0;j++){
 			if(instructions.get(j) instanceof Jump){
@@ -186,7 +184,7 @@ public class Macro implements Operator {
     }
     public List<Operator> transform() {
     	String string;
-    	List<Operator> array = new ArrayList();
+    	List<Operator> array = new ArrayList<Operator>();
     	string = toString().replaceAll(" ", "");
        for(int i =0;i<string.length();i++){
     	   array.add(factory.getInstruction(string.substring(i, i+1)));
