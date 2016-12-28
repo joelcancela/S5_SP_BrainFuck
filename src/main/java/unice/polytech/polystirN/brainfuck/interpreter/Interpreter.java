@@ -25,7 +25,7 @@ public class Interpreter {
     private String programName;
     private Metrics metrics;
     private Trace trace;
-
+    
     /**
      * Constructor for Interpreter
      *
@@ -102,7 +102,7 @@ public class Interpreter {
                 metrics.incrementProgSize();
                 metrics.incrementExecMove();
                 if (isTrace()) {
-                    trace.write(metrics.getExecMove() + " : " + keyword + "\n");
+                    trace.write(metrics.getExecMove() + " : " + op.toString() + "\n");
                     trace.write("pointer : " + memory.getP());
                 }
                 if (op == null) {

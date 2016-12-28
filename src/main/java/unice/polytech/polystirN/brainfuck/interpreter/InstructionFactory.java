@@ -2,7 +2,6 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import unice.polytech.polystirN.brainfuck.language.*;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
@@ -25,7 +24,7 @@ public class InstructionFactory {
 	 * @throws Exception 
      */
     public InstructionFactory() throws Exception {
-    	mapInstruction = new HashMap();
+    	mapInstruction = new HashMap<String, Operator>();
     	mapInstruction.put("INCR",new Increment());
     	mapInstruction.put("DECR",new Decrement());
     	mapInstruction.put("LEFT",new Left());
