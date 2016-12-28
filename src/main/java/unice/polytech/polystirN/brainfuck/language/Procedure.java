@@ -14,6 +14,7 @@ public class Procedure implements Operator{
 	private String corp;
 	private List<String> param = new ArrayList();
 	private int nbParam;
+	private String name;
 	private  InstructionFactory factory;
 	private int i=0; //pour parcourire le corp de la procedure
 	/**
@@ -22,10 +23,11 @@ public class Procedure implements Operator{
 	 * @param param2
 	 * @param factory
 	 */
-	public Procedure(String corp, String[] param2, InstructionFactory factory) {
+	public Procedure(String name,String corp, String[] param2, InstructionFactory factory) {
 		param.addAll(Arrays.asList(param2));
 		this.corp = corp;
 		this.factory = factory;
+		this.name = name;
 	}
 	/**
 	 * method execute
@@ -62,7 +64,7 @@ public class Procedure implements Operator{
 	        }//executer l'instruction
 	        if(factory.getInstruction(keyword.trim())!=null){
 	    			if(factory.getInstruction(keyword.trim()) instanceof Jump){	    				 
-	    				new Jump(LoopSeparate()).execute(interpreter);
+	    				new Jump(loopSeparate()).execute(interpreter);
 	    			}
 	    			else
 	        		factory.getInstruction(keyword.trim()).execute(interpreter);
@@ -194,7 +196,7 @@ public class Procedure implements Operator{
 	  * @return
 	  * @throws Exception
 	  */
-	  public List<Operator> LoopSeparate() throws Exception{
+	  public List<Operator> loopSeparate() throws Exception{
 			List<Operator> list = new ArrayList<Operator>();
 			int nb=1;
 			for(i=i+1;i<corp.length() && nb!=0;i++){
@@ -235,5 +237,9 @@ public class Procedure implements Operator{
 	public String generateC(int indentLevel, int consecutive) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public String toString(){
+		return name;
 	}
 }

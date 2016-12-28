@@ -169,7 +169,7 @@ public class TextReader extends Reader {
     		}
     		else throw new SyntaxErrorException("the function should contain { and }");
     	}
-    	factory.getMapInstruction().put(nomPro.trim(), new Procedure(corp,param, factory));
+    	factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
     	
     }
     /**

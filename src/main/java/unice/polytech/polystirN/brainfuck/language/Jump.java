@@ -276,5 +276,6 @@ public class Jump implements Operator {
             indentation = indentation + "\t";
         return indentation + "while (c[p]){\n" + generateC(indentLevel + 1, consecutive - 1);
     }
+    
 
 }
