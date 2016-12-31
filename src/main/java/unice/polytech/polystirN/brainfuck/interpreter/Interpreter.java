@@ -6,6 +6,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Jump;
 import unice.polytech.polystirN.brainfuck.language.Operator;
+import unice.polytech.polystirN.brainfuck.language.Procedure;
 import unice.polytech.polystirN.brainfuck.debug.Metrics;
 import unice.polytech.polystirN.brainfuck.debug.Trace;
 
@@ -167,7 +168,12 @@ public class Interpreter {
                 } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
                 } else if(factory.getInstruction(keyword.trim())!=null){
-                    System.out.print(factory.getInstruction(keyword.trim()).toString());
+                	if(factory.getInstruction(keyword.trim()) instanceof Procedure){
+                		if(!((Procedure)factory.getInstruction(keyword.trim())).wasDefined())
+                			System.out.println(((Procedure)factory.getInstruction(keyword.trim())).defineP());
+                		System.out.print(System.lineSeparator()+keyword.trim()+"("+((Procedure) factory.getInstruction(keyword.trim())).getParam()+");");
+                		}
+                	else System.out.print(factory.getInstruction(keyword.trim()).toString());
                 }
             }
         }

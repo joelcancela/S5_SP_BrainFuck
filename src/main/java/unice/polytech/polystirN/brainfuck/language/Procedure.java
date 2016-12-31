@@ -16,6 +16,7 @@ public class Procedure implements Operator{
 	private String name;
 	private  InstructionFactory factory;
 	private int i=0; //pour parcourire le corp de la procedure
+	private boolean defined;
 	/**
 	 * constructor
 	 * @param corp
@@ -102,10 +103,11 @@ public class Procedure implements Operator{
 	 * @throws Exception 
 	 */
 	public String readInstruction() throws Exception{
-		String keyword = " ";
+		String keyword = "";
 		int c ;
 		
 		while(i<corp.length()){
+			
 			c = corp.charAt(i);
 			//Ignore the commentary 
 	        if(c=='#'){
@@ -169,6 +171,7 @@ public class Procedure implements Operator{
 	public void setParam(String[] parametre) throws Exception{
 		if(parametre.length!=param.size())
 			throw new SyntaxErrorException("It is necessary to have the same number as in the declaration");
+		array.clear();
 		for(int j=0;j<parametre.length;j++){
 			if(!parametre[j].trim().isEmpty())
 				array.add(parametre[j].trim());
@@ -243,6 +246,52 @@ public class Procedure implements Operator{
 	public String getName(){
 		return name;
 
+	}
+	public String getParam(){
+		String ch="";
+		int j=0;
+		for(j=0;j<array.size()-1;j++){
+			ch=ch+array.get(j)+",";
+		}
+		ch=ch+array.get(j);
+		return ch;
+	}
+	public boolean wasDefined(){
+		return defined;
+	}
+	public String defineP() throws Exception{
+		String ch="",corps ="";
+		Operator temp;
+		int j=0;
+		for(j=0;j<param.size()-1;j++){
+			ch=ch+param.get(j)+",";
+		}
+		ch=ch+param.get(j);
+		
+		while(i<corp.length()){
+			String keyw = readInstruction().trim();
+			 String[] macro = keyw.split(" ");
+		        if(macro.length==2)
+		        if(isInt(macro[1].trim())){
+		        	if(factory.getMapInstruction().get(macro[0].trim())!=null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacroWithParam.class)){
+		        		if(factory.getInstruction(macro[0].trim()).getClass().equals(MacroWithParam.class))
+		        		if(Integer.parseInt(macro[1].trim())>=0){
+		        			keyw = macro[0].trim();
+		        			((MacroWithParam) factory.getMapInstruction().get(keyw)).setParam(Integer.parseInt(macro[1].trim()));
+		        		}
+		        	}
+		        }
+			temp = factory.getInstruction(keyw);
+			if(temp!=null){
+				if(temp instanceof Procedure)
+					corps +=System.lineSeparator()+((Procedure) temp).getName()+"("+((Procedure) temp).getParam()+");"+System.lineSeparator();
+				else corps +=temp.toString();
+			}
+			else if(!keyw.trim().isEmpty()) corps +=System.lineSeparator()+keyw+System.lineSeparator();
+			i++;
+		}
+		defined = true;
+		return System.lineSeparator()+name+"("+ch+")"+"{"+System.lineSeparator()+corps+System.lineSeparator()+"}";
 	}
 	/**
 	 * get a String of all instruction of a macro
