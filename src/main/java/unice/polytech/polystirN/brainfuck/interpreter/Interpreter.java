@@ -98,7 +98,7 @@ public class Interpreter {
         }
         while (reader.hasNext()) {
             keyword = reader.next();
-            if(keyword.length()>0 && keyword.charAt(0)=='?')
+            if(keyword.charAt(0)=='?')
             	keyword = " ";
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
                 Operator op = getFactory().getInstruction(keyword.trim());
@@ -277,15 +277,6 @@ public class Interpreter {
     public Metrics getMetrics() {
         return metrics;
     }
-    
-    /**
-     * Setter for the metrics
-     *
-     * @return the metrics instance
-     */
-    public void setMetrics(Metrics metrics) {
-    	this.metrics =  metrics;
-    }
 
     /**
      * Checks if the trace is initialized
@@ -294,5 +285,8 @@ public class Interpreter {
      */
     public boolean isTrace() {
         return !(trace == null);
+    }
+
+    public void setMetrics(Metrics metrics) {
     }
 }

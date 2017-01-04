@@ -2,21 +2,11 @@
 
 Polytech'Nice SI3 group PolyStirN's BrainFuck project.
 
-## What is this ?
-This is an interpreter for the BrainFuck language (Mül93).
-It uses *.bf textual files.
-
 ## Features
-* Open a BrainFuck textual file (*.bf) using `-p` argument
-* Supports all defaults BrainFuck instructions in both short and long syntaxes :
-    * \+ | INCR
-    * \- | DECR
-    * \< | LEFT
-    * \> | RIGHT
-    * \. | OUT
-    * \, | IN
-    
+*TODO*
+
 ## Requirements
+
 Maven and the JDK 8 are required to build the project.
 
 ## How to launch
@@ -24,8 +14,7 @@ Maven and the JDK 8 are required to build the project.
 `./bfck`
 
 ### WINDOWS
-`mvn install` <br>
-`mvn -q exec:java -Dexec.mainClass="Main" -Dexec.args="[args]"`
+*TODO*
 
 ### Maven commands
 

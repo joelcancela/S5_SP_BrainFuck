@@ -33,6 +33,7 @@ public class Increment implements Operator {
         }
         interpreter.getMemory().getCells()[p]++;
         interpreter.getMetrics().incrementDataWrite();
+
     }
 
     @Override

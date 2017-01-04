@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
-import java.io.OutputStream;
-import java.io.PrintStream;
-
 import static org.junit.Assert.*;
 
 /**
@@ -17,13 +14,7 @@ import static org.junit.Assert.*;
  */
 public class MetricsTest {
     @Before
-    public void setUp() {
-        //NoOutputs
-        System.setOut(new PrintStream(new OutputStream() {
-            public void write(int b) {
-                //DO NOTHING
-            }
-        }));
+    public void setUp() throws Exception {
     }
 
     @After

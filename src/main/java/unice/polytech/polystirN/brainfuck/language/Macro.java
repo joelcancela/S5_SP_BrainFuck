@@ -35,9 +35,9 @@ public class Macro implements Operator {
 				temp=LoopSeparate();
 				new Jump(temp).execute(interpreter);
 			}
-			else{
+			else {
 				instructions.get(j).execute(interpreter);
-				}
+			}
 		}
 	}
 	/**
