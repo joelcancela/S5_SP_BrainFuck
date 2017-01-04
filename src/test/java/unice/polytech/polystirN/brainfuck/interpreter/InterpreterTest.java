@@ -1,7 +1,12 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
@@ -16,6 +21,16 @@ public class InterpreterTest {
     private Interpreter intrptr;
     private int mask = 0xff; //Use to translate bytes into integers
     private String inputMock = getClass().getResource("/mocks/input.txt").getFile();
+
+    @Before
+    public void setUp() {
+        //NoOutputs
+        System.setOut(new PrintStream(new OutputStream() {
+            public void write(int b) {
+                //DO NOTHING
+            }
+        }));
+    }
 
 
     /**************
@@ -409,42 +424,6 @@ public class InterpreterTest {
         assertEquals(100, intrptr.getMemory().getCells()[2] & mask);//100 is d in ascii
         assertEquals(33, intrptr.getMemory().getCells()[3] & mask);//33 is ! in ascii
         assertEquals(10, intrptr.getMemory().getCells()[4] & mask);//10 is a line feed in ascii
-    }
-
-
-    //TODO
-    @Ignore
-    @Test
-    public void checkWellFormed() throws Exception {
-        //Bien formé :
-        try {
-            intrptr = new Interpreter(getClass().getResource("/L2/usual/helloworld.bf").getFile());
-            intrptr.check();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Ignore
-    @Test
-    public void rewriteBfFile() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void rewriteBmpFile() throws Exception {
-    }
-
-    @Ignore
-    @Test
-    public void macrosErrors() throws Exception {
-
-    }
-
-    @Ignore
-    @Test
-    public void macrosTest() throws Exception {
-        
     }
 
 }

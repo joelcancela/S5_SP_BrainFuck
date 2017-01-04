@@ -26,6 +26,7 @@ echo
 read
 echo ./bfck -p examples/l2/helloworld.bf
 ./bfck -p examples/L2/helloworld.bf
+#Not proven that helloworld in bmp and bf do the same thing
 
 read
 clear

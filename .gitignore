@@ -22,8 +22,6 @@ target/
 .settings/
 src/main/resources/
 
-# Brainfuck outputs
+# BrainFuck outputs
 outputTranslate.bmp
 *.log
-fichierTampon.bf
-/src/main/java/META-INF/
