@@ -36,13 +36,14 @@ public class Procedure implements Operator{
 	public void execute(Interpreter interpreter) throws Exception {
 		Interpreter inter = new Interpreter(interpreter);//clone l'objet interpréteur passé en paramètre
 		execute1(inter);
+		interpreter.setMetrics(inter.getMetrics()); //Mise à jours de metriques
 	}
 	/**
 	 * Method which execute the call of the procedure
 	 * @param interpreter
 	 * @throws Exception
 	 */
-	private void execute1(Interpreter interpreter) throws Exception{
+	protected void execute1(Interpreter interpreter) throws Exception{
 		if(corp.trim().length()==0)//si la procedure est vide on execute rien meme si elle a des paramettres
 			return ;
 		MacroWithParam left = (MacroWithParam) factory.getMapInstruction().get("MULTI_LEFT");

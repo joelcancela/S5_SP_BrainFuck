@@ -270,6 +270,15 @@ public class Interpreter {
     public Metrics getMetrics() {
         return metrics;
     }
+    
+    /**
+     * Setter for the metrics
+     *
+     * @return the metrics instance
+     */
+    public void setMetrics(Metrics metrics) {
+    	this.metrics =  metrics;
+    }
 
     /**
      * Checks if the trace is initialized

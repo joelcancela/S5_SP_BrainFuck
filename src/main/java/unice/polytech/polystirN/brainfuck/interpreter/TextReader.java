@@ -2,6 +2,7 @@ package unice.polytech.polystirN.brainfuck.interpreter;
 
 import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
+import unice.polytech.polystirN.brainfuck.language.Function;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
@@ -67,7 +68,7 @@ public class TextReader extends Reader {
     public String next() throws Exception {
         String keyword = "";
         String VOID = "void";
-     
+        String FUNC = "func";
 
        
         if(c=='#'){
@@ -94,7 +95,11 @@ public class TextReader extends Reader {
         	}
         }
         if(keyword.contains(VOID) && keyword.trim().length()>VOID.length()){
-        	procedureRead(keyword);
+        	procedureRead(keyword, false);
+        	keyword = "";
+        }
+        if(keyword.contains(FUNC) && keyword.trim().length()>FUNC.length()){
+        	procedureRead(keyword, true);
         	keyword = "";
         }
         if(keyword.split("\\(").length ==2 && keyword.split("\\)").length ==2 && keyword.trim().split(";").length==1){
@@ -106,15 +111,19 @@ public class TextReader extends Reader {
         }
         c = buffer.read();
         return keyword;
-
     }
+    
     /**
      * 
      * @param procedure
      * @throws Exception
      */
-    private void procedureRead(String procedure) throws Exception{
-    	String Void = "void";
+    private void procedureRead(String procedure, boolean isFunction) throws Exception{
+    	String Void;
+    	if(isFunction)
+    		Void = "func";
+    	else
+    		Void = "void";
     	String nomPro,corp ="",param[];
     	procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
     	nomPro = procedure.split("\\(")[0].trim();
@@ -168,9 +177,13 @@ public class TextReader extends Reader {
     		}
     		else throw new SyntaxErrorException("the function should contain { and }");
     	}
-    	factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
     	
+    	if(isFunction)
+    		factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory));
+    	else
+    		factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
     }
+    
     /**
      * 
      * Stock the equivalent of the macros to be able to use them after
