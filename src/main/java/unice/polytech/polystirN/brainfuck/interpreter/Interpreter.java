@@ -98,6 +98,8 @@ public class Interpreter {
         }
         while (reader.hasNext()) {
             keyword = reader.next();
+            if(keyword.length()>0 && keyword.charAt(0)=='?')
+            	keyword = " ";
             if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("\t") || keyword.equals(" ") || keyword.equals("#") || keyword.equals(""))) {
                 Operator op = getFactory().getInstruction(keyword.trim());
                 metrics.incrementProgSize();
@@ -139,9 +141,12 @@ public class Interpreter {
      */
     public boolean rewriteFile() throws Exception {
         String keyword;
-
+        
         while (reader.hasNext()) {
             keyword = reader.next();
+            if(keyword.charAt(0)=='?')
+            	if(keyword.length()>1)
+            	keyword = keyword.substring(1,keyword.length());
             if (getFactory().getInstruction(keyword.trim()) == null) {
                 for (int i = 0; i < keyword.trim().length(); i++) {
                     if (getFactory().getInstruction(keyword.trim().substring(i, i + 1)) != null) {
@@ -168,9 +173,11 @@ public class Interpreter {
                 } else if (keyword.trim().equals("IN") || keyword.trim().equals("#FFFF00")) {
                     System.out.print(",");
                 } else if(factory.getInstruction(keyword.trim())!=null){
+                	
                 	if(factory.getInstruction(keyword.trim()) instanceof Procedure){
                 		if(!((Procedure)factory.getInstruction(keyword.trim())).wasDefined())
                 			System.out.println(((Procedure)factory.getInstruction(keyword.trim())).defineP());
+                		else
                 		System.out.print(System.lineSeparator()+keyword.trim()+"("+((Procedure) factory.getInstruction(keyword.trim())).getParam()+");");
                 		}
                 	else System.out.print(factory.getInstruction(keyword.trim()).toString());

@@ -9,13 +9,13 @@ import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class Procedure implements Operator{
-	private List<String> array = new ArrayList<String>();
-	private String corp;
-	private List<String> param = new ArrayList<String>();
+	protected List<String> array = new ArrayList<String>();
+	protected String corp;
+	protected List<String> param = new ArrayList<String>();
 	private int nbParam;
 	private String name;
-	private  InstructionFactory factory;
-	private int i=0; //pour parcourire le corp de la procedure
+	protected  InstructionFactory factory;
+	protected int i=0; //pour parcourire le corp de la procedure
 	private boolean defined;
 	/**
 	 * constructor
@@ -38,14 +38,15 @@ public class Procedure implements Operator{
 		execute1(inter);
 		interpreter.setMetrics(inter.getMetrics()); //Mise à jours de metriques
 	}
+	
 	/**
 	 * Method which execute the call of the procedure
 	 * @param interpreter
 	 * @throws Exception
 	 */
-	protected void execute1(Interpreter interpreter) throws Exception{
+	protected byte execute1(Interpreter interpreter) throws Exception{
 		if(corp.trim().length()==0)//si la procedure est vide on execute rien meme si elle a des paramettres
-			return ;
+			return 0;
 		MacroWithParam left = (MacroWithParam) factory.getMapInstruction().get("MULTI_LEFT");
 		MacroWithParam right = (MacroWithParam) factory.getMapInstruction().get("MULTI_RIGHT");
 		
@@ -96,7 +97,10 @@ public class Procedure implements Operator{
 				
 			}
 		}
+		return 0;
 	}
+	
+	
 	/**
 	 * Method which read the body of the procedure 
 	 * the job of this method  are the of the job of next in TextReader
@@ -183,7 +187,7 @@ public class Procedure implements Operator{
 	 * @param chaine
 	 * @return
 	 */
-	 private static boolean isInt(String chaine) {
+	 protected static boolean isInt(String chaine) {
 	        boolean valeur = true;
 	        char[] tab = chaine.toCharArray();
 
