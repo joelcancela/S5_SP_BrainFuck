@@ -281,11 +281,11 @@ public class Jump implements Operator {
 
     public String generateC(int indentLevel, int consecutive) {
         if (consecutive <= 0)
-            return "";
+            return "\n";
         String indentation = "";
         for (int i = 1; i < indentLevel; i++)
             indentation = indentation + "\t";
-        return indentation + "while (c[p]) {\n" + generateC(indentLevel + 1, consecutive - 1);
+        return indentation + "while (c[p]){\n" + generateC(indentLevel + 1, consecutive - 1);
     }
     
 

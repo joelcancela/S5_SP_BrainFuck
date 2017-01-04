@@ -1,13 +1,16 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
 import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
+import unice.polytech.polystirN.brainfuck.exceptions.BadFunctionException;
 import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
+import unice.polytech.polystirN.brainfuck.language.Function;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 
 
 /**
@@ -27,14 +30,14 @@ public class TextReader extends Reader {
      *
      * @param filename is the name of the file to be read
      */
-    public TextReader(String filename, Interpreter inte) throws Exception {
+    public TextReader(String filename,Interpreter inte) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
         factory = inte.getFactory();
         c = buffer.read();
         macrosRead();
        
     }
-    public TextReader(String filename, InstructionFactory factory) throws Exception {
+    public TextReader(String filename,InstructionFactory factory) throws Exception {
         buffer = new BufferedReader(new FileReader(filename));
         this.factory= factory;
         c = buffer.read();
@@ -67,10 +70,12 @@ public class TextReader extends Reader {
     public String next() throws Exception {
         String keyword = "";
         String VOID = "void";
+        String FUNC = "func";
+
        
         if(c=='#'){
         	buffer.readLine();
-            c = ' ';
+        	c = ' ';
         }
         if (('A' <= c && 'Z' >= c) || ('a' <= c && 'z' >= c)) {
             while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
@@ -92,7 +97,12 @@ public class TextReader extends Reader {
         	}
         }
         if(keyword.contains(VOID) && keyword.trim().length()>VOID.length()){
-        	keyword = procedureRead(keyword);
+        	procedureRead(keyword, false);
+        	keyword = "";
+        }
+        if(keyword.contains(FUNC) && keyword.trim().length()>FUNC.length()){
+        	procedureRead(keyword, true);
+        	keyword = "";
         }
         if(keyword.split("\\(").length ==2 && keyword.split("\\)").length ==2 && keyword.trim().split(";").length==1){
         	if(factory.getInstruction(keyword.split("\\(")[0].trim())!=null && factory.getInstruction(keyword.split("\\(")[0].trim()) instanceof Procedure){
@@ -103,16 +113,23 @@ public class TextReader extends Reader {
         }
         c = buffer.read();
         return keyword;
-
     }
+    
     /**
      * 
      * @param procedure
      * @throws Exception
      */
-    private String procedureRead(String procedure) throws Exception{
-    	String Void = "void";
+    private String procedureRead(String procedure, boolean isFunction) throws Exception{
+    	String Void;
+    	if(isFunction)
+    		Void = "func";
+    	else
+    		Void = "void";
     	String nomPro,corp ="",param[];
+    	int returnPointeur = -1;
+    	String returnParam = "none";
+    	
     	procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
     	nomPro = procedure.split("\\(")[0].trim();
     	if(nomPro.split(" ").length > 1){
@@ -138,6 +155,34 @@ public class TextReader extends Reader {
     				corp = procedure.split("\\{")[1];
     			while(c!=-1 && c!='}'){
     				c = buffer.read();
+    				
+    				if(isFunction){
+    					if(c=='r'){
+    						String tempo = "";
+    						while(c!='\n' && c!='\r'){
+    							tempo += Character.toString((char) c);
+    							c = buffer.read();
+    						}
+    						String tempoSplited[] = tempo.split(" ");
+    						if(tempoSplited[0].equals("return")){
+    				        	if(Arrays.asList(param).contains(tempoSplited[1])){
+    				        		for(int i=0;i<param.length;i++){
+    				        			if(param[i].equals(tempoSplited[1])){
+    				        				returnParam = tempoSplited[1];
+    				        				break;
+    				        			}
+    				        		}
+    				        	}else if(isInt(tempoSplited[1])){
+    				        		returnPointeur = Integer.valueOf(tempoSplited[1]);
+    				        	} else {
+    				        		throw new BadFunctionException("Bad return value. Should be a pointeur value (integer between 0 and 29999 or a param).");
+    				        	}
+    						}else{
+    							throw new SyntaxErrorException("Unknown word : "+tempo);
+    						}
+    					}
+    				}
+    				
     				if(c=='}'){
     					c=' ';
     					break;
@@ -165,9 +210,20 @@ public class TextReader extends Reader {
     		}
     		else throw new SyntaxErrorException("the function should contain { and }");
     	}
-    	factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
+    	
+    	if(isFunction){
+    		if(returnPointeur != -1)
+    			factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory, returnPointeur));
+    		else if(!returnParam.equals("none"))
+    			factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory, returnParam));
+    		else
+    			throw new BadFunctionException("Missing \"return\" keyword.");
+    	}else
+    		factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
+
     	return "?"+nomPro;
     }
+    
     /**
      * 
      * Stock the equivalent of the macros to be able to use them after

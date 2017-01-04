@@ -1,12 +1,12 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
-import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
-import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
+import unice.polytech.polystirN.brainfuck.interpreter.InstructionFactory;
+import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class Procedure implements Operator{
 	protected List<String> array = new ArrayList<String>();
@@ -38,7 +38,7 @@ public class Procedure implements Operator{
 		execute1(inter);
 		interpreter.setMetrics(inter.getMetrics()); //Mise à jours de metriques
 	}
-
+	
 	/**
 	 * Method which execute the call of the procedure
 	 * @param interpreter
@@ -99,8 +99,8 @@ public class Procedure implements Operator{
 		}
 		return 0;
 	}
-
-
+	
+	
 	/**
 	 * Method which read the body of the procedure 
 	 * the job of this method  are the of the job of next in TextReader
@@ -244,7 +244,8 @@ public class Procedure implements Operator{
 	  
 	@Override
 	public String generateC(int indentLevel, int consecutive) {
-		return this.getName() + "()";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public String getName(){
@@ -311,9 +312,5 @@ public class Procedure implements Operator{
 		}
 		
 		return toStringValue;
-	}
-
-	public void incI() {
-		i++;
 	}
 }
