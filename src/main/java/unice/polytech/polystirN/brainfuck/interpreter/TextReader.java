@@ -94,8 +94,7 @@ public class TextReader extends Reader {
         	}
         }
         if(keyword.contains(VOID) && keyword.trim().length()>VOID.length()){
-        	procedureRead(keyword);
-        	keyword = "";
+        	keyword = procedureRead(keyword);
         }
         if(keyword.split("\\(").length ==2 && keyword.split("\\)").length ==2 && keyword.trim().split(";").length==1){
         	if(factory.getInstruction(keyword.split("\\(")[0].trim())!=null && factory.getInstruction(keyword.split("\\(")[0].trim()) instanceof Procedure){
@@ -113,7 +112,7 @@ public class TextReader extends Reader {
      * @param procedure
      * @throws Exception
      */
-    private void procedureRead(String procedure) throws Exception{
+    private String procedureRead(String procedure) throws Exception{
     	String Void = "void";
     	String nomPro,corp ="",param[];
     	procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
@@ -169,7 +168,7 @@ public class TextReader extends Reader {
     		else throw new SyntaxErrorException("the function should contain { and }");
     	}
     	factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
-    	
+    	return "?"+nomPro;
     }
     /**
      * 
