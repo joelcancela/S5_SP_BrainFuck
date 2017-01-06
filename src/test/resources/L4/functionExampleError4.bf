@@ -7,8 +7,8 @@ func ff(x , y  ,z  )     {
 	++++++++++++++++++++
 	++++++++++++++++++++ #qsjdnsqdks,d;lsqd
 	++++++++++++++++++++.
-
-	ret urn x
+	lol
+	return x
 										}
 ff(20, 0,22);
 .

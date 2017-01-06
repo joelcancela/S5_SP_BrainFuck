@@ -74,4 +74,15 @@ public class FunctionTest {
             assertEquals("Unknown word : ret urn x", e.getMessage());
         }
     }
+    
+    @Test
+    public void functionWithIncorrectWord() throws Exception {
+        try {
+        	intrptr = new Interpreter(getClass().getResource("/L4/functionExampleError4.bf").getFile());
+        	intrptr.interpretFile();
+        } catch (Exception e) {
+            assertEquals("SyntaxErrorException", e.getClass().getSimpleName());
+            assertEquals("Incorrect word operator", e.getMessage());
+        }
+    }
 }
