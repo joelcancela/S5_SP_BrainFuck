@@ -8,14 +8,6 @@ void ff(x , y  ,z  )     {
 	++++++++++++++++++++ #qsjdnsqdks,d;lsqd
 	++++++++++++++++++++.
 	z
-<<<<<<< HEAD:examples/L4/functionExample1.bf
-	R 
-	return y
-										}
-ff(20, 33,22);
-.
-=======
 }
 
 ff(2 , 3 ,        4  );
->>>>>>> 42548934a6252d95706a8d19cdabe71b3d8eb415:examples/L4/procedureExample3.bf
