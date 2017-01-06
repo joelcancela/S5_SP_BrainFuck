@@ -25,10 +25,12 @@ public class Jump implements Operator {
 
     public Jump(){
     }
+    
     public Jump(List<Operator> temp){
     	macros = true;
     	listInst = temp;
     }
+    
     /**
      * This method checks the content of the current memory cell.
      * This operator does nothing if the value is different of 0.

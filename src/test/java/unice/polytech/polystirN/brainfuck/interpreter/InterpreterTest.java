@@ -115,6 +115,17 @@ public class InterpreterTest {
         }
 
     }
+    
+    @Test
+    public void incorrectFileExtension() throws Exception {
+    	try {
+	    	intrptr = new Interpreter(getClass().getResource("/L1/errors/program.bfck").getFile());
+	        intrptr.interpretFile();
+	    } catch (Exception e) {
+	        assertEquals("IncorrectFileTypeException", e.getClass().getSimpleName());
+	        assertEquals("Incorrect file's extension, expected .bf or .bmp", e.getMessage());
+	    }
+    }
 
     /**************
      ** LEVEL 2 **
