@@ -91,11 +91,10 @@ public class Procedure implements Operator{
 						}
 						}
 					}else{
-						if(factory.getInstruction(keyword)!=null){
-							 throw new SyntaxErrorException("Incorrect word operator");
+						if(factory.getInstruction(keyword.trim())==null && !keyword.trim().isEmpty()){
+							throw new SyntaxErrorException("Incorrect word operator");
 						}
-				
-			}
+					}
 		}
 		return 0;
 	}
@@ -149,6 +148,7 @@ public class Procedure implements Operator{
 	        		((Procedure)factory.getInstruction(keyword.split("\\(")[0].trim())).setParam(paramettre);
 	        	}
 	        }
+	        
         return keyword;
 		}
 		return keyword;
