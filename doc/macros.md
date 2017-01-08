@@ -17,7 +17,7 @@ r
  `f` means ten increments (+), note that you can also write long syntax instructions, you only have to put `/` before them.<br>
  The macro `E` calls the `f` macro twice.
  
- ### N-macros
+### N-macros
  
  You can define macros with an argument using `()` after its name, this argument will be the number of times the macro will be executed when called.<br>
  Example :
@@ -28,7 +28,7 @@ r
 
  In this case, fgg 5 will execute 5*3 increments.
  
- ### MULTI_DECR & TO_DIGIT
+### MULTI_DECR & TO_DIGIT
  
  There are two natives macros in our interpreter :
  MULTI_DECR & TO_DIGIT.
