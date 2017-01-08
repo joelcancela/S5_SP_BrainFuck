@@ -15,24 +15,24 @@ import static org.junit.Assert.assertTrue;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class CGeneratorTest {
-    @Test
-    public void generateEmptyFile() throws Exception {
-        CGenerator cgen = new CGenerator(getClass().getResource("/L1/usual/empty.bf").getFile());
-        cgen.generateFile();
-        assertTrue(compareTwoFilesContent(getClass().getResource("/L1/usual/emptyTest.c").getFile(), getClass().getResource("/L1/usual/empty.c").getFile()));
-    }
+	@Test
+	public void generateEmptyFile() throws Exception {
+		CGenerator cgen = new CGenerator(getClass().getResource("/L1/usual/empty.bf").getFile());
+		cgen.generateFile();
+		assertTrue(compareTwoFilesContent(getClass().getResource("/L1/usual/emptyTest.c").getFile(), getClass().getResource("/L1/usual/empty.c").getFile()));
+	}
 
-    @Test
-    public void generateHelloWorld() throws Exception {
-        CGenerator cgen = new CGenerator(getClass().getResource("/L2/usual/helloworld.bf").getFile());
-        cgen.generateFile();
-        assertTrue(compareTwoFilesContent(getClass().getResource("/L2/usual/helloworld.c").getFile(), getClass().getResource("/L2/usual/helloworldTest.c").getFile()));
-    }
+	@Test
+	public void generateHelloWorld() throws Exception {
+		CGenerator cgen = new CGenerator(getClass().getResource("/L2/usual/helloworld.bf").getFile());
+		cgen.generateFile();
+		assertTrue(compareTwoFilesContent(getClass().getResource("/L2/usual/helloworld.c").getFile(), getClass().getResource("/L2/usual/helloworldTest.c").getFile()));
+	}
 
-    private boolean compareTwoFilesContent(String f1, String f2) throws IOException {
-        File file1 = new File(f1);
-        File file2 = new File(f2);
-	    return FileUtils.contentEquals(file1, file2);
-    }
+	private boolean compareTwoFilesContent(String f1, String f2) throws IOException {
+		File file1 = new File(f1);
+		File file2 = new File(f2);
+		return FileUtils.contentEqualsIgnoreEOL(file1, file2, null);
+	}
 
 }
