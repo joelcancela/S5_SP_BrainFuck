@@ -29,7 +29,7 @@ The results are printed on stdout.
 * Logging step to trace execution using `--trace`, creates a .log file where the program is to help the debug.
 * Supports the code comments & indentation, you can use # (like in shell) to create your comments, tabulations, space and line breaks are supported.
 * Supports macros, [more details here](doc/macros.md).
-* Supports functions & procedures, [more details here](doc/functions_&_procedures.md).
+* Supports functions & procedures, [more details here](doc/procedures&functions.md).
 * Can generate C code from any program using `--cgen`, creates a .c file in the program directory.
 
     
