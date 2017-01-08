@@ -23,5 +23,4 @@ target/
 src/main/resources/
 
 # BrainFuck outputs
-outputTranslate.bmp
 *.log
