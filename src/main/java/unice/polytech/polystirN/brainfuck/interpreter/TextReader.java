@@ -211,9 +211,9 @@ public class TextReader extends Reader {
     			}
     			
     		}
-    		else throw new SyntaxErrorException("the function should contain { and }");
+    
     	}
-    	
+		if(c ==-1) throw new SyntaxErrorException("the function should contain { and }");
     	if(isFunction){
     		if(returnPointeur != -1)
     			factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory, returnPointeur));

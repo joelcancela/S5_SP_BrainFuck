@@ -92,6 +92,7 @@ public class Procedure implements Operator{
 						}
 					}else{
 						if(factory.getInstruction(keyword.trim())==null && !keyword.trim().isEmpty()){
+							System.out.println(keyword);
 							throw new SyntaxErrorException("Incorrect word operator");
 						}
 					}
