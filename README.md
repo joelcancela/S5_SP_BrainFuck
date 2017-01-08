@@ -4,17 +4,34 @@ Polytech'Nice SI3 group PolyStirN's BrainFuck project.
 
 ## What is this ?
 This is an interpreter for the BrainFuck language (Mül93).
-It uses *.bf textual files.
+It can read textual files (\*.bf) and bitmaps (\*.bmp).
 
 ## Features
-* Open a BrainFuck textual file (*.bf) using `-p` argument
-* Supports all defaults BrainFuck instructions in both short and long syntaxes :
+* Can interpret a BrainFuck textual file (\*.bf) or a bitmap (\*.bmp) using `-p` argument.
+* Supports all default BrainFuck instructions in both short and long syntaxes :
     * \+ | INCR
     * \- | DECR
     * \< | LEFT
     * \> | RIGHT
-    * \. | OUT
-    * \, | IN
+    * \. | OUT, use the argument `-o` to specify an output file
+    * \, | IN, use the argument `-i` to specify an input file
+    * \[ | JUMP
+    * \] | BACK <br> 
+ 
+    [More details here](doc/brainfuck.md)
+* Can rewrite a long syntax-written program into a short syntax written-program using `--rewrite`. <br>
+The results are printed on stdout.
+* Can translate a textual program into an image-based one using `--translate`. <br>
+The results are printed on stdout, you can redirect with `>` in command line to a bmp file to create the picture.
+* Can check if a program is well-formed (loops well formed and no wrong instructions) <br>
+The results are printed on stdout.
+* Show metrics for an execution of a program (shown in stdout, after the program results), [more details here](doc/metrics.md).
+* Logging step to trace execution using `--trace`, creates a .log file where the program is to help the debug.
+* Supports the code comments & indentation, you can use # (like in shell) to create your comments, tabulations, space and line breaks are supported.
+* Supports macros, [more details here](doc/macros.md).
+* Supports functions & procedures, [more details here](doc/functions_&_procedures.md).
+* Can generate C code from any program using `--cgen`, creates a .c file in the program directory.
+
     
 ## Requirements
 Maven and the JDK 8 are required to build the project.
@@ -27,39 +44,25 @@ Maven and the JDK 8 are required to build the project.
 `mvn install` <br>
 `mvn -q exec:java -Dexec.mainClass="Main" -Dexec.args="[args]"`
 
-### Maven commands
-
-- mvn clean install : downloads required dependencies for the project (plugins like JUnit) 
-- mvn test : launches all the tests
-
 ---
 
 ## Upcoming Demos
 
 Démo #3:
-Semaine #2, lundi 9 janvier après-midi (sauf changement de dernière minute).<br>
-Potentiellement en visio-conférence pour une session.
+Semaine #2, 4 Janvier 2017, 14:25 (E-108) <br>
 
 ## TODO
 
-### Pierre & Aghiles
-
-- [ ] S19
-- [ ] Rapport S19
-- [ ] S20
-- [ ] Rapport S20
-
-### Tanguy
-
 - [ ] S21
-- [ ] Rapport S21
-
-### Joël
-
-- [ ] Tweaks
+- [ ] Script démo 3
 
 ---
 ## Done
+
+### Week 50-01
+
+- [x] End level 4 (S18->S20)
+- [x] Tweaks
 
 ### Week 46-49
 
