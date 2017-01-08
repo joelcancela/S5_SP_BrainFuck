@@ -1,10 +1,9 @@
 package unice.polytech.polystirN.brainfuck.language;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
+
+import static org.junit.Assert.assertEquals;
 
 public class ProcedureTest {
     private Interpreter intrptr;
