@@ -62,7 +62,7 @@ public class Main {
                         intrptr = new Interpreter((String) options.valueOf("p"), trace);
                         intrptr.interpretFile();
                     }
-                    if (!options.has("check") && !options.has("rewrite") && !options.has("translate") && !options.has("trace")){ //This else condition execute the file, with the proper input/output files
+                    if (!options.has("check") && !options.has("rewrite") && !options.has("translate") && !options.has("trace") && !options.has("cgen")){ //This else condition execute the file, with the proper input/output files
                         if (options.has("i") && options.has("o")) {
                             intrptr = new Interpreter((String) options.valueOf("p"), (String) options.valueOf("i"), (String) options.valueOf("o"));
                             intrptr.interpretFile();

@@ -10,7 +10,7 @@ public class ProcedureTest {
     private Interpreter intrptr;
 
     @Test
-    public void ProcedureExécution() throws Exception {
+    public void ProcedureExecution() throws Exception {
             intrptr = new Interpreter("./examples/L4/ProcedureExample1.bf");
             intrptr.interpretFile();
             assertEquals(10, intrptr.getMemory().getCells()[intrptr.getMemory().getP()] & 0xFF);
