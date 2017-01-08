@@ -495,34 +495,29 @@ public class InterpreterTest {
 		assertEquals(0, intrptr.getMemory().getP());
 		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
 
-		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_avecParam.bf").getFile());
-		intrptr.interpretFile();
-		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
-
-		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_example1.bf").getFile());
-		intrptr.interpretFile();
-		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
-
-		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_example2.bf").getFile());
-		intrptr.interpretFile();
-		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
-
-		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_sansParam.bf").getFile());
-		intrptr.interpretFile();
-		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
-
-		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_sansParam.bf").getFile());
-		intrptr.interpretFile();
-		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
-
 		intrptr = new Interpreter(getClass().getResource("/L3/usual/macroTEN_INCR_J.bf").getFile());
 		intrptr.interpretFile();
 		assertEquals(0, intrptr.getMemory().getP());
-		assertEquals(74, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:74 74 IS J in ASCII
+		assertEquals(74, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:74, 74 IS J in ASCII
+
+// 		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_avecParam.bf").getFile());
+//		intrptr.interpretFile();
+//		assertEquals(0, intrptr.getMemory().getP());
+//		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
+//
+//		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_example1.bf").getFile());
+//		intrptr.interpretFile();
+//		assertEquals(0, intrptr.getMemory().getP());
+//		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
+//
+//		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_example2.bf").getFile());
+//		intrptr.interpretFile();
+//		assertEquals(0, intrptr.getMemory().getP());
+//		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
+
+//		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_sansParam.bf").getFile());
+//		intrptr.interpretFile();
+//		assertEquals(0, intrptr.getMemory().getP());
+//		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
 	}
 }
