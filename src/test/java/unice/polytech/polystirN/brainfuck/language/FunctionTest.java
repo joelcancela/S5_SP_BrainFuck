@@ -43,6 +43,17 @@ public class FunctionTest {
     }
     
     @Test
+    public void functionReturningParamStartingByR() throws Exception {
+        try {
+            intrptr = new Interpreter(getClass().getResource("/L4/functionExample4.bf").getFile());
+            intrptr.interpretFile();
+            assertEquals(97, intrptr.getMemory().getCells()[intrptr.getMemory().getP()] & 0xFF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
     public void functionReturnUnknownParam() throws Exception {
         try {
         	intrptr = new Interpreter(getClass().getResource("/L4/functionExampleError1.bf").getFile());
