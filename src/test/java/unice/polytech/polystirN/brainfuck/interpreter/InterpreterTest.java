@@ -1,8 +1,6 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.OutputStream;
@@ -114,6 +112,17 @@ public class InterpreterTest {
             assertEquals("pointer can't be moved to the right (already at position 29999)", e.getMessage());
         }
 
+    }
+    
+    @Test
+    public void incorrectFileExtension() throws Exception {
+    	try {
+	    	intrptr = new Interpreter(getClass().getResource("/L1/errors/program.bfck").getFile());
+	        intrptr.interpretFile();
+	    } catch (Exception e) {
+	        assertEquals("IncorrectFileTypeException", e.getClass().getSimpleName());
+	        assertEquals("Incorrect file's extension, expected .bf or .bmp", e.getMessage());
+	    }
     }
 
     /**************
@@ -292,20 +301,20 @@ public class InterpreterTest {
         //Image Interpreter
         intrptr = new Interpreter(getClass().getResource("/images/12345.bmp").getFile());
         intrptr.interpretFile();
-        assertEquals(1, intrptr.getMemory().getCells()[0]);
-        assertEquals(2, intrptr.getMemory().getCells()[1]);
-        assertEquals(3, intrptr.getMemory().getCells()[2]);
-        assertEquals(4, intrptr.getMemory().getCells()[3]);
-        assertEquals(5, intrptr.getMemory().getCells()[4]);
+        assertEquals(1, intrptr.getMemory().getCells()[0] & mask);
+        assertEquals(2, intrptr.getMemory().getCells()[1] & mask);
+        assertEquals(3, intrptr.getMemory().getCells()[2] & mask);
+        assertEquals(4, intrptr.getMemory().getCells()[3] & mask);
+        assertEquals(5, intrptr.getMemory().getCells()[4] & mask);
 
         //Image Interpreter
         intrptr = new Interpreter(getClass().getResource("/images/54321to33441.bmp").getFile());
         intrptr.interpretFile();
-        assertEquals(3, intrptr.getMemory().getCells()[0]);
-        assertEquals(3, intrptr.getMemory().getCells()[1]);
-        assertEquals(4, intrptr.getMemory().getCells()[2]);
-        assertEquals(4, intrptr.getMemory().getCells()[3]);
-        assertEquals(1, intrptr.getMemory().getCells()[4]);
+        assertEquals(3, intrptr.getMemory().getCells()[0] & mask);
+        assertEquals(3, intrptr.getMemory().getCells()[1] & mask);
+        assertEquals(4, intrptr.getMemory().getCells()[2] & mask);
+        assertEquals(4, intrptr.getMemory().getCells()[3] & mask);
+        assertEquals(1, intrptr.getMemory().getCells()[4] & mask);
 
 
         try {
@@ -376,20 +385,34 @@ public class InterpreterTest {
         assertEquals(33, intrptr.getMemory().getCells()[3] & mask);//33 is ! in ascii
         assertEquals(10, intrptr.getMemory().getCells()[4] & mask);//10 is a line feed in ascii
 
+
+        //In, reads the first char of the input file and write it in a memory cell
+        //Here it's "L"
+        intrptr = new Interpreter(getClass().getResource("/images/in.bmp").getFile(), inputMock, null);
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());//Result of this program is C0:76
+        assertEquals(76, intrptr.getMemory().getCells()[0] & mask);
+
+
         intrptr = new Interpreter(getClass().getResource("/images/InternalLoop.bmp").getFile());
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
-        assertEquals(0, intrptr.getMemory().getCells()[0]);
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);
+
+        intrptr = new Interpreter(getClass().getResource("/images/jumpInternalLoop.bmp").getFile());
+        intrptr.interpretFile();
+        assertEquals(0, intrptr.getMemory().getP());
+        assertEquals(0, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:0
 
         intrptr = new Interpreter(getClass().getResource("/images/NormalLoop.bmp").getFile());
         intrptr.interpretFile();
         assertEquals(1, intrptr.getMemory().getP());
-        assertEquals(5, intrptr.getMemory().getCells()[1]);
+        assertEquals(5, intrptr.getMemory().getCells()[1] & mask);
 
         intrptr = new Interpreter(getClass().getResource("/images/out35.bmp").getFile());
         intrptr.interpretFile();
         assertEquals(0, intrptr.getMemory().getP());
-        assertEquals(35, intrptr.getMemory().getCells()[0]);
+        assertEquals(35, intrptr.getMemory().getCells()[0] & mask);
     }
 
     /**************

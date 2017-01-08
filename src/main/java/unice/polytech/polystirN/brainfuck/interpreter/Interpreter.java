@@ -44,6 +44,8 @@ public class Interpreter {
         } else if (filename.matches("(.*).bmp")) {
             programName = filename.substring(0, filename.length() - 4);
             reader = new ImageReader(filename);
+        }else {
+        	throw new IncorrectFileTypeException("Incorrect file's extension, expected .bf or .bmp");
         }
 
 

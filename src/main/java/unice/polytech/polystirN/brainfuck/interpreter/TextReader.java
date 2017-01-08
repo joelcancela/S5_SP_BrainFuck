@@ -6,6 +6,7 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Function;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
+import unice.polytech.polystirN.brainfuck.language.Operator;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
 
 import java.io.BufferedReader;
@@ -178,7 +179,9 @@ public class TextReader extends Reader {
     				        		throw new BadFunctionException("Bad return value. Should be a pointeur value (integer between 0 and 29999 or a param).");
     				        	}
     						}else{
-    							throw new SyntaxErrorException("Unknown word : "+tempo);
+    							if(!Arrays.asList(param).contains(tempoSplited[0]) && factory.getInstruction(tempoSplited[0])==null)
+    								throw new SyntaxErrorException("Unknown word : "+tempo);
+    							corp+=tempo;
     						}
     					}
     				}
