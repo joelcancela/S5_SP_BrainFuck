@@ -5,11 +5,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the C g generator class
@@ -20,22 +17,22 @@ import static org.junit.Assert.*;
 public class CGeneratorTest {
     @Test
     public void generateEmptyFile() throws Exception {
-        CGenerator cgen = new CGenerator("src/test/resources/L1/usual/empty.bf");
+        CGenerator cgen = new CGenerator(getClass().getResource("/L1/usual/empty.bf").getFile());
         cgen.generateFile();
-        assertTrue(this.compareTwoFilesContent("src/test/resources/L1/usual/emptyTest.c", "src/test/resources/L1/usual/empty.c"));
+        assertTrue(compareTwoFilesContent(getClass().getResource("/L1/usual/emptyTest.c").getFile(), getClass().getResource("/L1/usual/empty.c").getFile()));
     }
 
     @Test
     public void generateHelloWorld() throws Exception {
-        CGenerator cgen = new CGenerator("src/test/resources/L2/usual/helloworld.bf");
+        CGenerator cgen = new CGenerator(getClass().getResource("/L2/usual/helloworld.bf").getFile());
         cgen.generateFile();
-        assertTrue(this.compareTwoFilesContent("src/test/resources/L2/usual/helloworld.c", "src/test/resources/L2/usual/helloworldTest.c"));
+        assertTrue(compareTwoFilesContent(getClass().getResource("/L2/usual/helloworld.c").getFile(), getClass().getResource("/L2/usual/helloworldTest.c").getFile()));
     }
 
-    public boolean compareTwoFilesContent(String f1, String f2) throws IOException {
+    private boolean compareTwoFilesContent(String f1, String f2) throws IOException {
         File file1 = new File(f1);
         File file2 = new File(f2);
-        return FileUtils.contentEquals(file1, file2);
+	    return FileUtils.contentEquals(file1, file2);
     }
 
 }
