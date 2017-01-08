@@ -1,4 +1,4 @@
-$DEFINE f ++++++++++
-ffffffffff
+$DEFINE f +++++++++INCR
+f
 ---
 .#affiche a
