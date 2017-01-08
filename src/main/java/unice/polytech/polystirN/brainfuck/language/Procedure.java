@@ -245,8 +245,13 @@ public class Procedure implements Operator{
 	  
 	@Override
 	public String generateC(int indentLevel, int consecutive) {
-		// TODO Auto-generated method stub
-		return null;
+		String instruction;
+
+		instruction = "\t";
+
+		instruction = instruction + this.getName() + "(" + this.getParam() + ")\n";
+
+		return instruction;
 	}
 
 	public String getName(){

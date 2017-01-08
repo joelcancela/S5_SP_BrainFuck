@@ -50,7 +50,6 @@ public class CGenerator {
                 }
 
                 if (lastOp != null) {
-                    System.out.println(op.toString() + "   " + indentLevel);
                     if (lastOp.toString().equals("]"))
                         indentLevel--;
                     if (!(op.toString().equals(lastOp.toString()))) {
@@ -70,7 +69,9 @@ public class CGenerator {
             }
         }
     }
-        outputFile.write(lastOp.generateC(indentLevel, consecutive));
+        if (lastOp != null) {
+            outputFile.write(lastOp.generateC(indentLevel, consecutive));
+        }
 
         outputFile.write("\treturn (0);\n}");
         outputFile.close();
