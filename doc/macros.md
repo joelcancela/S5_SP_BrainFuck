@@ -37,6 +37,6 @@ r
  * TO_DIGIT: decrements the current memory cell 48 times (48 is the ascii code for 0)
  (calls MULTI_DECR 48)
 
-### Warning
+### Notes
 * If you call a macro with the name of a previous defined macro, it'll replace it.
 * You can't name your macros with the same name of long-syntax instructions, functions, procedures
