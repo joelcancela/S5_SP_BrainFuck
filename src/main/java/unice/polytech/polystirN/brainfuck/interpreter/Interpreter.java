@@ -199,9 +199,9 @@ public class Interpreter {
 
         while (reader.hasNext()) {
             keyword = reader.next();
-            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("#") || keyword.equals("\t") || keyword.equals(" "))) {
+            if (!(keyword.equals("\n") || keyword.equals("\r") || keyword.equals("#") || keyword.equals("\t") || keyword.equals(" ") || keyword.isEmpty())) {
                 Operator op = getFactory().getInstruction(keyword);
-                if (op == null)
+                if (op == null)     	
                     throw new SyntaxErrorException("Incorrect word operator");
                 if (keyword.equals("JUMP") || keyword.equals("[") || keyword.equals("#FF7F00"))
                     nbOuvert++;
