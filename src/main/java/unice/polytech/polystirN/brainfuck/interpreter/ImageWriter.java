@@ -1,12 +1,12 @@
 package unice.polytech.polystirN.brainfuck.interpreter;
 
-import javax.imageio.ImageIO;
-
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
@@ -22,7 +22,8 @@ public class ImageWriter {
     private String filename;//Filename of the program
     private final int pixelSize = 3;//pixels squares' width and height
     private InstructionFactory factory;
-    /**
+
+	/**
      * ImageWriter constructor
      *
      * @param filename is the filename of the program to translate
@@ -39,7 +40,7 @@ public class ImageWriter {
      *
      * @throws Exception if the program is bad formed or if the image writing went wrong
      */
-    private void translate(String outputFilename) throws Exception {
+    public void translate() throws Exception {
         int instructionsNumber = 0;
         String ins = " ";
         while (buffer.hasNext()) {
@@ -109,16 +110,11 @@ public class ImageWriter {
            }
         }
 
-        ImageIO.write(img, "BMP", new File(outputFilename));
-    }
-
-    /**
-     * Default call for translate
-     *
-     * @throws Exception if the output filename is incorrect
-     */
-    public void translate() throws Exception {
-        translate("outputTranslate.bmp");
+	    DataOutputStream dout = new DataOutputStream(System.out);
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    ImageIO.write(img, "bmp", baos);
+	    byte[] bytes = baos.toByteArray();
+        dout.write(bytes);
     }
 
     /**
