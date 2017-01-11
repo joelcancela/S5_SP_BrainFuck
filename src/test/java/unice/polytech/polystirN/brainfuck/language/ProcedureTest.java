@@ -38,7 +38,7 @@ public class ProcedureTest {
         }
     }
     @Test
-    public void procedureWithoutReturn() throws Exception {
+    public void ProcedureWithoutReturn() throws Exception {
     	intrptr = new Interpreter("./examples/L4/ProcedureExampleError.bf");
     	try {	
         	intrptr.interpretFile();
@@ -49,7 +49,7 @@ public class ProcedureTest {
     }
  
     @Test
-    public void PeocedureWithLoops() throws Exception {
+    public void ProcedureWithLoops() throws Exception {
     	intrptr = new Interpreter("./examples/L4/proTest.bf");
     	try {	
     		
