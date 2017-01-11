@@ -38,9 +38,21 @@ public class ProcedureTest {
         }
     }
     @Test
-    public void functionWithoutReturn() throws Exception {
+    public void procedureWithoutReturn() throws Exception {
     	intrptr = new Interpreter("./examples/L4/ProcedureExampleError.bf");
     	try {	
+        	intrptr.interpretFile();
+        } catch (Exception e) {
+        	assertEquals("the function should contain { and }",e.getMessage());
+           
+        }
+    }
+ 
+    @Test
+    public void PeocedureWithLoops() throws Exception {
+    	intrptr = new Interpreter("./examples/L4/proTest.bf");
+    	try {	
+    		
         	intrptr.interpretFile();
         } catch (Exception e) {
         	assertEquals("the function should contain { and }",e.getMessage());
