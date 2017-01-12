@@ -43,6 +43,7 @@ echo
 echo ./examples/L3/prog
 read
 ./examples/L3/prog
+read
 #C Gen Macro
 clear
 echo cat examples/L3/macros_example1.bf

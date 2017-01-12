@@ -1,4 +1,4 @@
-func difference(x , y)     { #Permet de retourner la difference (absolue) entre deux cases consécutives
+func difference(x , y)     { #Permet de retourner la difference absolue entre deux cases consécutives
 	x
 	[
 		-
