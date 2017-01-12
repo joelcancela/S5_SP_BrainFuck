@@ -146,7 +146,7 @@ public class Interpreter {
         
         while (reader.hasNext()) {
             keyword = reader.next();
-            if(keyword.charAt(0)=='?')
+            if( !keyword.isEmpty() && keyword.charAt(0)=='?' )
             	if(keyword.length()>1)
             	keyword = keyword.substring(1,keyword.length());
             if (getFactory().getInstruction(keyword.trim()) == null) {
