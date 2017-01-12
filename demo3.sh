@@ -12,13 +12,13 @@ echo
 read
 #Function
 clear
-echo cat examples/L4/functionExample1.bf
+echo cat examples/L4/functionDemo.bf
 read
-cat examples/L4/functionExample1.bf
+cat examples/L4/functionDemo.bf
 read
-echo ./bfck -p examples/L4/functionExample1.bf
+echo ./bfck -p examples/L4/functionDemo.bf
 read
-./bfck -p examples/L4/functionExample1.bf
+./bfck -p examples/L4/functionDemo.bf
 echo
 read
 #C Gen Helloworld
