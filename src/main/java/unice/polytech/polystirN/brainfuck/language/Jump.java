@@ -242,10 +242,12 @@ public class Jump implements Operator {
     private String getNextInstruction(Interpreter interpreter) throws Exception {
         if(macros){
         	i++;
+        	
         	if(listInst.get(i) instanceof Procedure)
         		return ((Procedure) listInst.get(i)).getName();	
-        	if(i<listInst.size())
+        	if(i<listInst.size()){
         		return listInst.get(i).toString();
+        	}
         }
         else{
 	    	String instruction;

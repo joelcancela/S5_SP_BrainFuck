@@ -47,11 +47,8 @@ public class Procedure implements Operator{
 	protected byte execute1(Interpreter interpreter) throws Exception{
 		if(corp.trim().length()==0)//si la procedure est vide on execute rien meme si elle a des paramettres
 			return 0;
-		MacroWithParam left = (MacroWithParam) factory.getMapInstruction().get("MULTI_LEFT");
-		MacroWithParam right = (MacroWithParam) factory.getMapInstruction().get("MULTI_RIGHT");
 		
 		for(i=0;i<corp.length();i++){
-			int p = interpreter.getMemory().getP();
 			String keyword = readInstruction();
 			String[] macro = keyword.split(" ");
 	        if(macro.length==2)
@@ -67,7 +64,8 @@ public class Procedure implements Operator{
 	        }//executer l'instruction
 	        if(factory.getInstruction(keyword.trim())!=null){
 	    			if(factory.getInstruction(keyword.trim()) instanceof Jump){	    				 
-	    				new Jump(loopSeparate()).execute(interpreter);
+	    				Jump jump = new Jump(loopSeparate());
+	    				jump.execute(interpreter);
 	    			}
 	    			else
 	        		factory.getInstruction(keyword.trim()).execute(interpreter);
@@ -76,19 +74,11 @@ public class Procedure implements Operator{
 	        	if(param.contains(keyword.trim()) && !param.isEmpty() && !array.isEmpty()){
 						for(int j=0;j<param.size();j++){
 							if(keyword.trim().equals(param.get(j).trim())){
-								if(isInt(array.get(j).trim())){
-								if(Integer.parseInt(array.get(j).trim())-p > 0){
-									right.setParam(Integer.parseInt(array.get(j))-p);
-									right.execute(interpreter);
-									break;
-								}else{
-									left.setParam(p - Integer.parseInt(array.get(j).trim()));
-									left.execute(interpreter);
-									break;
-								}
-							}//thrw an exception if the parameter are not an integer 
+								if(isInt(array.get(j).trim()))
+									interpreter.getMemory().setP(Integer.valueOf(array.get(j).trim()));
+							//thrw an exception if the parameter are not an integer 
 							else throw new SyntaxErrorException("the param should be Integer");
-						}
+							}
 						}
 					}else{
 						if(factory.getInstruction(keyword.trim())==null && !keyword.trim().isEmpty()){
