@@ -17,7 +17,6 @@ import java.util.List;
 public class Macro implements Operator {
 	private List<Operator> instructions;//for save the instruction of macros
 	private InstructionFactory factory;
-	private String inst[];
 	private int j;
 
 	/**
@@ -53,11 +52,9 @@ public class Macro implements Operator {
 	}
 
 	private static boolean isShort(String chaine) {
-		if (chaine.equals("+") || chaine.equals("-") || chaine.equals("<") || chaine.equals(">")
-				|| chaine.equals("[") || chaine.equals("]") || chaine.equals(",") || chaine.equals("."))
-			return true;
-		return false;
-	}
+        return chaine.equals("+") || chaine.equals("-") || chaine.equals("<") || chaine.equals(">")
+                || chaine.equals("[") || chaine.equals("]") || chaine.equals(",") || chaine.equals(".");
+    }
 
 	/**
 	 * Method execute
@@ -82,7 +79,7 @@ public class Macro implements Operator {
 	 */
 	public List<Operator> madeInstruction(String macrosEquivalent) throws Exception {
 		String instruction[] = macrosEquivalent.split("/");
-		inst = instruction;
+        String inst[] = instruction;
 		if (macrosEquivalent.equals("")) return instructions;
 		int i = 0;
 		while (i < instruction.length) {
@@ -169,8 +166,8 @@ public class Macro implements Operator {
 	}
 
 	/**
-	 * @param i index of next instruction after jump
-	 * @return
+     * Isolate the operators in the selected loop
+	 * @return The list of operators in the loop
 	 */
 	public List<Operator> LoopSeparate() {
 		List<Operator> list = new ArrayList<Operator>();

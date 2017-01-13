@@ -19,10 +19,11 @@ public class TraceTest {
 	private Interpreter intrptr;
 	private Trace trace;
 	private BufferedReader br1;
-	private BufferedReader br2;
 
 	@Test
 	public void writeSameTraceWithAnytypeOfFile() throws Exception {
+		BufferedReader br2;
+
 		try {
 			trace = new Trace();
 			intrptr = new Interpreter(getClass().getResource("/L3/usual/little_traceLONG.bf").getFile(), trace);
