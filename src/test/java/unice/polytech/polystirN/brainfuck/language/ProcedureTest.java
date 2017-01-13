@@ -17,7 +17,7 @@ public class ProcedureTest {
 
 	@Test
 	public void ProcedureExecution() throws Exception {
-		intrptr = new Interpreter("./examples/L4/ProcedureExample1.bf");
+		intrptr = new Interpreter("./examples/L4/procedureExample1.bf");
 		intrptr.interpretFile();
 		assertEquals(10, intrptr.getMemory().getCells()[intrptr.getMemory().getP()] & 0xFF);
 
@@ -36,7 +36,7 @@ public class ProcedureTest {
 
 	@Test
 	public void ProcedureErrorSyntax() throws Exception {
-		intrptr = new Interpreter("./examples/L4/ProcedureExampleError.bf");
+		intrptr = new Interpreter("./examples/L4/procedureExampleError.bf");
 		try {
 			intrptr.interpretFile();
 		} catch (Exception e) {
@@ -47,7 +47,7 @@ public class ProcedureTest {
 
 	@Test
 	public void ProcedureWithoutReturn() throws Exception {
-		intrptr = new Interpreter("./examples/L4/ProcedureExampleError.bf");
+		intrptr = new Interpreter("./examples/L4/procedureExampleError.bf");
 		try {
 			intrptr.interpretFile();
 		} catch (Exception e) {

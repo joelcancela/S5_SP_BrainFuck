@@ -51,7 +51,7 @@ public class MacroTest {
 		} catch (SyntaxErrorException e) {
 			assertEquals("Incorrect word operator", e.getMessage());
 		}
-		intrptr = new Interpreter("./examples/L3/MacroSans.bf");
+		intrptr = new Interpreter("./examples/L3/macroSans.bf");
 		try {
 			intrptr.interpretFile();
 		} catch (SyntaxErrorException e) {
