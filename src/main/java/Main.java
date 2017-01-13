@@ -53,7 +53,12 @@ public class Main {
 					}
 					if (options.has("translate")) {
 						ImageWriter iw = new ImageWriter((String) options.valueOf("p"));
-						iw.translate();
+						if(((String) options.valueOf("p")).matches("(.*).bmp")){
+							iw.translateBmp();
+						}
+						else{
+							iw.translate();
+						}
 					}
 					if (options.has("trace")) {
 						System.out.println();

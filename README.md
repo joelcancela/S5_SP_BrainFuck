@@ -48,7 +48,6 @@ Maven and the JDK 8 are required to build the project.
 
 ## TODO/Known Bugs
 
-* You can't translate an image
 * Launching a program containing the instruction IN with `--trace` causes the execution to infinite loop
 * Next to a procedure/function declaration (not call), having parenthesis in comment causes the execution to fail
 * In a procedure/function, parameters can't be used inside a loop

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
@@ -129,4 +130,12 @@ public class ImageWriter {
 		}
 	}
 
+	public void translateBmp() throws Exception {
+		img = ImageIO.read(new File(filename));
+		DataOutputStream dout = new DataOutputStream(System.out);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(img, "bmp", baos);
+		byte[] bytes = baos.toByteArray();
+		dout.write(bytes);
+	}
 }
