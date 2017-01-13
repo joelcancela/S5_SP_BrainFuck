@@ -13,31 +13,38 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  */
 public class Decrement implements Operator {
 
-    /**
-     * This method execute all the decrement operator operations.
-     *
-     * @param interpreter is the current interpreter instance
-     * @throws PointerPositionOutOfBoundsException if the pointer position is recognized as invalid (out of bounds of memory capacity)
-     * @throws MemoryUnderflowException            if the operation goes out of bounds of the memory
-     */
-    public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
-        int p = interpreter.getMemory().getP();
+	/**
+	 * This method execute all the decrement operator operations.
+	 *
+	 * @param interpreter is the current interpreter instance
+	 * @throws PointerPositionOutOfBoundsException if the pointer position is recognized as invalid (out of bounds of memory capacity)
+	 * @throws MemoryUnderflowException            if the operation goes out of bounds of the memory
+	 */
+	public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException, MemoryUnderflowException {
+		int p = interpreter.getMemory().getP();
 
-        //Test pointer position
-        if (p < 0 || p > Memory.size - 1) {
-            throw new PointerPositionOutOfBoundsException("pointer must be between 0 and " + (Memory.size - 1) + " included");
-        }
-        //Test underflow
-        if (((interpreter.getMemory().getCells()[p]) & 0xFF) == 0) {
-            throw new MemoryUnderflowException("value can't be negative");
-        }
-        interpreter.getMemory().getCells()[p]--;
-        interpreter.getMetrics().incrementDataWrite();
-    }
+		//Test pointer position
+		if (p < 0 || p > Memory.size - 1) {
+			throw new PointerPositionOutOfBoundsException("pointer must be between 0 and " + (Memory.size - 1) + " included");
+		}
+		//Test underflow
+		if (((interpreter.getMemory().getCells()[p]) & 0xFF) == 0) {
+			throw new MemoryUnderflowException("value can't be negative");
+		}
+		interpreter.getMemory().getCells()[p]--;
+		interpreter.getMetrics().incrementDataWrite();
+	}
 
-    @Override
-    public String toString() {
-        return "-";
-    }
+	@Override
+	public String toString() {
+		return "-";
+	}
+
+	public String generateC(int indentLevel, int consecutive) {
+		String indentation = "";
+		for (int i = 0; i < indentLevel; i++)
+			indentation = indentation + "\t";
+		return indentation + "c[p] = c[p] - " + consecutive + ";" + "\n";
+	}
 
 }

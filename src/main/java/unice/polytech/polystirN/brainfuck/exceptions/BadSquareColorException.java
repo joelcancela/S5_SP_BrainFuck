@@ -8,9 +8,9 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class BadSquareColorException extends Exception {
 
-    private static final long serialVersionUID = 6770648937530744461L;
+	private static final long serialVersionUID = 6770648937530744461L;
 
-    public BadSquareColorException(int number) {
-        super("Square #" + number + " is not monochrome");
-    }
+	public BadSquareColorException(int number) {
+		super("Square #" + number + " is not monochrome");
+	}
 }

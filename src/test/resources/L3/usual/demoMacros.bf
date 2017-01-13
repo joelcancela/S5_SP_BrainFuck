@@ -1,4 +1,4 @@
-$DEFINE TenIncr +++++++++\INCR
+$DEFINE TenIncr +++++++++/INCR
 $DEFINE Incr() TenIncr
 Incr 10
 ---

@@ -14,129 +14,123 @@ import static org.junit.Assert.assertEquals;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class IncrementTest {
-    @Before
-    public void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-    }
+	}
 
-    @After
-    public void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void doOperation() throws Exception {
-    	Interpreter a=null;
-        /*--------------------------------------------------------------------------
+	@Test
+	public void doOperation() throws Exception {
+		Interpreter a = null;
+	    /*--------------------------------------------------------------------------
         les tests pour les syntax court
 		--------------------------------------------------------------------------*/
-        //Nominal cases
-        //Nominal case 1, with an empty file
-        try {
-        	a = new Interpreter("./examples/L1/empty.bf");
-            a.interpretFile();
-            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal cases
+		//Nominal case 1, with an empty file
+		try {
+			a = new Interpreter("./examples/L1/empty.bf");
+			a.interpretFile();
+			assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Nominal case 2, incrementation of c0 255 times
-        try {
-        	a = new Interpreter("./examples/L2/incrementMax255.bf");
-            a.interpretFile();
-            assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal case 2, incrementation of c0 255 times
+		try {
+			a = new Interpreter("./examples/L2/incrementMax255.bf");
+			a.interpretFile();
+			assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Nominal case 3, incrementation of c0 7 times
-        try {
-        	a = new Interpreter("./examples/L2/incrementC0by7.bf");
-            a.interpretFile();
-            assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal case 3, incrementation of c0 7 times
+		try {
+			a = new Interpreter("./examples/L2/incrementC0by7.bf");
+			a.interpretFile();
+			assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Anomaly cases
-        //Anomaly case 1, incrementation of c0 256 times
-        try {
-        	a = new Interpreter("./examples/L1/INCRError256.bf");
-            a.interpretFile();
-        } catch (Exception e) {
-            assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
-            assertEquals("value can't be higher than 255", e.getMessage());
-        }
+		//Anomaly cases
+		//Anomaly case 1, incrementation of c0 256 times
+		try {
+			a = new Interpreter("./examples/L1/INCRError256.bf");
+			a.interpretFile();
+		} catch (Exception e) {
+			assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
+			assertEquals("value can't be higher than 255", e.getMessage());
+		}
 
-        
-        
-        
 
-        //Anomaly case 2, incrementation of c-1
-        try {
-        	a = new Interpreter("./examples/L2/incrementMax255.bf");
-            a.getMemory().setP(-1);
-            a.interpretFile();
-        } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
-            assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
-        }
+		//Anomaly case 2, incrementation of c-1
+		try {
+			a = new Interpreter("./examples/L2/incrementMax255.bf");
+			a.getMemory().setP(-1);
+			a.interpretFile();
+		} catch (Exception e) {
+			assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+			assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
+		}
         
         
       /*--------------------------------------------------------------------------
         les tests pour les syntax longue
 		--------------------------------------------------------------------------*/
-        //Nominal cases
-        //Nominal case 1, with an empty file
-        try {
-        	a = new Interpreter("./examples/L1/empty.bf");
-            a.interpretFile();
-            assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal cases
+		//Nominal case 1, with an empty file
+		try {
+			a = new Interpreter("./examples/L1/empty.bf");
+			a.interpretFile();
+			assertEquals(0, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Nominal case 2, incrementation of c0 255 times
-        try {
-        	a = new Interpreter("./examples/L1/INCRMax255.bf");
-            a.interpretFile();
-            assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal case 2, incrementation of c0 255 times
+		try {
+			a = new Interpreter("./examples/L1/INCRMax255.bf");
+			a.interpretFile();
+			assertEquals(255, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Nominal case 3, incrementation of c0 7 times
-        try {
-        	a = new Interpreter("./examples/L1/INCRC0by7.bf");
-            a.interpretFile();
-            assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		//Nominal case 3, incrementation of c0 7 times
+		try {
+			a = new Interpreter("./examples/L1/INCRC0by7.bf");
+			a.interpretFile();
+			assertEquals(7, a.getMemory().getCells()[a.getMemory().getP()] & 0xFF);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        //Anomaly cases
-        //Anomaly case 1, incrementation of c0 256 times
-        try {
-        	a = new Interpreter("./examples/L1/INCRError256.bf");
-            a.interpretFile();
-        } catch (Exception e) {
-            assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
-            assertEquals("value can't be higher than 255", e.getMessage());
-        }
+		//Anomaly cases
+		//Anomaly case 1, incrementation of c0 256 times
+		try {
+			a = new Interpreter("./examples/L1/INCRError256.bf");
+			a.interpretFile();
+		} catch (Exception e) {
+			assertEquals("MemoryOverflowException", e.getClass().getSimpleName());
+			assertEquals("value can't be higher than 255", e.getMessage());
+		}
 
-        
-        
-        
 
-        //Anomaly case 2, incrementation of c-1
-        try {
-        	a = new Interpreter("./examples/L1/INCRMax255.bf");
-            a.getMemory().setP(-1);
-            a.interpretFile();
-        } catch (Exception e) {
-            assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
-            assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
-        }
-    }
+		//Anomaly case 2, incrementation of c-1
+		try {
+			a = new Interpreter("./examples/L1/INCRMax255.bf");
+			a.getMemory().setP(-1);
+			a.interpretFile();
+		} catch (Exception e) {
+			assertEquals("PointerPositionOutOfBoundsException", e.getClass().getSimpleName());
+			assertEquals("pointer must be between 0 and 29999 included", e.getMessage());
+		}
+	}
 
 }

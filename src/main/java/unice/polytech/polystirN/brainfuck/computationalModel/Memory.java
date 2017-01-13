@@ -9,63 +9,71 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
-    private byte[] cells; //Cells of the memory
-    private int p; //Pointer to the current memory cell used
-    public final static int size = 30000; //Size of the memory
-    private int lastInstancedCell; //Index of the last instanced cell
+	public final static int size = 30000; //Size of the memory
+	private byte[] cells; //Cells of the memory
+	private int p; //Pointer to the current memory cell used
+	private int lastInstancedCell; //Index of the last instanced cell
 
-    /**
-     * Memory constructor
-     */
-    public Memory() {
-        p = 0;
-        cells = new byte[size];
-        lastInstancedCell = 0;
-    }
+	/**
+	 * Memory constructor
+	 */
+	public Memory() {
+		p = 0;
+		cells = new byte[size];
+		lastInstancedCell = 0;
+	}
 
-    /**
-     * Gets the current memory state
-     *
-     * @return cells being all the data stored in memory
-     */
-    public byte[] getCells() {
-        return cells;
-    }
+	/**
+	 *
+	 */
+	public Memory(Memory memory) {
+		this.p = new Integer(memory.p);
+		this.cells = memory.cells.clone();
+	}
 
-    /**
-     * Gets the current memory cell index
-     *
-     * @return p being the pointer
-     */
-    public int getP() {
-        return p;
-    }
+	/**
+	 * Gets the current memory state
+	 *
+	 * @return cells being all the data stored in memory
+	 */
+	public byte[] getCells() {
+		return cells;
+	}
 
-    /**
-     * Sets a new value to the memory cell index
-     *
-     * @param nP new value for the pointer p
-     */
-    public void setP(int nP) {
-        lastInstancedCell = Math.max(lastInstancedCell, nP);
-        p = nP;
-    }
+	/**
+	 * Gets the current memory cell index
+	 *
+	 * @return p being the pointer
+	 */
+	public int getP() {
+		return p;
+	}
 
-    /**
-     * Prints a snapshot of the memory
-     *
-     * @return a string being the display of the cells of the memory and their content
-     */
-    public String toString() {
-        String returnValue = "[";
-        for (int i = 0; i <= lastInstancedCell; i++) {
-            if (i == lastInstancedCell)
-                returnValue += (cells[i] & 0xFF);
-            else
-                returnValue += (cells[i] & 0xFF) + ", ";
-        }
-        returnValue += "]\n";
-        return returnValue;
-    }
+	/**
+	 * Sets a new value to the memory cell index
+	 *
+	 * @param nP new value for the pointer p
+	 */
+	public void setP(int nP) {
+		lastInstancedCell = Math.max(lastInstancedCell, nP);
+		p = nP;
+	}
+
+	/**
+	 * Prints a snapshot of the memory
+	 *
+	 * @return a string being the display of the cells of the memory and their content
+	 */
+	public String toString() {
+		String returnValue = "[";
+		for (int i = 0; i <= lastInstancedCell; i++) {
+			if (i == lastInstancedCell)
+				returnValue += (cells[i] & 0xFF);
+			else
+				returnValue += (cells[i] & 0xFF) + ", ";
+		}
+		returnValue += "]\n";
+		return returnValue;
+	}
 
 }

@@ -12,30 +12,37 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
 
 public class Right implements Operator {
 
-    /**
-     * This method moves the pointer by one to the right
-     *
-     * @param interpreter memory (M and P) of the current program and all of the following operations.
-     * @throws PointerPositionOutOfBoundsException if the pointer has already reached
-     *                                             the value of 299999 so it can't be moved to the right or if the pointer position
-     *                                             is recognized as invalid (out of bounds of memory capacity)
-     */
-    public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
-        int p = interpreter.getMemory().getP();
-        //Anomaly cases :
-        if (p == 29999)
-            throw new PointerPositionOutOfBoundsException("pointer can't be moved to the right (already at position 29999)");
-        if (p < 0)
-            throw new PointerPositionOutOfBoundsException("pointer is at illegal position");
+	/**
+	 * This method moves the pointer by one to the right
+	 *
+	 * @param interpreter memory (M and P) of the current program and all of the following operations.
+	 * @throws PointerPositionOutOfBoundsException if the pointer has already reached
+	 *                                             the value of 299999 so it can't be moved to the right or if the pointer position
+	 *                                             is recognized as invalid (out of bounds of memory capacity)
+	 */
+	public void execute(Interpreter interpreter) throws PointerPositionOutOfBoundsException {
+		int p = interpreter.getMemory().getP();
+		//Anomaly cases :
+		if (p == 29999)
+			throw new PointerPositionOutOfBoundsException("pointer can't be moved to the right (already at position 29999)");
+		if (p < 0)
+			throw new PointerPositionOutOfBoundsException("pointer is at illegal position");
 
-        //Nominal case :
-        interpreter.getMemory().setP(p + 1);
-        interpreter.getMetrics().incrementDataMove();
-    }
+		//Nominal case :
+		interpreter.getMemory().setP(p + 1);
+		interpreter.getMetrics().incrementDataMove();
+	}
 
-    @Override
-    public String toString() {
-        return ">";
-    }
+	@Override
+	public String toString() {
+		return ">";
+	}
+
+	public String generateC(int indentLevel, int consecutive) {
+		String indentation = "";
+		for (int i = 0; i < indentLevel; i++)
+			indentation = indentation + "\t";
+		return indentation + "p = p + " + consecutive + ";" + "\n";
+	}
 
 }

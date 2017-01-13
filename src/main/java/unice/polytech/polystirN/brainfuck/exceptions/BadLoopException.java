@@ -8,9 +8,9 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class BadLoopException extends Exception {
 
-    private static final long serialVersionUID = -6832017286379417581L;
+	private static final long serialVersionUID = -6832017286379417581L;
 
-    public BadLoopException(String message) {
-        super(message);
-    }
+	public BadLoopException(String message) {
+		super(message);
+	}
 }

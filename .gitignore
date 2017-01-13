@@ -22,7 +22,6 @@ target/
 .settings/
 src/main/resources/
 
-# Brainfuck outputs
-outputTranslate.bmp
+# BrainFuck outputs
 *.log
-fichierTampon.bf
+prog

@@ -15,50 +15,59 @@ import java.util.Scanner;
  */
 public class In implements Operator {
 
-    private String filename;
-    private BufferedReader buffer;
+	private String filename;
+	private BufferedReader buffer;
 
-    /**
-     * In constructor
-     *
-     * @param filename where In is supposed to read, or null if the operator
-     *                 is supposed to read on the standard input.
-     * @throws FileNotFoundException if the filename is incorrect
-     */
-    public In(String filename) throws FileNotFoundException {
-        this.filename = filename;
-        if (filename != null) {
-            buffer = new BufferedReader(new FileReader(filename));
-        }
-    }
+	/**
+	 * In constructor
+	 *
+	 * @param filename where In is supposed to read, or null if the operator
+	 *                 is supposed to read on the standard input.
+	 * @throws FileNotFoundException if the filename is incorrect
+	 */
+	public In(String filename) throws FileNotFoundException {
+		this.filename = filename;
+		if (filename != null) {
+			buffer = new BufferedReader(new FileReader(filename));
+		}
+	}
 
-    /**
-     * In constructor without filename, uses standard input instead (keyboard)
-     */
-    public In() {
-        this.filename = null;
-    }
+	/**
+	 * In constructor without filename, uses standard input instead (keyboard)
+	 */
+	public In() {
+		this.filename = null;
+	}
 
-    /**
-     * Read a character, either on the standard output or in a file, and put
-     * it in the current cell memory as the new value of the cell, erasing
-     * it's previous content.
-     *
-     * @param interpreter is the current Interpreter instance
-     */
-    @Override
-    public void execute(Interpreter interpreter) throws Exception {
-        if (filename == null) {
-            Scanner sc = new Scanner(System.in);
-            interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) sc.next().charAt(0);
-        } else {
-            interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) buffer.read();
-        }
-        interpreter.getMetrics().incrementDataWrite();
-    }
+	/**
+	 * Read a character, either on the standard output or in a file, and put
+	 * it in the current cell memory as the new value of the cell, erasing
+	 * it's previous content.
+	 *
+	 * @param interpreter is the current Interpreter instance
+	 */
+	@Override
+	public void execute(Interpreter interpreter) throws Exception {
+		if (filename == null) {
+			Scanner sc = new Scanner(System.in);
+			interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) sc.next().charAt(0);
+		} else {
+			interpreter.getMemory().getCells()[interpreter.getMemory().getP()] = (byte) buffer.read();
+		}
+		interpreter.getMetrics().incrementDataWrite();
+	}
 
-    @Override
-    public String toString() {
-        return ",";
-    }
+	@Override
+	public String toString() {
+		return ",";
+	}
+
+	public String generateC(int indentLevel, int consecutive) {
+		String cCode = "";
+		for (int i = 0; i < indentLevel; i++)
+			cCode = cCode + "\t";
+		for (int j = 0; j < consecutive; j++)
+			cCode = cCode + "c[p] = getchar();\n";
+		return cCode;
+	}
 }
