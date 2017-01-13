@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class Macro implements Operator {
 	private List<Operator> instructions;//for save the instruction of macros
-	private List<Operator> temp;
 	private InstructionFactory factory;
 	private String inst[];
 	private int j;
@@ -65,6 +64,7 @@ public class Macro implements Operator {
 	 */
 	@Override
 	public void execute(Interpreter interpreter) throws Exception {
+		List<Operator> temp;
 		for (j = 0; j < instructions.size(); j++) {
 			if (instructions.get(j) instanceof Jump) {
 				temp = LoopSeparate();
