@@ -1,13 +1,10 @@
-
-
-
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import unice.polytech.polystirN.brainfuck.codeGenerator.CGenerator;
+import unice.polytech.polystirN.brainfuck.debug.Trace;
 import unice.polytech.polystirN.brainfuck.exceptions.IncorrectFileTypeException;
 import unice.polytech.polystirN.brainfuck.interpreter.ImageWriter;
 import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
-import unice.polytech.polystirN.brainfuck.debug.Trace;
 
 import java.io.IOException;
 

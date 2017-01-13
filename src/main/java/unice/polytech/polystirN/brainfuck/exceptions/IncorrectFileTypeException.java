@@ -8,9 +8,9 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class IncorrectFileTypeException extends Exception {
 
-    private static final long serialVersionUID = 906034342661260277L;
+	private static final long serialVersionUID = 906034342661260277L;
 
-    public IncorrectFileTypeException(String message) {
-        super(message);
-    }
+	public IncorrectFileTypeException(String message) {
+		super(message);
+	}
 }

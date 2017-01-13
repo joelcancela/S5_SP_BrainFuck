@@ -9,9 +9,9 @@ package unice.polytech.polystirN.brainfuck.exceptions;
  */
 public class PointerPositionOutOfBoundsException extends Exception {
 
-    private static final long serialVersionUID = 4951164788640972956L;
+	private static final long serialVersionUID = 4951164788640972956L;
 
-    public PointerPositionOutOfBoundsException(String message) {
-        super(message);
-    }
+	public PointerPositionOutOfBoundsException(String message) {
+		super(message);
+	}
 }

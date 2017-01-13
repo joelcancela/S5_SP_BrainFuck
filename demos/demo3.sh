@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#cd must be project root
 #Procedure
 clear
 echo cat examples/L4/demoProcedure.bf

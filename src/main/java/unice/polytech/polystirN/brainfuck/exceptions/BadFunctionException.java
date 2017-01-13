@@ -1,16 +1,16 @@
 package unice.polytech.polystirN.brainfuck.exceptions;
 
 /**
- * Exception class for malformed function
+ * Exception class for malformed functions
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class BadFunctionException extends Exception {
 
-    private static final long serialVersionUID = -6832017286379417581L;
+	private static final long serialVersionUID = -6832017286379417581L;
 
-    public BadFunctionException(String message) {
-        super(message);
-    }
+	public BadFunctionException(String message) {
+		super(message);
+	}
 }

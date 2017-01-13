@@ -10,7 +10,7 @@ import unice.polytech.polystirN.brainfuck.language.Operator;
 import java.io.FileWriter;
 
 /**
- * Generator class for C Files
+ * Class used to Generate C Code Files
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI

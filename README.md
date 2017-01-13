@@ -46,15 +46,7 @@ Maven and the JDK 8 are required to build the project.
 
 ---
 
-## Upcoming Demos
-
-Démo #3:
-Semaine #2, 4 Janvier 2017, 14:25 (E-108) <br>
-
 ## TODO
-
-- [ ] S21
-- [ ] Script démo 3
 
 ---
 ## Done

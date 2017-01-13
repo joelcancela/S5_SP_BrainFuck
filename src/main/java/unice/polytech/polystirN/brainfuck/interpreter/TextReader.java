@@ -6,7 +6,6 @@ import unice.polytech.polystirN.brainfuck.exceptions.SyntaxErrorException;
 import unice.polytech.polystirN.brainfuck.language.Function;
 import unice.polytech.polystirN.brainfuck.language.Macro;
 import unice.polytech.polystirN.brainfuck.language.MacroWithParam;
-import unice.polytech.polystirN.brainfuck.language.Operator;
 import unice.polytech.polystirN.brainfuck.language.Procedure;
 
 import java.io.BufferedReader;
@@ -21,290 +20,285 @@ import java.util.Arrays;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class TextReader extends Reader {
-    private BufferedReader buffer;
-    private int c;
-    private InstructionFactory factory;
-    private CGenerator cGenerator;
+	private BufferedReader buffer;
+	private int c;
+	private InstructionFactory factory;
+	private CGenerator cGenerator;
 
-    /**
-     * TextReader constructor
-     *
-     * @param filename is the name of the file to be read
-     */
-    public TextReader(String filename,Interpreter inte) throws Exception {
-        buffer = new BufferedReader(new FileReader(filename));
-        factory = inte.getFactory();
-        c = buffer.read();
-        macrosRead();
-       
-    }
-    public TextReader(String filename,InstructionFactory factory) throws Exception {
-        buffer = new BufferedReader(new FileReader(filename));
-        this.factory= factory;
-        c = buffer.read();
-        macrosRead();
-    }
+	/**
+	 * TextReader constructor
+	 *
+	 * @param filename is the name of the file to be read
+	 */
+	public TextReader(String filename, Interpreter inte) throws Exception {
+		buffer = new BufferedReader(new FileReader(filename));
+		factory = inte.getFactory();
+		c = buffer.read();
+		macrosRead();
 
-    public TextReader(String filename, CGenerator cGenerator) throws Exception {
-        buffer = new BufferedReader(new FileReader(filename));
-        this.factory = cGenerator.getFactory();
-        c = buffer.read();
-        macrosRead();
-    }
+	}
 
-    /**
-     * Checks if there is another character to read
-     *
-     * @return true if the current character is not the last, else false
-     */
-    @Override
-    public boolean hasNext() throws Exception {
-        return c!=-1;
-    }
+	public TextReader(String filename, InstructionFactory factory) throws Exception {
+		buffer = new BufferedReader(new FileReader(filename));
+		this.factory = factory;
+		c = buffer.read();
+		macrosRead();
+	}
 
-    /**
-     * Reads the next character or keyword and translates it into an instruction
-     *
-     * @return String being the instruction
-     */
-    @Override
-    public String next() throws Exception {
-        String keyword = "";
-        String VOID = "void";
-        String FUNC = "func";
+	public TextReader(String filename, CGenerator cGenerator) throws Exception {
+		buffer = new BufferedReader(new FileReader(filename));
+		this.factory = cGenerator.getFactory();
+		c = buffer.read();
+		macrosRead();
+	}
 
-       
-        if(c=='#'){
-        	buffer.readLine();
-        	c = ' ';
-        }
-        if (('A' <= c && 'Z' >= c) || ('a' <= c && 'z' >= c)) {
-            while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
-                keyword += ((char) c);
-                c = buffer.read();
-            }
-        } else {
-            keyword = Character.toString((char) c);
-        }
-        String[] macro = keyword.split(" ");
-        if(macro.length==2)
-        if(isInt(macro[1].trim())){
-        	if(factory.getMapInstruction().get(macro[0].trim())!=null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacroWithParam.class)){
-        		if(factory.getInstruction(macro[0].trim()).getClass().equals(MacroWithParam.class))
-        		if(Integer.parseInt(macro[1].trim())>=0){
-        			keyword = macro[0].trim();
-        			((MacroWithParam) factory.getMapInstruction().get(keyword)).setParam(Integer.parseInt(macro[1].trim()));
-        		}
-        	}
-        }
-        if(keyword.contains(VOID) && keyword.trim().length()>VOID.length()){
-        	procedureRead(keyword, false);
-        	keyword = "";
-        }
-        if(keyword.contains(FUNC) && keyword.trim().length()>FUNC.length()){
-        	procedureRead(keyword, true);
-        	keyword = "";
-        }
-        if(keyword.split("\\(").length ==2 && keyword.split("\\)").length ==2 && keyword.trim().split(";").length==1){
-        	if(factory.getInstruction(keyword.split("\\(")[0].trim())!=null && factory.getInstruction(keyword.split("\\(")[0].trim()) instanceof Procedure){
-        		String[] paramettre = keyword.split("\\(")[1].split("\\)")[0].split(",");
-            	keyword = keyword.split("\\(")[0].trim();
-        		((Procedure)factory.getInstruction(keyword.split("\\(")[0].trim())).setParam(paramettre);
-        	}
-        }
-        c = buffer.read();
-        return keyword;
-    }
-    
-    /**
-     * 
-     * @param procedure
-     * @throws Exception
-     */
-    private String procedureRead(String procedure, boolean isFunction) throws Exception{
-    	String Void;
-    	if(isFunction)
-    		Void = "func";
-    	else
-    		Void = "void";
-    	String nomPro,corp ="",param[];
-    	int returnPointeur = -1;
-    	String returnParam = "none";
-    	
-    	procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
-    	nomPro = procedure.split("\\(")[0].trim();
-    	if(nomPro.split(" ").length > 1){
-    		throw new SyntaxErrorException("the name of the function should not contain spaces");
-    	}
-    	if(procedure.split("\\(").length > 2 || procedure.split("\\)").length >2 ){
-    		throw new SyntaxErrorException("the function should not contain too many ( or )");
-    	}
-    	if(!procedure.split("\\(")[1].contains(")")){
-    		throw new SyntaxErrorException("the function should contain  ( param )");
-    	}
-    	param = procedure.split("\\(")[1].split("\\)")[0].split(",");
-    	for(int i=0;i<param.length;i++){
-    		param[i] = param[i].trim();
-    	}
-    	procedure = procedure.split("\\)")[1];
-    	if(procedure.contains("{")){
-    		if(procedure.contains("}")){
-    			corp = procedure.split("\\{")[0];
-    		}
-    		else {
-    			if(procedure.split("\\{").length == 2)
-    				corp = procedure.split("\\{")[1];
-    			while(c!=-1 && c!='}'){
-    				c = buffer.read();
-    				
-    				if(isFunction){
-    					if(c=='r'){
-    						String tempo = "";
-    						while(c!='\n' && c!='\r'){
-    							tempo += Character.toString((char) c);
-    							c = buffer.read();
-    						}
-    						String tempoSplited[] = tempo.split(" ");
-    						if(tempoSplited[0].equals("return")){
-    				        	if(Arrays.asList(param).contains(tempoSplited[1])){
-    				        		for(int i=0;i<param.length;i++){
-    				        			if(param[i].equals(tempoSplited[1])){
-    				        				returnParam = tempoSplited[1];
-    				        				break;
-    				        			}
-    				        		}
-    				        	}else if(isInt(tempoSplited[1])){
-    				        		returnPointeur = Integer.valueOf(tempoSplited[1]);
-    				        	} else {
-    				        		throw new BadFunctionException("Bad return value. Should be a pointeur value (integer between 0 and 29999 or a param).");
-    				        	}
-    						}else{
-    							if(!Arrays.asList(param).contains(tempoSplited[0]) && factory.getInstruction(tempoSplited[0])==null)
-    								throw new SyntaxErrorException("Unknown word : "+tempo);
-    							corp+=tempo;
-    						}
-    					}
-    				}
-    				
-    				if(c=='}'){
-    					c=' ';
-    					break;
-    				}else{
-    					corp+=Character.toString((char) c);
-    				}
-    				
-    			}
-    		}
-    	}
-    	else{
-    		c = buffer.read();
-    		if(c=='{'){
-    			while(c!=-1 && c!='}'){
-				
-    				if(c=='}'){
-    					c=' ';
-    					break;
-    				}else{
-    					corp+=(char)c;
-    				}
-    				c = buffer.read();
-    			}
-    			
-    		}
-    
-    	}
-		if(c ==-1) throw new SyntaxErrorException("the function should contain { and }");
-    	if(isFunction){
-    		if(returnPointeur != -1)
-    			factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory, returnPointeur));
-    		else if(!returnParam.equals("none"))
-    			factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(),corp,param, factory, returnParam));
-    		else
-    			throw new BadFunctionException("Missing \"return\" keyword.");
-    	}else
-    		factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(),corp,param, factory));
+	/**
+	 * Verifies if a string is an integer
+	 *
+	 * @param chaine is a string to check
+	 * @return boolean if the string is an integer else false
+	 */
+	private static boolean isInt(String chaine) {
+		boolean valeur = true;
+		char[] tab = chaine.toCharArray();
 
-    	return "?"+nomPro;
-    }
-    
-    /**
-     * 
-     * Stock the equivalent of the macros to be able to use them after
-     * @throws SyntaxErrorException if the character is not part of the syntax
-     */
-    private void macrosRead() throws Exception {
-        String word;
-        char charOfM;
-        String macros;
-        String define = "DEFINE";
-        int i;
+		for (char carac : tab) {
+			if (!Character.isDigit(carac) && valeur) {
+				valeur = false;
+			}
+		}
 
-        while (hasNext() && (c == '$' || c == ' ' || c == '\n' || c == '\r')) {
-            word = "";
-            charOfM = '\0';
-            if ((char) c == '$') {
-                macros = buffer.readLine();
-                if (macros.length() <= define.length())
-                    throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
-                if (!macros.substring(0, define.length()).equals(define))
-                    throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
-                else {
-                    if (macros.trim().split(" ").length < 2)
-                        throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
-                    macros = macros.trim().substring(define.length(), macros.trim().length()).trim();
-                    for (i = 0; i < macros.trim().length() && charOfM != ' '; i++) {
-                        word += macros.trim().charAt(i);
-                        if (i < macros.trim().length() - 1)
-                            charOfM = macros.trim().charAt(i + 1);
+		return valeur;
+	}
 
-                    }
-                   
-                    macros = macros.trim().substring(word.trim().length(), macros.trim().length()).trim();
-                    
-                    if (word.trim().length() > 2) {
-                        if (word.trim().substring(word.trim().length() - 2, word.trim().length()).equals("()")){
-                        	word = word.trim().substring(0, word.trim().length()-2);
-                        	if(factory.getInstruction(word.trim())==null)
-                        	factory.getMapInstruction().put(word.trim(), new MacroWithParam(macros.trim(),factory));
-                        	else throw new SyntaxErrorException("<your word> must be !="+ word);
-                        	
-                        }
-                    
-                    else {
-                    
-                    	if(factory.getInstruction(word.trim())==null)
-                    		factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
-                    	else throw new SyntaxErrorException("<your word> must be !="+ word);
-                    	
-                    }
-                    }
-                    else factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(),factory));
-                   
-                }
-            }
-            c = buffer.read();
-           
-        }   
-        
-    }
+	/**
+	 * Checks if there is another character to read
+	 *
+	 * @return true if the current character is not the last, else false
+	 */
+	@Override
+	public boolean hasNext() throws Exception {
+		return c != -1;
+	}
 
-    /**
-     * Verifies if a string is an integer
-     *
-     * @param chaine is a string to check
-     * @return boolean if the string is an integer else false
-     */
-    private static boolean isInt(String chaine) {
-        boolean valeur = true;
-        char[] tab = chaine.toCharArray();
+	/**
+	 * Reads the next character or keyword and translates it into an instruction
+	 *
+	 * @return String being the instruction
+	 */
+	@Override
+	public String next() throws Exception {
+		String keyword = "";
+		String VOID = "void";
+		String FUNC = "func";
 
-        for (char carac : tab) {
-            if (!Character.isDigit(carac) && valeur) {
-                valeur = false;
-            }
-        }
 
-        return valeur;
-    }
+		if (c == '#') {
+			buffer.readLine();
+			c = ' ';
+		}
+		if (('A' <= c && 'Z' >= c) || ('a' <= c && 'z' >= c)) {
+			while ((char) c != '\r' && (char) c != '\n' && c != -1) {//c!=1 required because we read in the buffer
+				keyword += ((char) c);
+				c = buffer.read();
+			}
+		} else {
+			keyword = Character.toString((char) c);
+		}
+		String[] macro = keyword.split(" ");
+		if (macro.length == 2)
+			if (isInt(macro[1].trim())) {
+				if (factory.getMapInstruction().get(macro[0].trim()) != null && factory.getMapInstruction().get(macro[0].trim()).getClass().equals(MacroWithParam.class)) {
+					if (factory.getInstruction(macro[0].trim()).getClass().equals(MacroWithParam.class))
+						if (Integer.parseInt(macro[1].trim()) >= 0) {
+							keyword = macro[0].trim();
+							((MacroWithParam) factory.getMapInstruction().get(keyword)).setParam(Integer.parseInt(macro[1].trim()));
+						}
+				}
+			}
+		if (keyword.contains(VOID) && keyword.trim().length() > VOID.length()) {
+			procedureRead(keyword, false);
+			keyword = "";
+		}
+		if (keyword.contains(FUNC) && keyword.trim().length() > FUNC.length()) {
+			procedureRead(keyword, true);
+			keyword = "";
+		}
+		if (keyword.split("\\(").length == 2 && keyword.split("\\)").length == 2 && keyword.trim().split(";").length == 1) {
+			if (factory.getInstruction(keyword.split("\\(")[0].trim()) != null && factory.getInstruction(keyword.split("\\(")[0].trim()) instanceof Procedure) {
+				String[] paramettre = keyword.split("\\(")[1].split("\\)")[0].split(",");
+				keyword = keyword.split("\\(")[0].trim();
+				((Procedure) factory.getInstruction(keyword.split("\\(")[0].trim())).setParam(paramettre);
+			}
+		}
+		c = buffer.read();
+		return keyword;
+	}
+
+	/**
+	 * @param procedure
+	 * @throws Exception
+	 */
+	private String procedureRead(String procedure, boolean isFunction) throws Exception {
+		String Void;
+		if (isFunction)
+			Void = "func";
+		else
+			Void = "void";
+		String nomPro, corp = "", param[];
+		int returnPointeur = -1;
+		String returnParam = "none";
+
+		procedure = procedure.trim().substring(Void.length(), procedure.trim().length()).trim();
+		nomPro = procedure.split("\\(")[0].trim();
+		if (nomPro.split(" ").length > 1) {
+			throw new SyntaxErrorException("the name of the function should not contain spaces");
+		}
+		if (procedure.split("\\(").length > 2 || procedure.split("\\)").length > 2) {
+			throw new SyntaxErrorException("the function should not contain too many ( or )");
+		}
+		if (!procedure.split("\\(")[1].contains(")")) {
+			throw new SyntaxErrorException("the function should contain  ( param )");
+		}
+		param = procedure.split("\\(")[1].split("\\)")[0].split(",");
+		for (int i = 0; i < param.length; i++) {
+			param[i] = param[i].trim();
+		}
+		procedure = procedure.split("\\)")[1];
+		if (procedure.contains("{")) {
+			if (procedure.contains("}")) {
+				corp = procedure.split("\\{")[0];
+			} else {
+				if (procedure.split("\\{").length == 2)
+					corp = procedure.split("\\{")[1];
+				while (c != -1 && c != '}') {
+					c = buffer.read();
+
+					if (isFunction) {
+						if (c == 'r') {
+							String tempo = "";
+							while (c != '\n' && c != '\r') {
+								tempo += Character.toString((char) c);
+								c = buffer.read();
+							}
+							String tempoSplited[] = tempo.split(" ");
+							if (tempoSplited[0].equals("return")) {
+								if (Arrays.asList(param).contains(tempoSplited[1])) {
+									for (int i = 0; i < param.length; i++) {
+										if (param[i].equals(tempoSplited[1])) {
+											returnParam = tempoSplited[1];
+											break;
+										}
+									}
+								} else if (isInt(tempoSplited[1])) {
+									returnPointeur = Integer.valueOf(tempoSplited[1]);
+								} else {
+									throw new BadFunctionException("Bad return value. Should be a pointeur value (integer between 0 and 29999 or a param).");
+								}
+							} else {
+								if (!Arrays.asList(param).contains(tempoSplited[0]) && factory.getInstruction(tempoSplited[0]) == null)
+									throw new SyntaxErrorException("Unknown word : " + tempo);
+								corp += tempo;
+							}
+						}
+					}
+
+					if (c == '}') {
+						c = ' ';
+						break;
+					} else {
+						corp += Character.toString((char) c);
+					}
+
+				}
+			}
+		} else {
+			c = buffer.read();
+			if (c == '{') {
+				while (c != -1 && c != '}') {
+
+					if (c == '}') {
+						c = ' ';
+						break;
+					} else {
+						corp += (char) c;
+					}
+					c = buffer.read();
+				}
+
+			}
+
+		}
+		if (c == -1) throw new SyntaxErrorException("the function should contain { and }");
+		if (isFunction) {
+			if (returnPointeur != -1)
+				factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(), corp, param, factory, returnPointeur));
+			else if (!returnParam.equals("none"))
+				factory.getMapInstruction().put(nomPro.trim(), new Function(nomPro.trim(), corp, param, factory, returnParam));
+			else
+				throw new BadFunctionException("Missing \"return\" keyword.");
+		} else
+			factory.getMapInstruction().put(nomPro.trim(), new Procedure(nomPro.trim(), corp, param, factory));
+
+		return "?" + nomPro;
+	}
+
+	/**
+	 * Stock the equivalent of the macros to be able to use them after
+	 *
+	 * @throws SyntaxErrorException if the character is not part of the syntax
+	 */
+	private void macrosRead() throws Exception {
+		String word;
+		char charOfM;
+		String macros;
+		String define = "DEFINE";
+		int i;
+
+		while (hasNext() && (c == '$' || c == ' ' || c == '\n' || c == '\r')) {
+			word = "";
+			charOfM = '\0';
+			if ((char) c == '$') {
+				macros = buffer.readLine();
+				if (macros.length() <= define.length())
+					throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+				if (!macros.substring(0, define.length()).equals(define))
+					throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+				else {
+					if (macros.trim().split(" ").length < 2)
+						throw new SyntaxErrorException("$DEFINE <your word> <instructions>");
+					macros = macros.trim().substring(define.length(), macros.trim().length()).trim();
+					for (i = 0; i < macros.trim().length() && charOfM != ' '; i++) {
+						word += macros.trim().charAt(i);
+						if (i < macros.trim().length() - 1)
+							charOfM = macros.trim().charAt(i + 1);
+
+					}
+
+					macros = macros.trim().substring(word.trim().length(), macros.trim().length()).trim();
+
+					if (word.trim().length() > 2) {
+						if (word.trim().substring(word.trim().length() - 2, word.trim().length()).equals("()")) {
+							word = word.trim().substring(0, word.trim().length() - 2);
+							if (factory.getInstruction(word.trim()) == null)
+								factory.getMapInstruction().put(word.trim(), new MacroWithParam(macros.trim(), factory));
+							else throw new SyntaxErrorException("<your word> must be !=" + word);
+
+						} else {
+
+							if (factory.getInstruction(word.trim()) == null)
+								factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(), factory));
+							else throw new SyntaxErrorException("<your word> must be !=" + word);
+
+						}
+					} else factory.getMapInstruction().put(word.trim(), new Macro(macros.trim(), factory));
+
+				}
+			}
+			c = buffer.read();
+
+		}
+
+	}
 }
 

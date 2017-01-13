@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#cd must be project root
 clear
 echo cat examples/L2/JUMP2.bf
 cat examples/L2/JUMP2.bf

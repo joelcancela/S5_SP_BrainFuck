@@ -9,16 +9,16 @@ import unice.polytech.polystirN.brainfuck.interpreter.Interpreter;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public interface Operator {
-    /**
-     * This method executes all the operations associated with the corresponding operator.
-     *
-     * @param interpreter is the current instance of the interpreter
-     * @throws Exception if the operation goes against memory capacity or pointer range position
-     */
-    void execute(Interpreter interpreter) throws Exception;
+	/**
+	 * This method executes all the operations associated with the corresponding operator.
+	 *
+	 * @param interpreter is the current instance of the interpreter
+	 * @throws Exception if the operation goes against memory capacity or pointer range position
+	 */
+	void execute(Interpreter interpreter) throws Exception;
 
-    @Override
-    String toString();
+	@Override
+	String toString();
 
-    String generateC(int indentLevel, int consecutive);
+	String generateC(int indentLevel, int consecutive);
 }

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#cd must be project root
 clear
 echo cat src/test/resources/L2/usual/jumpInternalLoop2.bf
 ./bfck -p src/test/resources/L2/usual/jumpInternalLoop2.bf --rewrite

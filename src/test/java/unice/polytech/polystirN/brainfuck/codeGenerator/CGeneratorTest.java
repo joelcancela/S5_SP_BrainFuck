@@ -9,7 +9,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests for the C g generator class
+ * Tests for the C generator class
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI

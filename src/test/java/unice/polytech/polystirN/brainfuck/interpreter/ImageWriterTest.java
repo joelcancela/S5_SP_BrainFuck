@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
-
 public class ImageWriterTest {
 	ImageWriter writer;
 	ByteArrayOutputStream baos;
@@ -25,7 +24,7 @@ public class ImageWriterTest {
 	@Before
 	public void init() throws Exception {
 		File f = new File("./src/test/resources/mocks/temp.bmp");
-		if(!f.exists())
+		if (!f.exists())
 			f.createNewFile();
 		baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
@@ -37,7 +36,7 @@ public class ImageWriterTest {
 		writer = new ImageWriter(getClass().getResource("/L1/usual/INCRC0by7.bf").getFile());
 		writer.translate();
 
-		assertTrue(baos.toByteArray().length!=0);
+		assertTrue(baos.toByteArray().length != 0);
 
 		File temp = new File("./target/test-classes/mocks/temp.bmp");
 		out = new FileOutputStream(temp);
@@ -54,7 +53,7 @@ public class ImageWriterTest {
 		writer = new ImageWriter(getClass().getResource("/L2/usual/helloworld.bf").getFile());
 		writer.translate();
 
-		assertTrue(baos.toByteArray().length!=0);
+		assertTrue(baos.toByteArray().length != 0);
 
 		File temp = new File("./target/test-classes/mocks/temp.bmp");
 		out = new FileOutputStream(temp);

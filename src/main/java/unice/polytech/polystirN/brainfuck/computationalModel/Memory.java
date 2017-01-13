@@ -9,9 +9,9 @@ package unice.polytech.polystirN.brainfuck.computationalModel;
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
  */
 public class Memory {
+	public final static int size = 30000; //Size of the memory
 	private byte[] cells; //Cells of the memory
 	private int p; //Pointer to the current memory cell used
-	public final static int size = 30000; //Size of the memory
 	private int lastInstancedCell; //Index of the last instanced cell
 
 	/**

@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the Interpreter class
+ * Non-regression tests
  *
  * @author Joël CANCELA VAZ and Pierre RAINERO
  * @author Tanguy INVERNIZZI and Aghiles DZIRI
@@ -500,7 +501,7 @@ public class InterpreterTest {
 		assertEquals(0, intrptr.getMemory().getP());
 		assertEquals(74, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:74, 74 IS J in ASCII
 
- 		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_avecParam.bf").getFile());
+		intrptr = new Interpreter(getClass().getResource("/L3/usual/macros_avecParam.bf").getFile());
 		intrptr.interpretFile();
 		assertEquals(0, intrptr.getMemory().getP());
 		assertEquals(97, intrptr.getMemory().getCells()[0] & mask);//Result of this program is C0:97
