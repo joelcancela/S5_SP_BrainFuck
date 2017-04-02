@@ -1,4 +1,4 @@
-## Metrics:
+# Metrics:
 * PROG SIZE: the number of instructions in the program;
 * EXEC TIME: the execution time of the program, in milliseconds;
 * EXEC MOVE: the number of times the execution pointer was moved to execute this program;
