@@ -1,6 +1,4 @@
-# BrainFuckSI3
-
-Polytech'Nice SI3 group PolyStirN's BrainFuck project.
+# BrainFuck (Mül93) interpreter
 
 ## What is this ?
 This is an interpreter for the BrainFuck language (Mül93).
