@@ -21,7 +21,7 @@ It can read textual files (\*.bf) and bitmaps (\*.bmp).
 The results are printed on stdout.
 * Can translate a textual program into an image-based one using `--translate`. <br>
 The results are printed on stdout, you can redirect with `>` in command line to a bmp file to create the picture.
-* Can check if a program is well-formed (loops well formed and no wrong instructions) <br>
+* Can check if a program is well-formed (loops well formed and no wrong instructions) using `--check`. <br>
 The results are printed on stdout.
 * Show metrics for an execution of a program (shown in stdout, after the program results), [more details here](doc/metrics.md).
 * Logging step to trace execution using `--trace`, creates a .log file where the program is to help the debug.
